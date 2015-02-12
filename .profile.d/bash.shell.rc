@@ -1,0 +1,21 @@
+# Bash settings
+
+export TERM=xterm-color
+export GREP_OPTIONS='--color=auto' GREP_COLOR='1;32'
+export CLICOLOR=1
+export LSCOLORS=GxFxCxDxBxegedabagaced
+export COLOR_NC='\e[0m' # No Color
+
+export GIT_PS1_DESCRIBE_STYLE=branch
+export GIT_PS1_SHOWCOLORHINTS=1
+export GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWSTASHSTATE=1
+export GIT_PS1_SHOWUNTRACKEDFILES=1
+export GIT_PS1_SHOWUPSTREAM="verbose git"
+export GIT_PS1_STATESEPARATOR=""
+
+export PROMPT_COMMAND="__git_ps1 '[\u@\h \[\033[1;36m\]\w\[\033[0m\] ' ']\$ ' '%s'"
+
+if [ -f `brew --prefix`/etc/bash_completion ]; then
+    . `brew --prefix`/etc/bash_completion
+fi
