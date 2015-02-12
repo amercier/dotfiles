@@ -1,0 +1,6 @@
+alias gl='git log --graph --pretty=format:'\''%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\'' --abbrev-commit'
+alias gl-full='git log --graph --pretty=format:'\''%Cred%H%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\'' --abbrev-commit'
+alias gll='gl | h10'
+alias gs='git status'
+alias gd='git diff'
+alias gdc='git diff --cached'
