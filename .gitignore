@@ -1,3 +1,10 @@
 *
 !.editorconfig
 !.gitignore
+!.profile
+!.profile.d
+!.profile.d/*
+!.bashrc
+!.bash_profile
+!.bash_aliases
+!.zshrc
