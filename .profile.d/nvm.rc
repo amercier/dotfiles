@@ -1,0 +1,5 @@
+# Node Version Manager
+# https://github.com/creationix/nvm
+
+export PATH="$PATH:$HOME/.nvm/current/bin"
+export PATH="$PATH:./node_modules/.bin"
