@@ -1,6 +1,8 @@
 # Bash settings
 # =============
 
+. "$HOME/.profile.d/colors"
+
 export TERM=xterm-color
 export GREP_OPTIONS='--color=auto'
 export GREP_COLOR='1;32'
@@ -15,4 +17,22 @@ export GIT_PS1_SHOWUNTRACKEDFILES=1
 export GIT_PS1_SHOWUPSTREAM="verbose git"
 export GIT_PS1_STATESEPARATOR=""
 
-export PROMPT_COMMAND="__git_ps1 '[\u@\h \[\033[1;36m\]\w\[\033[0m\] ' ']\$ ' '%s'"
+export PS1_HOST_COLOR=
+# export PS1_HOST_COLOR=$COLOR_WHITE
+# export PS1_HOST_COLOR=$COLOR_BLACK
+# export PS1_HOST_COLOR=$COLOR_BLUE
+# export PS1_HOST_COLOR=$COLOR_LIGHT_BLUE
+# export PS1_HOST_COLOR=$COLOR_GREEN
+# export PS1_HOST_COLOR=$COLOR_LIGHT_GREEN
+# export PS1_HOST_COLOR=$COLOR_CYAN
+# export PS1_HOST_COLOR=$COLOR_LIGHT_CYAN
+# export PS1_HOST_COLOR=$COLOR_RED
+# export PS1_HOST_COLOR=$COLOR_LIGHT_RED
+# export PS1_HOST_COLOR=$COLOR_PURPLE
+# export PS1_HOST_COLOR=$COLOR_LIGHT_PURPLE
+# export PS1_HOST_COLOR=$COLOR_BROWN
+# export PS1_HOST_COLOR=$COLOR_YELLOW
+# export PS1_HOST_COLOR=$COLOR_GRAY
+# export PS1_HOST_COLOR=$COLOR_LIGHT_GRAY
+
+export PROMPT_COMMAND="__git_ps1 '[\u@$PS1_HOST_COLOR\h$COLOR_NC \[\033[1;36m\]\w\[\033[0m\] ' ']\$ ' '%s'"

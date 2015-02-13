@@ -3,9 +3,7 @@
 # Bash configuration
 # ==================
 
-DIR="$( cd "$( dirname "$0" )" && pwd )"
-. "$DIR/.install.d/colors.rc"
-
+. "$HOME/.profile.d/colors"
 
 # Run all scripts for which the command doesn't exist and no function exist
 while read path; do
