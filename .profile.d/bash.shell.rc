@@ -7,7 +7,6 @@ export TERM=xterm-color
 export GREP_OPTIONS='--color=auto'
 export GREP_COLOR='1;32'
 export CLICOLOR=1
-export LSCOLORS=GxFxCxDxBxegedabagaced
 
 export GIT_PS1_DESCRIBE_STYLE=branch
 export GIT_PS1_SHOWCOLORHINTS=1
@@ -19,7 +18,6 @@ export GIT_PS1_STATESEPARATOR=""
 
 export PS1_HOST_COLOR=
 # export PS1_HOST_COLOR=$COLOR_WHITE
-# export PS1_HOST_COLOR=$COLOR_BLACK
 # export PS1_HOST_COLOR=$COLOR_BLUE
 # export PS1_HOST_COLOR=$COLOR_LIGHT_BLUE
 # export PS1_HOST_COLOR=$COLOR_GREEN

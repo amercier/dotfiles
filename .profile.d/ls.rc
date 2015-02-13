@@ -1,0 +1,27 @@
+# ls
+# ==
+
+export CLICOLOR=1
+export LSCOLORS=gxfxexdxcxgxfxexdxeaex
+
+# a = black         A = gray
+# b = red           B = light red
+# c = green         C = light green
+# d = yellow        D = light yellow
+# e = blue          E = light blue
+# f = purple        F = light purple
+# g = cyan          G = light cyan
+# h = light gray    H = white
+# x = transparent
+
+# 1. Directory
+# 2. Symbolic link
+# 3. Socket
+# 4. Pipe
+# 5. Exceutable
+# 6. Block special
+# 7. Character special
+# 8. Setuid executable
+# 9. Setgid executable
+# 10. Directory writable to others, with sticky bit
+# 11. Directory writable to others, without sticky bit
