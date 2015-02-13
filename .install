@@ -1,27 +1,22 @@
-#!/usr/bin/env bash
 # Bash configuration
 
-# Source all files in install.d, except apps
-while read f; do
-  "$f"
-done < <(find "$HOME/.install.d" -type f -name '*.sh' ! -name '*.bin.sh' ! -name '*.fn.sh')
+nvm --help
 
-# Run all bin scripts for which the command doesn't exist
-while read f; do
-  bin=$(basename "$f" .bin.sh | egrep -o '[^\.]+$')
-  if ! which "$bin" > /dev/null; then
-    "$f"
-  else
-    echo "Binary $bin is already installed, skipping" >&2
-  fi
-done < <(find "$HOME/.install.d" -type f -name '*.bin.sh')
-
-# Run all fn files for which the function doesn't exist
-while read f; do
-  fn=$(basename "$f" .fn.sh | egrep -o '[^\.]+$')
-  if [ "$(type -t "$fn")" = "function" ]; then
-    "$f"
-  else
-    echo "Function $fn is already installed, skipping" >&2
-  fi
-done < <(find "$HOME/.install.d" -type f -name '*.fn.sh')
+# Run all scripts for which the command doesn't exist and no function exist
+# while read path; do
+#   [ -x "$path" ] || continue
+#   bin=$(basename "$path" | egrep -o '[^\.]+$')
+#   if which "$bin" > /dev/null; then
+#     echo "Binary $bin is already installed, skipping" >&2
+#   elif [ "$(type -t "$bin")" == "function" ]; then
+#     echo "Function $bin is already installed, skipping" >&2
+#   else
+#     t=$(type -t $bin)
+#     declare -f "$bin" && echo ok || echo nok
+#     declare -f -F "$bin" && echo ok || echo nok
+#     echo "Running $path ($bin) => $(type -t $bin) $t"
+#     echo "PATH = $PATH"
+#     $bin --help
+#     # "$path"
+#   fi
+# done < <(find "$HOME/.install.d" -type f)
