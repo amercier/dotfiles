@@ -5,17 +5,19 @@
 
 . "$HOME/.profile.d/colors"
 
+version() {
+  ("$bin" --version 2>/dev/null || "$bin" -v) | egrep -o '[0-9]+(\.[0-9]+)+'
+}
+
 # Run all scripts for which the command doesn't exist and no function exist
 while read path; do
   [ -x "$path" ] || continue
   bin=$(basename "$path" | egrep -o '[^\.]+$')
-  if which "$bin" > /dev/null; then
-    echo -e "$(green ✔) $(yellow "$bin") is already installed"
-  elif [ "$(type -t "$bin")" == "function" ]; then
-    echo -e "$(green ✔) $(yellow "$bin") is already installed"
+  if which "$bin" > /dev/null || [ "$(type -t "$bin")" == "function" ]; then
+    echo -e "$(green ✔) $(cyan "$bin") is already installed ($(yellow "v$(version "$bin")"))"
   else
-    echo "Installing $(yellow "$bin")... "
+    echo "Installing $(cyan "$bin")... "
     "$path"
-    echo "$(green ✔) $(yellow "$bin") $(green installed successfully)"
+    echo "$(green ✔) $(cyan "$bin") $(green installed successfully) ($(yellow "v$(version "$bin")"))"
   fi
 done < <(find "$HOME/.install.d" -type f)
