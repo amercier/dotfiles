@@ -2,6 +2,9 @@
 !.editorconfig
 !.gitignore
 !.profile
+!.install
+!.install.d
+!.install.d/*
 !.profile.d
 !.profile.d/*
 !.bashrc

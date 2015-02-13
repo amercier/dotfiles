@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# Bash configuration
+
+# Source all files in install.d, except apps
+while read f; do
+  "$f"
+done < <(find "$HOME/.install.d" -type f -name '*.sh' ! -name '*.bin.sh' ! -name '*.fn.sh')
+
+# Run all bin scripts for which the command doesn't exist
+while read f; do
+  bin=$(basename "$f" .bin.sh)
+  if ! which "$bin" > /dev/null; then
+    "$f"
+  else
+    echo "Binary $bin is already installed, skipping" >&2
+  fi
+done < <(find "$HOME/.install.d" -type f -name '*.bin.sh')
+
+# Run all fn files for which the function doesn't exist
+while read f; do
+  fn=$(basename "$f" .fn.sh)
+  if [ "$(type -t "$fn")" = "function" ]; then
+    "$f"
+  else
+    echo "Function $fn is already installed, skipping" >&2
+  fi
+done < <(find "$HOME/.install.d" -type f -name '*.fn.sh')
