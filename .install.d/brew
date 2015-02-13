@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-"$HOME/.profile"
+. "$HOME/.profile.d/homebrew.rc"
 
 brew tap caskroom/cask
 brew tap caskroom/versions

@@ -19,12 +19,24 @@ COLOR_YELLOW='\033[1;33m'
 COLOR_GRAY='\033[0;30m'
 COLOR_LIGHT_GRAY='\033[0;37m'
 
+blue() {
+  echo -e "${COLOR_BLUE}${*}${COLOR_NC}"
+}
+
 cyan() {
   echo -e "${COLOR_CYAN}${*}${COLOR_NC}"
 }
 
 green() {
   echo -e "${COLOR_GREEN}${*}${COLOR_NC}"
+}
+
+red() {
+  echo -e "${COLOR_RED}${*}${COLOR_NC}"
+}
+
+red_light() {
+  echo -e "${COLOR_LIGHT_RED}${*}${COLOR_NC}"
 }
 
 yellow() {

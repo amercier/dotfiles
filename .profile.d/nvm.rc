@@ -1,8 +1,10 @@
 # Node Version Manager
 # https://github.com/creationix/nvm
 
-export NVM_DIR="$HOME/.nvm"
-[ -d "$NVM_DIR" ] || mkdir -p "$NVM_DIR"
-. "$(brew --prefix nvm)/nvm.sh"
-export PATH="$PATH:$NVM_DIR/current/bin"
-export PATH="$PATH:./node_modules/.bin"
+if brew --prefix nvm >/dev/null 2>&1; then
+  export NVM_DIR="$HOME/.nvm"
+  [ -d "$NVM_DIR" ] || mkdir -p "$NVM_DIR"
+  . "$(brew --prefix nvm)/nvm.sh"
+  path_add "$NVM_DIR/current/bin"
+  path_add "./node_modules/.bin"
+fi

@@ -1,3 +1,5 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bash --login
 
-nvm install stable
+nvm install stable &&
+\ nvm alias default stable &&
+\ . "$HOME/.profile.d/rnode.rc"

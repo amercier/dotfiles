@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+rvm install latest
+
+gem install travis

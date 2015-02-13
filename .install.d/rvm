@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+curl -L get.rvm.io | bash
+. "$HOME/.profile.d/rvm.rc"
