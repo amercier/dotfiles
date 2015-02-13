@@ -1,4 +1,5 @@
 # Bash settings
+# =============
 
 export TERM=xterm-color
 export GREP_OPTIONS='--color=auto'
