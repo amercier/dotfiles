@@ -8,7 +8,7 @@ done < <(find "$HOME/.install.d" -type f -name '*.sh' ! -name '*.bin.sh' ! -name
 
 # Run all bin scripts for which the command doesn't exist
 while read f; do
-  bin=$(basename "$f" .bin.sh)
+  bin=$(basename "$f" .bin.sh | egrep -o '[^\.]+$')
   if ! which "$bin" > /dev/null; then
     "$f"
   else
@@ -18,7 +18,7 @@ done < <(find "$HOME/.install.d" -type f -name '*.bin.sh')
 
 # Run all fn files for which the function doesn't exist
 while read f; do
-  fn=$(basename "$f" .fn.sh)
+  fn=$(basename "$f" .fn.sh | egrep -o '[^\.]+$')
   if [ "$(type -t "$fn")" = "function" ]; then
     "$f"
   else
