@@ -1,22 +1,23 @@
-# Bash configuration
+#!/usr/bin/env bash --login
 
-nvm --help
+# Bash configuration
+# ==================
+
+DIR="$( cd "$( dirname "$0" )" && pwd )"
+. "$DIR/.install.d/colors.rc"
+
 
 # Run all scripts for which the command doesn't exist and no function exist
-# while read path; do
-#   [ -x "$path" ] || continue
-#   bin=$(basename "$path" | egrep -o '[^\.]+$')
-#   if which "$bin" > /dev/null; then
-#     echo "Binary $bin is already installed, skipping" >&2
-#   elif [ "$(type -t "$bin")" == "function" ]; then
-#     echo "Function $bin is already installed, skipping" >&2
-#   else
-#     t=$(type -t $bin)
-#     declare -f "$bin" && echo ok || echo nok
-#     declare -f -F "$bin" && echo ok || echo nok
-#     echo "Running $path ($bin) => $(type -t $bin) $t"
-#     echo "PATH = $PATH"
-#     $bin --help
-#     # "$path"
-#   fi
-# done < <(find "$HOME/.install.d" -type f)
+while read path; do
+  [ -x "$path" ] || continue
+  bin=$(basename "$path" | egrep -o '[^\.]+$')
+  if which "$bin" > /dev/null; then
+    echo -e "$(green ✔) $(yellow "$bin") is already installed"
+  elif [ "$(type -t "$bin")" == "function" ]; then
+    echo -e "$(green ✔) $(yellow "$bin") is already installed"
+  else
+    echo "Installing $(yellow "$bin")... "
+    "$path"
+    echo "$(green ✔) $(yellow "$bin") $(green installed successfully)"
+  fi
+done < <(find "$HOME/.install.d" -type f)
