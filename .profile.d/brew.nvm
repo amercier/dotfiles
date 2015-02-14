@@ -1,7 +1,4 @@
-# Node Version Manager
-# https://github.com/creationix/nvm
-
-if brew --prefix nvm >/dev/null 2>&1; then
+if [ "$(brew --prefix nvm)" != "" ]; then
   export NVM_DIR="$HOME/.nvm"
   [ -d "$NVM_DIR" ] || mkdir -p "$NVM_DIR"
   . "$(brew --prefix nvm)/nvm.sh"

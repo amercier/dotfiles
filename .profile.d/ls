@@ -2,7 +2,7 @@
 # ==
 
 export CLICOLOR=1
-export LSCOLORS=gxfxexdxcxgxfxexdxeaex
+export LSCOLORS=gafaeadacagafaeadaeaea
 
 # a = black         A = gray
 # b = red           B = light red

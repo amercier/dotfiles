@@ -1,4 +1,0 @@
-#!/usr/bin/env sh --login
-
-# node.js
-nvm use default >/dev/null

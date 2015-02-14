@@ -3,7 +3,7 @@
 # Bash configuration
 # ==================
 
-. "$HOME/.profile.d/colors"
+. "$HOME/.profile.d/.colors"
 
 version() {
   ("$bin" --version 2>/dev/null || "$bin" -v) | egrep -o '[0-9]+(\.[0-9]+)+'
@@ -17,8 +17,8 @@ while read path; do
     echo -e "$(green ✔) $(cyan "$bin") is already installed ($(yellow "v$(version "$bin")"))"
   else
     echo "Installing $(cyan "$bin")... "
-    "$path" \
+    . "$path" \
       && echo "$(green ✔) $(cyan "$bin") $(green installed successfully) ($(yellow "v$(version "$bin")"))" \
       || echo "$(red ✘ Failed installing) $(red_light "$bin")"
   fi
-done < <(find "$HOME/.install.d" -type f)
+done < <(find "$HOME/.install.d" -type f ! -name '.*')

@@ -2,7 +2,7 @@
 # https://rvm.io/
 
 # Load RVM into a shell session *as a function*
-if [ -d "$HOME/.rvm/scripts/rvm" ]; then
+if [ -d "$HOME/.rvm" ]; then
   . "$HOME/.rvm/scripts/rvm"
 
   # Add RVM to PATH for scripting

@@ -1,4 +1,2 @@
-#!/usr/bin/env bash --login
-
-brew install nvm
-. "$HOME/.profile.d/nvm.rc"
+brew install nvm \
+&& . "$HOME/.profile.d/brew.nvm"

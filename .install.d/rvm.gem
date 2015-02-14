@@ -1,5 +1,2 @@
-#!/usr/bin/env bash
-
-rvm install latest
-
-gem install travis
+rvm install latest \
+&& gem install travis

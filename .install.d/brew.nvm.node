@@ -1,5 +1,4 @@
-#!/usr/bin/env bash --login
-
-nvm install stable &&
-\ nvm alias default stable &&
-\ . "$HOME/.profile.d/rnode.rc"
+nvm install stable \
+&& nvm alias default stable \
+&& nvm use default \
+&& . "$HOME/.profile.d/brew.nvm.node"
