@@ -1,0 +1,7 @@
+[user]
+	name = Alex Mercier
+	email = pro.alexandre.mercier@gmail.com
+[push]
+	default = simple
+[remote "origin"]
+	fetch = +refs/pull/*/head:refs/remotes/origin/pr/*
