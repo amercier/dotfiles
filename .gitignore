@@ -5,8 +5,10 @@
 !.install
 !.install.d
 !.install.d/*
+!.install.d/**
 !.profile.d
 !.profile.d/*
+!.profile.d/**
 !.bashrc
 !.bash_profile
 !.bash_aliases
