@@ -1,0 +1,10 @@
+# PostgreSQL
+
+if brew --prefix postgresql >/dev/null 2>&1; then
+  export PGDATA='/usr/local/var/postgres'
+  export PGHOST=localhost
+  alias pg-start='pg_ctl -l $PGDATA/server.log start'
+  alias pg-stop='pg_ctl stop -m fast'
+  alias pg-status='pg_ctl status'
+  alias pg-restart='pg_ctl reload'
+fi
