@@ -6,7 +6,7 @@
 . "$HOME/.profile.d/.colors"
 
 version() {
-  ("$bin" --version 2>/dev/null || "$bin" -v) | egrep -o '[0-9]+(\.[0-9]+)+'
+  ("$bin" --version || "$bin" -v) 2>/dev/null | egrep -o '[0-9]+(\.[0-9]+)+'
 }
 
 # Run all scripts for which the command doesn't exist and no function exist
@@ -17,8 +17,17 @@ while read path; do
     echo -e "$(green ✔) $(cyan "$bin") is already installed ($(yellow "v$(version "$bin")"))"
   else
     echo "Installing $(cyan "$bin")... "
-    . "$path" \
-      && echo "$(green ✔) $(cyan "$bin") $(green installed successfully) ($(yellow "v$(version "$bin")"))" \
+    . "$path"
+    ok=$?
+    version=$(version "$bin")
+    if [ "$version" = '' ]; then
+      [ $ok = 0 ] \
+      && echo "$(green ✔) $(cyan "$bin") $(green configured successfully)" \
+      || echo "$(red ✘ Failed configuring) $(red_light "$bin")"
+    else
+      [ $ok = 0 ] \
+      && echo "$(green ✔) $(cyan "$bin") $(green installed successfully) ($(yellow "v$version"))" \
       || echo "$(red ✘ Failed installing) $(red_light "$bin")"
+    fi
   fi
 done < <(find "$HOME/.install.d" -type f ! -name '.*')
