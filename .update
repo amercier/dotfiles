@@ -1,0 +1,19 @@
+#!/usr/bin/env bash --login
+
+# Updates
+# =======
+. "$HOME/.profile.d/.colors"
+
+# Run all scripts for which the command doesn't exist and no function exist
+while read path; do
+  [ -x "$path" ] || continue
+  bin=$(basename "$path" | egrep -o '[^\.]+$')
+  if which "$bin" > /dev/null || [ "$(type -t "$bin")" == "function" ]; then
+    echo "Updating $(cyan "$bin")... "
+    . "$path" \
+    && echo "$(green ✔) $(cyan "$bin") $(green updated successfully)" \
+    || echo "$(red ✘ Failed installing) $(red_light "$bin")"
+  else
+    echo -e "$(green ✔) $(cyan "$bin") is not installed"
+  fi
+done < <(find "$HOME/.update.d" -type f ! -name '.*')

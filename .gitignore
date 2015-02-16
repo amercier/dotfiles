@@ -13,5 +13,9 @@
 !.profile.d
 !.profile.d/*
 !.profile.d/**
+!.update
+!.update.d
+!.update.d/*
+!.update.d/**
 !.zlogin
 !.zshrc
