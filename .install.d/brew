@@ -1,7 +1,5 @@
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" \
 && . "$HOME/.profile.d/brew" \
-&& brew tap caskroom/cask \
-&& brew tap caskroom/versions \
 && brew tap homebrew/dupes \
 && brew tap homebrew/php \
 && brew tap homebrew/versions \
