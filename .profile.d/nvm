@@ -1,4 +1,4 @@
-if [ "$(brew --prefix nvm)" != "" ]; then
+if [ "$(type -t nvm)" != "" ]; then
   export NVM_DIR="$HOME/.nvm"
   [ -d "$NVM_DIR" ] || mkdir -p "$NVM_DIR"
   . "$(brew --prefix nvm)/nvm.sh"

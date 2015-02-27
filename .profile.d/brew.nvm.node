@@ -1,3 +1,0 @@
-# Bower
-alias bower-list="node -e 'console.log(Object.keys(require(\"./bower.json\").dependencies || {}).join(\" \"));'"
-alias bower-list-dev="node -e 'console.log(Object.keys(require(\"./bower.json\").devDependencies || {}).join(\" \"));'"

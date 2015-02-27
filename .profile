@@ -22,4 +22,4 @@ path_add() {
 while read path; do
   [ ! -x "$path" ] || continue
   . "$path"
-done < <(find "$HOME/.profile.d" -type f -maxdepth 1 ! -name '*.rc' ! -name '*.sh' ! -name '.*')
+done < <(find -L "$HOME/.profile.d" -maxdepth 1 -type f ! -name '*.rc' ! -name '*.sh' ! -name '.*')

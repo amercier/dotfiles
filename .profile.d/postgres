@@ -1,6 +1,5 @@
 # PostgreSQL
-
-if brew --prefix postgresql >/dev/null 2>&1; then
+if which postgresql >/dev/null 2>&1; then
   export PGDATA='/usr/local/var/postgres'
   export PGHOST=localhost
   alias pg-start='pg_ctl -l $PGDATA/server.log start'

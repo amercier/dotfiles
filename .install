@@ -1,4 +1,4 @@
-#!/usr/bin/env bash --login
+#!/usr/bin/bash --login
 
 # Bash configuration
 # ==================
