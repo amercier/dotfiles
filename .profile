@@ -23,3 +23,4 @@ while read path; do
   [ ! -x "$path" ] || continue
   . "$path"
 done < <(find -L "$HOME/.profile.d" -maxdepth 1 -type f ! -name '*.rc' ! -name '*.sh' ! -name '.*')
+

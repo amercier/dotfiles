@@ -1,4 +1,6 @@
+#!/usr/bin/bash --login
+
 nvm install stable \
 && nvm alias default stable \
 && nvm use default \
-&& . "$HOME/.profile.d/brew.nvm.node"
+&& . "$HOME/.profile.d/nvm.node"

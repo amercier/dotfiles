@@ -1,7 +1,8 @@
-if [ "$(type -t nvm)" != "" ]; then
-  export NVM_DIR="$HOME/.nvm"
-  [ -d "$NVM_DIR" ] || mkdir -p "$NVM_DIR"
-  . "$(brew --prefix nvm)/nvm.sh"
+NVM_DIR="$HOME/.nvm"
+if [ -e "$NVM_DIR/nvm.sh" ]; then
+  export NVM_DIR
+  . "$NVM_DIR/nvm.sh"
   path_add "$NVM_DIR/current/bin"
   path_add "./node_modules/.bin"
 fi
+
