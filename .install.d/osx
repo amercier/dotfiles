@@ -92,7 +92,7 @@ defaults write NSGlobalDomain KeyRepeat -int 10 # normal minimum is 2 (30 ms)
 # Note: if you’re in the US, replace `EUR` with `USD`, `Centimeters` with
 # `Inches`, `en_GB` with `en_US`, and `true` with `false`.
 defaults write NSGlobalDomain AppleLanguages -array "en" "fr"
-defaults write NSGlobalDomain AppleLocale -string "en_US@currency=DOL"
+defaults write NSGlobalDomain AppleLocale -string "en_US@currency=USD"
 defaults write NSGlobalDomain AppleMeasurementUnits -string "Centimeters"
 defaults write NSGlobalDomain AppleMetricUnits -bool true
 
