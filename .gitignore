@@ -20,3 +20,6 @@
 !.update.d/**
 !.zlogin
 !.zshrc
+!Library
+!Library/Preferences
+!Library/Preferences/net.sourceforge.cruisecontrol.CCMenu.plist
