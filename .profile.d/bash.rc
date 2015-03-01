@@ -90,4 +90,4 @@ export PS1_HOST_COLOR=$COLOR_BLUE
 # export PS1_HOST_COLOR=$COLOR_LIGHT_GRAY
 
 . /usr/share/git-core/contrib/completion/git-prompt.sh
-export PROMPT_COMMAND="__git_ps1 '[\u@$PS1_HOST_COLOR\h$COLOR_NC \[\033[1;36m\]\w\[\033[0m\] ' ']\$ ' '%s'"
+export PROMPT_COMMAND="__git_ps1 '[\u@$PS1_HOST_COLOR\h$COLOR_NC \[\033[0;36m\]\w\[\033[0m\] ' ']\$ ' '%s'"
