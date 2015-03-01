@@ -15,9 +15,6 @@
   current = green black
   local = cyan black
   remote = magenta black
-  head = yellow black
-  sha1 = yellow black
-  ref = yellow black
 [color "diff"]
   meta = yellow black
   frag = black black bold
