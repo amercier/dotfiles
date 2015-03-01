@@ -74,4 +74,4 @@ export PS1_HOST_COLOR=
 # export PS1_HOST_COLOR=$COLOR_GRAY
 # export PS1_HOST_COLOR=$COLOR_LIGHT_GRAY
 
-export PROMPT_COMMAND="__git_ps1 '[\u@$PS1_HOST_COLOR\h$COLOR_NC \[\033[1;36m\]\w\[\033[0m\] ' ']\$ ' '%s'"
+export PROMPT_COMMAND="__git_ps1 '[\u@$PS1_HOST_COLOR\h$COLOR_NC \[\033[0;36m\]\w\[\033[0m\] ' ']\$ ' '%s'"
