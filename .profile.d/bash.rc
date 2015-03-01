@@ -17,10 +17,53 @@ for i in /etc/bash_completion.d/*; do
   fi
 done
 
+# Helper function that is meant to be called from __git_ps1.  It
+# injects color codes into the appropriate gitstring variables used
+# to build a gitstring.
+__git_ps1_colorize_gitstring ()
+{
+  # Using \[ and \] around colors is necessary to prevent
+  # issues with command line editing/browsing/completion!
+  local c_clear='\[\e[0m\]'
+  local c_red='\[\e[40;31m\]'
+  local c_green='\[\e[40;32m\]'
+  local c_yellow='\[\e[40;33m\]'
+  local c_blue='\[\e[40;34m\]'
+  local c_magenta='\[\e[40;35m\]'
+  local c_lblack='\[\e[1;40;30m\]'
+  local c_white='\[\e[40;37m\]'
+  local c_lwhite='\[\e[1;40;37m\]'
+
+  local ok_color=$c_green
+  local bad_color=$c_red
+  local untracked_color=$c_blue
+  local flags_color=$c_yellow
+
+  local branch_color=""
+  if [ "$detached" = no ]; then
+    branch_color="$ok_color"
+  else
+    branch_color="$bad_color"
+  fi
+  c="$branch_color$c"
+
+  z="$c_clear$z"
+  if [ "$w" = "*" ]; then
+    w="$bad_color$w"
+  fi
+  if [ -n "$i" ]; then
+    i="$ok_color$i"
+  fi
+  if [ -n "$s" ]; then
+    s="$flags_color$s"
+  fi
+  if [ -n "$u" ]; then
+    u="$untracked_color$u"
+  fi
+  r="$c_clear$r"
+}
+
 export TERM=xterm-color
-export GREP_OPTIONS='--color=auto'
-# export GREP_COLOR='1;32;40'
-export GREP_COLORS='ms=01;31:mc=01;31:sl=:cx=:fn=35:ln=32:bn=32:se=36'
 
 export GIT_PS1_DESCRIBE_STYLE=branch
 export GIT_PS1_SHOWCOLORHINTS=1

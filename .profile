@@ -2,12 +2,6 @@
 
 . "$HOME/.profile.d/.colors"
 
-# Source shell-specific
-shell=$(basename "$SHELL")
-if [ -e "$HOME/.profile.d/$shell.rc" ]; then
-  . "$HOME/.profile.d/$shell.rc"
-fi
-
 path_add() {
   case ":$PATH:" in
     *":$1:"*) :;; # already there
@@ -23,4 +17,10 @@ while read path; do
   [ ! -x "$path" ] || continue
   . "$path"
 done < <(find -L "$HOME/.profile.d" -maxdepth 1 -type f ! -name '*.rc' ! -name '*.sh' ! -name '.*')
+
+# Source shell-specific
+shell=$(basename "$SHELL")
+if [ -e "$HOME/.profile.d/$shell.rc" ]; then
+  . "$HOME/.profile.d/$shell.rc"
+fi
 

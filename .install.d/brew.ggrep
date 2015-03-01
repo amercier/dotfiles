@@ -1,0 +1,2 @@
+brew install grep \
+&& . "$HOME/.profile.d/brew.ggrep"

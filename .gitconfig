@@ -1,9 +1,35 @@
 [user]
-	name = Alex Mercier
-	email = pro.alexandre.mercier@gmail.com
+  name = Alex Mercier
+  email = pro.alexandre.mercier@gmail.com
 [push]
-	default = simple
+  default = simple
 [remote "origin"]
-	fetch = +refs/pull/*/head:refs/remotes/origin/pr/*
+  fetch = +refs/pull/*/head:refs/remotes/origin/pr/*
 [color]
-	ui = auto
+  ui = auto
+[color]
+  branch = auto
+  diff = auto
+  status = auto
+[color "branch"]
+  current = green black
+  local = cyan black
+  remote = magenta black
+  head = yellow black
+  sha1 = yellow black
+  ref = yellow black
+[color "diff"]
+  meta = yellow black
+  frag = black black bold
+  new = green black
+  old = red black
+  whitespace = white reverse
+[color "status"]
+  header = normal black
+  added = green black
+  updated = green black
+  changed = red black
+  untracked = blue black
+  branch = cyan black
+  nobranch = black black bold
+
