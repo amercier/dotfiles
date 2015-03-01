@@ -28,5 +28,6 @@
   updated = green black
   changed = red black
   untracked = blue black
+  unmerged = red black
   branch = cyan black
   nobranch = black black bold
