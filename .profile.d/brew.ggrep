@@ -1,0 +1,5 @@
+# GNU grep
+# ========
+
+alias grep='ggrep --color=auto'
+export GREP_COLORS='cx=:mt=32;40:fn=33;40:ln=36;40:bn=35;40:se=1;30;40'
