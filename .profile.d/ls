@@ -3,7 +3,7 @@
 
 alias ls='ls -color=auto'
 alias ll='ls -Al'
-export LS_COLORS='di=36;40:fi=0;40:ln=35;40:pi=5;40:so=5;40:bd=5;40:cd=5;40:or=35;40:mi=31;40:ex=32;40:*.rpm=34;40:*.gz=34;40:*.zip=34;40:*.deb=34;40:*.7z=34;40:*.txt=33;40:*.md=33;40'
+export LS_COLORS='di=36;40:fi=0;40:ln=35;40:pi=5;40:so=5;40:bd=5;40:cd=5;40:or=31;40:mi=30;41:ex=32;40:*.rpm=34;40:*.gz=34;40:*.zip=34;40:*.deb=34;40:*.7z=34;40:*.txt=33;40:*.md=33;40'
 
 # di = directory
 # fi = file
