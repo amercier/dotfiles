@@ -1,7 +1,7 @@
-#!/usr/bin/bash --login
+#!/bin/bash --login
 
-# Bash configuration
-# ==================
+# Software installation
+# =====================
 
 . "$HOME/.profile.d/.colors"
 

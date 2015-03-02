@@ -1,7 +1,8 @@
-#!/usr/bin/env bash --login
+#!/bin/bash --login
 
 # Updates
 # =======
+
 . "$HOME/.profile.d/.colors"
 
 # Run all scripts for which the command doesn't exist and no function exist

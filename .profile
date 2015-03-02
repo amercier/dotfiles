@@ -1,4 +1,7 @@
+#!/bin/bash --login
+#
 # Bash configuration
+# ==================
 
 . "$HOME/.profile.d/.colors"
 
