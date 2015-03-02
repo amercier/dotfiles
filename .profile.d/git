@@ -1,3 +1,8 @@
+
+if [ -e /usr/share/git-core/contrib/completion/git-prompt.sh ]; then
+  . /usr/share/git-core/contrib/completion/git-prompt.sh
+fi
+
 alias gl-full="git log --graph --pretty=format:'%C(red black)%h%Creset -%C(yellow black)%d%Creset %s %C(green black)(%cr) %C(blue black)<%an>%Creset'"
 alias gl='gl-full --abbrev-commit'
 alias gll='gl | h10'
