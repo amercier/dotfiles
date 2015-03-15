@@ -7,4 +7,7 @@ if [ -d "$HOME/.rvm" ]; then
 
   # Add RVM to PATH for scripting
   path_add "$HOME/.rvm/bin"
+
+  # Unset GREP_OPTIONS
+  unset GREP_OPTIONS
 fi
