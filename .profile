@@ -19,10 +19,13 @@ path_add() {
 while read path; do
   [ ! -x "$path" ] || continue
   . "$path"
-done < <(find "$HOME/.profile.d" -type f -maxdepth 1 ! -name '*.rc' ! -name '*.sh' ! -name '.*')
+done < <(find "$HOME/.profile.d" -type f -maxdepth 1 ! -name '*.rc' ! -name '*.rc.local' ! -name '*.sh' ! -name '.*')
 
 # Source shell-specific
 shell=$(basename "$SHELL")
 if [ -e "$HOME/.profile.d/$shell.rc" ]; then
   . "$HOME/.profile.d/$shell.rc"
+fi
+if [ -e "$HOME/.profile.d/$shell.rc.local" ]; then
+  . "$HOME/.profile.d/$shell.rc.local"
 fi
