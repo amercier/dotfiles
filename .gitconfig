@@ -18,7 +18,7 @@
   frag = black black bold
   new = green black
   old = red black
-  whitespace = white reverse
+  whitespace = red black reverse
 [color "status"]
   header = normal black
   added = green black
