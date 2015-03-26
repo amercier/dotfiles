@@ -1,6 +1,7 @@
+alias gc='git checkout'
+alias gd='git diff'
+alias gdc='git diff --cached'
 alias gl-full="git log --graph --pretty=format:'%C(red black)%H%Creset -%C(yellow black)%d%Creset %s %C(green black)(%cr) %C(blue black)<%an>%Creset'"
 alias gl="git log --graph --pretty=format:'%C(red black)%h%Creset -%C(yellow black)%d%Creset %s %C(green black)(%cr) %C(blue black)<%an>%Creset'"
 alias gll='gl | h10'
 alias gs='git status'
-alias gd='git diff'
-alias gdc='git diff --cached'
