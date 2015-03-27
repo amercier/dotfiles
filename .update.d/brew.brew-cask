@@ -1,9 +1,0 @@
-#!/usr/bin/env sh
-
-brew cask cleanup \
-&& for cask in $(brew cask list); do
-  echo "========== $cask ==========" \
-  && brew cask uninstall "$cask" --force \
-  && brew cask install "$cask" \
-  || exit 1
-done || exit 1
