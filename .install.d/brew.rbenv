@@ -1,0 +1,2 @@
+brew install rbenv \
+&& . "$HOME/.profile.d/brew.rbenv"
