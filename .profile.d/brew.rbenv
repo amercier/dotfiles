@@ -1,4 +1,5 @@
 
 if which brew >/dev/null 2>&1 && brew --prefix rbenv >/dev/null 2>&1; then
+  path_add "$HOME/.rbenv/bin"
   eval "$(rbenv init -)"
 fi
