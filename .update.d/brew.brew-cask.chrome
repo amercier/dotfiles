@@ -1,0 +1,3 @@
+brew cask cleanup && \
+brew cask install google-chrome --force
+
