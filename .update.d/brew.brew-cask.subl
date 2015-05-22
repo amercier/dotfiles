@@ -1,2 +1,3 @@
 brew cask cleanup && \
+brew cask uninstall sublime-text3 && \
 brew cask install sublime-text3 --force
