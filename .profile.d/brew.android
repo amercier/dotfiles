@@ -1,0 +1,10 @@
+if [ "$(brew --prefix android)" != "" ]; then
+  export ANDROID_HOME="$(brew --prefix android)"
+  export ANDROID_ROOT="$(brew --prefix android)"
+  path_add "$ANDROID_HOME/tools"
+  path_add "$ANDROID_HOME/platform-tools"
+fi
+
+#export ANDROID_ROOT="$HOME/Workspace/android-sdk-macosx"
+#export ANDROID_HOME="$HOME/Workspace/android-sdk-macosx"
+#export PATH=$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:/usr/local/linkedin/bin:$PATH
