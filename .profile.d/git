@@ -5,3 +5,5 @@ alias gl-full="git log --graph --pretty=format:'%C(red black)%H%Creset -%C(yello
 alias gl="git log --graph --pretty=format:'%C(red black)%h%Creset -%C(yellow black)%d%Creset %s %C(green black)(%cr) %C(blue black)<%an>%Creset'"
 alias gll='gl | h10'
 alias gs='git status'
+alias git-merged-branches='git branch --merged | grep -v "\*"'
+alias git-deleted-merged-branches='git branch --merged | grep -v "\*" | xargs -n 1 git branch -d'
