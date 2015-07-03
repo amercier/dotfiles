@@ -7,3 +7,4 @@ alias gll='gl | h10'
 alias gs='git status'
 alias git-merged-branches='git branch --merged | grep -v "\*"'
 alias git-deleted-merged-branches='git checkout master && git branch --merged | grep -v "\*" | xargs -n 1 git branch -d'
+function git-pr { git checkout -B "pr$1" "origin/pr/$1"; }
