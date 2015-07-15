@@ -1,0 +1,6 @@
+# Bundle aliases
+alias brake='rbenv exec bundle exec rake'
+alias brails='rbenv exec bundle exec rails'
+alias brspec='RSPEC_ENV=test rbenv exec bundle exec rspec'
+alias brackup='rbenv exec bundle exec rackup'
+
