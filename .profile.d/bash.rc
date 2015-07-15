@@ -7,15 +7,9 @@ if [ -f /etc/bashrc ]; then
 fi
 
 # Source completion definitions
-for i in /etc/bash_completion.d/*; do
-  if [ -r "$i" ]; then
-    if [ "$PS1" ]; then
-      . "$i"
-    else
-      . "$i" >/dev/null
-    fi
-  fi
-done
+if [ -f /etc/bash_completion ]; then
+  . /etc/bash_completion
+fi
 
 # Helper function that is meant to be called from __git_ps1.  It
 # injects color codes into the appropriate gitstring variables used
@@ -89,5 +83,12 @@ export GIT_PS1_STATESEPARATOR=""
 # export PS1_HOST_COLOR=$COLOR_GRAY
 # export PS1_HOST_COLOR=$COLOR_LIGHT_GRAY
 
-. /usr/share/git-core/contrib/completion/git-prompt.sh
+if [ -f /usr/share/git-core/contrib/completion/git-prompt.sh ]; then
+  . /usr/share/git-core/contrib/completion/git-prompt.sh
+fi
+
+if [ -f ~/.profile.d/utils/git/contrib/completion/git-prompt.sh ]; then
+  . ~/.profile.d/utils/git/contrib/completion/git-prompt.sh
+fi
+
 export PROMPT_COMMAND="__git_ps1 '[\u@$PS1_HOST_COLOR\h$COLOR_NC \[\033[0;36m\]\w\[\033[0m\] ' ']\$ ' '%s'"
