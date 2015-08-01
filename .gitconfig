@@ -28,3 +28,5 @@
   unmerged = red black
   branch = cyan black
   nobranch = black black bold
+[core]
+	excludesfile = ~/.profile.d/utils/gitignore
