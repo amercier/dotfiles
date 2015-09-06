@@ -1,4 +1,7 @@
 #!/usr/bin/env sh
 
-brew update
-brew upgrade
+brew update \
+&& brew upgrade \
+&& brew cleanup \
+&& brew cask update \
+&& brew cask cleanup
