@@ -9,3 +9,4 @@ alias git-merged-branches='git branch --merged | grep -v "\*"'
 alias git-clean-merged-branches='git checkout master && git branch --merged | grep -v "\*" | xargs -n 1 git branch -d'
 function git-pr { git checkout -B "pr$1" "origin/pr/$1"; }
 alias git-show-files="git show --name-only"
+alias grm='git fetch origin && git rebase origin/master'
