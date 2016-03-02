@@ -1,4 +1,7 @@
 *
+!.atom
+!.atom/*
+!.atom/**
 !.bash_aliases
 !.bash_logout
 !.bash_profile

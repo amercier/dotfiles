@@ -1,0 +1,19 @@
+"*":
+  core: {}
+  editor:
+    fontSize: 12
+    invisibles: {}
+  "exception-reporting":
+    userId: "688f2554-1edc-74cd-4693-a54ce2123d35"
+  "file-icons":
+    onChanges: true
+  "markdown-preview": {}
+  minimap:
+    plugins:
+      "highlight-selected": true
+      linter: true
+  "project-quick-open":
+    projectPaths: "~/Workspace"
+  "pull-requests": {}
+  welcome:
+    showOnStartup: false
