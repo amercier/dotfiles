@@ -11,3 +11,4 @@ function git-pr { git checkout -B "pr$1" "origin/pr/$1"; }
 alias git-show-files="git show --name-only"
 alias grm='git fetch origin && git rebase origin/master'
 alias gp='git pull --rebase'
+alias git-open-unmerged-files=' git diff --name-only --diff-filter=U | xargs $EDITOR'
