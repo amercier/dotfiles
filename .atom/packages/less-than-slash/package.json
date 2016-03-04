@@ -1,0 +1,58 @@
+{
+  "name": "less-than-slash",
+  "main": "./lib/less-than-slash",
+  "version": "0.12.3",
+  "description": "Adds automatic closing of HTML tags when less-than, slash (</) is typed.",
+  "author": {
+    "name": "Matthew R Hanlon",
+    "email": "mrhanlon@gmail.com",
+    "url": "https://mrhanlon.com"
+  },
+  "contributors": [
+    {
+      "name": "MarcoThePoro",
+      "url": "https://github.com/MarcoThePoro"
+    },
+    {
+      "name": "Jimmy Brian Anamaria Torres",
+      "url": "https://github.com/Azakur4"
+    },
+    {
+      "name": "Jon Crenshaw",
+      "email": "jdcrensh@gmail.com",
+      "url": "https://github.com/jdcrensh"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/mrhanlon/less-than-slash/issues"
+  },
+  "repository": {
+    "url": "git+https://github.com/mrhanlon/less-than-slash.git",
+    "type": "git"
+  },
+  "license": "MIT",
+  "engines": {
+    "atom": ">0.50.0"
+  },
+  "dependencies": {},
+  "readme": "# </ Less Than-Slash\n\n[![Build Status](https://travis-ci.org/mrhanlon/less-than-slash.png)](https://travis-ci.org/mrhanlon/less-than-slash)\n\nAtom.io package for closing open tags when less-than, slash (`</`) is typed, like in Sublime Text 3.\n\n\n![Less Than Slash](https://mrhanlon.github.io/images/less-than-slash.gif)\n\n## Installation\n\n`apm install less-than-slash`\n\n## Settings\n\nYou can specify a list of \"Empty Tags\" to be ignored from auto-closing. The default value for \"Empty Tags\" is:\n\n`br`, `hr`, `img`, `input`, `link`, `meta`, `area`, `base`, `col`, `command`, `embed`, `keygen`, `param`, `source`, `track`, `wbr`\n\nThe plugin will automatically ignore any self-closing tags. This is useful for frameworks like Angular.js, which allows the definition of custom elements.\n\n## Contributing\n\nPlease follow the guidelines for [Contributing to Atom](https://atom.io/docs/latest/contributing).\n",
+  "readmeFilename": "README.md",
+  "homepage": "https://github.com/mrhanlon/less-than-slash#readme",
+  "_id": "less-than-slash@0.12.3",
+  "_shasum": "1aa32fa51fe44dc2e089b968da92d537e37fd95d",
+  "_resolved": "file:../d-11622-11887-130gtry/package.tgz",
+  "_from": "../d-11622-11887-130gtry/package.tgz",
+  "_atomModuleCache": {
+    "version": 1,
+    "dependencies": [],
+    "extensions": {
+      ".coffee": [
+        "lib/less-than-slash.coffee"
+      ],
+      ".json": [
+        "package.json"
+      ]
+    },
+    "folders": []
+  }
+}
