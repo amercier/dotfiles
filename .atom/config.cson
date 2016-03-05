@@ -18,3 +18,5 @@
   "pull-requests": {}
   welcome:
     showOnStartup: false
+  whitespace:
+    ignoreWhitespaceOnCurrentLine: false
