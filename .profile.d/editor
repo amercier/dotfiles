@@ -1,2 +1,3 @@
 # export EDITOR='subl -w'
-export EDITOR='atom -w'
+# export EDITOR='atom -w'
+export EDITOR=vim
