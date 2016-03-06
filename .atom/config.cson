@@ -13,6 +13,8 @@
     plugins:
       "highlight-selected": true
       linter: true
+  "package-sync":
+    forceOverwrite: true
   "project-quick-open":
     projectPaths: "~/Workspace"
   "pull-requests": {}
