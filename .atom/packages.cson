@@ -1,4 +1,5 @@
 packages: [
+  "atom-handlebars"
   "auto-update-packages"
   "docblockr"
   "editorconfig"
@@ -6,6 +7,8 @@ packages: [
   "highlight-selected"
   "hyperclick"
   "js-hyperclick"
+  "language-apache"
+  "language-ember-htmlbars"
   "less-than-slash"
   "linter"
   "linter-eslint"
@@ -21,6 +24,7 @@ packages: [
   "package-sync"
   "project-quick-open"
   "seti-ui"
+  "sort-lines"
   "todo-show"
   "travis-ci-status"
 ]
