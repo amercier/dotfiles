@@ -24,7 +24,7 @@
   added = green black
   updated = green black
   changed = red black
-  untracked = blue black
+  untracked = yellow black
   unmerged = red black
   branch = cyan black
   nobranch = black black bold

@@ -20,7 +20,7 @@ __git_ps1_colorize_gitstring ()
 
   local ok_color=$c_green
   local bad_color=$c_red
-  local untracked_color=$c_blue
+  local untracked_color=$c_yellow
   local flags_color=$c_yellow
 
   local branch_color=""
