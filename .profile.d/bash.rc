@@ -47,7 +47,7 @@ __git_ps1_colorize_gitstring ()
   r="$c_clear$r"
 }
 
-export TERM=xterm-color
+export TERM=xterm-256color
 
 export GIT_PS1_DESCRIBE_STYLE=branch
 export GIT_PS1_SHOWCOLORHINTS=1
