@@ -8,6 +8,8 @@
   "file-icons":
     onChanges: true
   "js-hyperclick": {}
+  "linter-jshint":
+    disableWhenNoJshintrcFileInPath: true
   "markdown-preview": {}
   minimap:
     plugins:

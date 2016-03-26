@@ -12,6 +12,7 @@ packages: [
   "less-than-slash"
   "linter"
   "linter-eslint"
+  "linter-jshint"
   "linter-markdown"
   "linter-rubocop"
   "linter-shellcheck"
