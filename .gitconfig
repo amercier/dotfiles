@@ -21,11 +21,11 @@
   whitespace = red black reverse
 [color "status"]
   header = normal black
-  added = green black
+  added = blue black
   updated = green black
   changed = red black
   untracked = yellow black
-  unmerged = red black
+  unmerged = magenta black
   branch = cyan black
   nobranch = black black bold
 [core]
