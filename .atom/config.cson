@@ -1,11 +1,12 @@
 "*":
-  core: {}
+  core:
+    disabledPackages: [
+      "linter-rubocop"
+    ]
   editor:
-    autoIndent: true
     fontSize: 12
     invisibles: {}
     showInvisibles: true
-    tabLength: 4
   "exception-reporting":
     userId: "688f2554-1edc-74cd-4693-a54ce2123d35"
   "file-icons":
@@ -28,4 +29,5 @@
   welcome:
     showOnStartup: false
   whitespace:
+    ensureSingleTrailingNewline: false
     ignoreWhitespaceOnCurrentLine: false
