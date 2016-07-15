@@ -31,3 +31,4 @@
   whitespace:
     ensureSingleTrailingNewline: false
     ignoreWhitespaceOnCurrentLine: false
+    removeTrailingWhitespace: false
