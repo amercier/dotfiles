@@ -31,4 +31,6 @@
   whitespace:
     ensureSingleTrailingNewline: false
     ignoreWhitespaceOnCurrentLine: false
+".md":
+  whitespace:
     removeTrailingWhitespace: false
