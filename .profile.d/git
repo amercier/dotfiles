@@ -15,4 +15,4 @@ alias gmc='git diff --name-only --diff-filter=U | xargs $VISUAL'
 alias gmm='branch="$(git symbolic-ref --short HEAD)"; git checkout master && git pull --rebase && git merge "$branch"'
 alias grd='git review dcommit'
 alias git-merge-master='grm && grd && gmm'
-alias git-tidy="git checkout master && git pull && git-clean-merged-branches"
+alias git-master="git checkout master && git pull && git-clean-merged-branches"
