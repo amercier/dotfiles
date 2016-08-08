@@ -74,3 +74,21 @@ export GIT_PS1_STATESEPARATOR=""
 # export PS1_HOST_COLOR=$COLOR_LIGHT_GRAY
 
 export PROMPT_COMMAND="__git_ps1 '[\u@$PS1_HOST_COLOR\h$COLOR_NC \[\033[0;36m\]\w\[\033[0m\] ' ']\$ ' '%s'"
+
+# function 20-times {
+#   for i in $(seq 20); do
+#     exec 3>&1 4>&2
+#     timings=$( { time "$@" 1>&3 2>&4; } 2>&1 )
+#     exec 3>&- 4>&-
+#     echo "$timings" | head -n 2 | tail -n 1 | sed "s/^real$(echo -e '\t')//"
+#   done
+# }
+
+function 20-times {
+  n=0
+  until [ $n -ge 20 ]
+  do
+    "$@" || return 1
+    n=$[$n+1]
+  done
+}
