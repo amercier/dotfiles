@@ -1,4 +1,5 @@
 
 if which brew >/dev/null 2>&1 && brew --prefix rbenv >/dev/null 2>&1; then
   eval "$(rbenv init -)"
+  export RBENV_VERSION=$(rbenv global)
 fi

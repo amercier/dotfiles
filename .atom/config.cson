@@ -1,8 +1,5 @@
 "*":
-  core:
-    disabledPackages: [
-      "linter-rubocop"
-    ]
+  core: {}
   editor:
     fontSize: 12
     invisibles: {}
@@ -14,6 +11,7 @@
   "js-hyperclick": {}
   "linter-jshint":
     disableWhenNoJshintrcFileInPath: true
+  "linter-rubocop": {}
   "markdown-preview": {}
   minimap:
     plugins:
