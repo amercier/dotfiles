@@ -17,3 +17,4 @@ alias grd='git review dcommit'
 alias git-merge-master='grm && grd && gmm'
 alias git-master="git checkout master && git pull && git-clean-merged-branches"
 alias git-push="git rev-parse --abbrev-ref HEAD | xargs git push -u origin"
+alias git-amend="git commit -a --amend --no-edit"
