@@ -85,10 +85,10 @@ export GIT_PS1_STATESEPARATOR=""
 
 if [ -f /usr/share/git-core/contrib/completion/git-prompt.sh ]; then
   . /usr/share/git-core/contrib/completion/git-prompt.sh
-fi
-
-if [ -f ~/.profile.d/utils/git/contrib/completion/git-prompt.sh ]; then
+elif [ -f ~/.profile.d/utils/git/contrib/completion/git-prompt.sh ]; then
   . ~/.profile.d/utils/git/contrib/completion/git-prompt.sh
+else
+  . ~/.profile.d/utils/git-prompt.sh
 fi
 
 export PROMPT_COMMAND="__git_ps1 '[\u@$PS1_HOST_COLOR\h$COLOR_NC \[\033[0;36m\]\w\[\033[0m\] ' ']\$ ' '%s'"
