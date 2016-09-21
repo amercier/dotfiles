@@ -1,11 +1,20 @@
 alias gc='git checkout'
 alias gd='git diff'
 alias gdc='git diff --cached'
-alias gl-full="git log --graph --pretty=format:'%C(red black)%H%Creset -%C(yellow black)%d%Creset %s %C(green black)(%cr) %C(blue black)<%an>%Creset'"
-alias gl="git log --graph --pretty=format:'%C(red black)%h%Creset -%C(yellow black)%d%Creset %s %C(green black)(%cr) %C(blue black)<%an>%Creset'"
+alias gl-full="git log --graph --pretty=format:'%C(red)%H%Creset -%C(yellow)%d%Creset %s %C(green)(%cr) %C(blue)<%an>%Creset'"
+alias gl="git log --graph --pretty=format:'%C(red)%h%Creset -%C(yellow)%d%Creset %<(95,trunc)%s %C(green)(%cr) %C(blue)<%an>%Creset' | sed -e 's/[ ]\{2,\}/ /g'"
 alias gll='gl | h10'
 alias gs='git status'
 alias git-merged-branches='git branch --merged | grep -v "\*"'
 alias git-clean-merged-branches='git checkout master && git branch --merged | grep -v "\*" | xargs -n 1 git branch -d'
 function git-pr { git checkout -B "pr$1" "origin/pr/$1"; }
-
+alias git-show-files="git show --name-only"
+alias grm='git fetch origin && git rebase origin/master'
+alias gp='git pull --rebase'
+alias gmc='git diff --name-only --diff-filter=U | xargs $VISUAL'
+alias gmm='branch="$(git symbolic-ref --short HEAD)"; git checkout master && git pull --rebase && git merge "$branch"'
+alias grd='git review dcommit'
+alias git-merge-master='grm && grd && gmm'
+alias git-master="git checkout master && git pull && git-clean-merged-branches"
+alias git-push="git rev-parse --abbrev-ref HEAD | xargs git push -u origin"
+alias git-amend="git commit -a --amend --no-edit"
