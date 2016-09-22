@@ -12,22 +12,22 @@
   diff = auto
   status = auto
 [color "branch"]
-  current = green black
-  local = cyan black
-  remote = magenta black
+  current = green
+  local = cyan
+  remote = magenta
 [color "diff"]
-  meta = yellow black
-  frag = black black bold
-  new = green black
-  old = red black
+  meta = yellow
+  frag = bold
+  new = green
+  old = red
   whitespace = white reverse
 [color "status"]
-  header = normal black
-  added = green black
-  updated = green black
-  changed = red black
-  untracked = blue black
-  unmerged = red black
-  branch = cyan black
-  nobranch = black black bold
+  header = normal
+  added = green
+  updated = green
+  changed = red
+  untracked = blue
+  unmerged = red
+  branch = cyan
+  nobranch = bold
 
