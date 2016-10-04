@@ -1,0 +1,4 @@
+if [ -e /home/amercier/.nix-profile/etc/profile.d/nix.sh ]; then
+  . /home/amercier/.nix-profile/etc/profile.d/nix.sh
+fi
+
