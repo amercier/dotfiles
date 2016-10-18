@@ -1,0 +1,41 @@
+"*":
+  core: {}
+  editor:
+    fontSize: 12
+    invisibles: {}
+    preferredLineLength: 100
+    showInvisibles: true
+  "exception-reporting":
+    userId: "688f2554-1edc-74cd-4693-a54ce2123d35"
+  "file-icons":
+    onChanges: true
+  "js-hyperclick": {}
+  "linter-jshint":
+    disableWhenNoJshintrcFileInPath: true
+  "linter-rubocop": {}
+  "markdown-preview": {}
+  minimap:
+    plugins:
+      "highlight-selected": true
+      "highlight-selectedDecorationsZIndex": 0
+      linter: true
+      linterDecorationsZIndex: 0
+  "package-sync":
+    forceOverwrite: true
+  "plantuml-preview":
+    dotLocation: "/home/amercier/.nix-profile/bin/dot"
+    jarLocation: "/home/amercier/Workspace/video-sharing-api-diagrams/vendor/plantuml.jar"
+  "plantuml-viewer": {}
+  "project-quick-open":
+    projectPaths: "~/Workspace"
+  "pull-requests": {}
+  "tree-view":
+    hideVcsIgnoredFiles: true
+  welcome:
+    showOnStartup: false
+  whitespace:
+    ensureSingleTrailingNewline: false
+    ignoreWhitespaceOnCurrentLine: false
+".md":
+  whitespace:
+    removeTrailingWhitespace: false
