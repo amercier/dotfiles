@@ -1,0 +1,6 @@
+if [ "$(brew --prefix android-sdk)" != "" ]; then
+  export ANDROID_HOME="$(brew --prefix android-sdk)"
+  export ANDROID_ROOT="$(brew --prefix android-sdk)"
+  path_add "$ANDROID_HOME/tools"
+  path_add "$ANDROID_HOME/platform-tools"
+fi
