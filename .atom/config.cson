@@ -1,5 +1,6 @@
 "*":
-  core: {}
+  core:
+    telemetryConsent: "limited"
   editor:
     fontSize: 12
     invisibles: {}
