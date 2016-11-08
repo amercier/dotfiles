@@ -1,0 +1,12 @@
+function runn() {
+  args="$@"
+  $args
+  code=$?
+  if [ $code == 0 ]; then
+    msg="SUCCESS"
+  else
+    msg="FAILURE - Exited with $code"
+  fi
+  notify -t "$args" -m "$msg" >/dev/null 2>&1
+  return $code
+}
