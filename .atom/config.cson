@@ -1,8 +1,5 @@
 "*":
   core:
-    disabledPackages: [
-      "whitespace"
-    ]
     telemetryConsent: "limited"
   editor:
     fontSize: 12
