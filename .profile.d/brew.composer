@@ -1,0 +1,4 @@
+if [ "$(brew --prefix composer 2>/dev/null)" != "" ]; then
+  export COMPOSER_DIR="$HOME/.composer"
+  path_add "$COMPOSER_DIR/vendor/bin"
+fi
