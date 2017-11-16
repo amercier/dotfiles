@@ -9,8 +9,24 @@
  * http://lesscss.org
  */
 
-.editor, atom-text-editor.editor {
-  .invisible-character {
-    color: rgba(171, 178, 191, 0.1);
-  }
+
+/*
+ * Examples
+ * (To see them, uncomment and save)
+ */
+
+// style the background color of the tree view
+.tree-view {
+  // background-color: whitesmoke;
+}
+
+// style the background and foreground colors on the atom-text-editor-element itself
+atom-text-editor {
+  // color: white;
+  // background-color: hsl(180, 24%, 12%);
+}
+
+// style UI elements inside atom-text-editor
+atom-text-editor .cursor {
+  // border-color: red;
 }

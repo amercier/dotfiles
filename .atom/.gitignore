@@ -1,10 +1,8 @@
-.apm
-.node-gyp
-.npm
 blob-store
 compile-cache
 dev
 packages
-recovery
 storage
-node_modules
+.apm
+.node-gyp
+.npm
