@@ -9,8 +9,9 @@
     showInvisibles: true
   "exception-reporting":
     userId: "36449ad6-e838-443c-b68a-e71110c9bc12"
+  "linter-phpcs": {}
   "linter-ui-default":
-    panelHeight: 283
+    panelHeight: 300
   minimap:
     plugins:
       "highlight-selected": true
