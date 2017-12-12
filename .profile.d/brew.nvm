@@ -1,0 +1,25 @@
+#!/usr/bin/env sh
+# shellcheck source=~
+
+if brew_exists nvm; then
+  export NVM_DIR="$HOME/.nvm"
+  [ -d "$NVM_DIR" ] || mkdir -p "$NVM_DIR"
+  . "$(brew --prefix nvm)/nvm.sh"
+  add_to_path "$NVM_DIR/current/bin"
+  add_to_path "./node_modules/.bin"
+
+  alias npm-list="node -e 'Object.keys(require(\"./package.json\").dependencies || {}).map(function(d) { console.log(d); });'"
+  alias npm-list-dev="node -e 'Object.keys(require(\"./package.json\").devDependencies || {}).map(function(d) { console.log(d); });'"
+  alias npm-list-peer="node -e 'Object.keys(require(\"./package.json\").peerDependencies || {}).map(function(d) { console.log(d); });'"
+  alias npm-list-bundled="node -e 'Object.keys(require(\"./package.json\").bundledDependencies || {}).map(function(d) { console.log(d); });'"
+  alias npm-list-optional="node -e 'Object.keys(require(\"./package.json\").optionalDependencies || {}).map(function(d) { console.log(d); });'"
+
+  alias npm-install-latest="sed 's/$/@latest/' | xargs npm install"
+  alias npm-upgrade-deps="npm-list | npm-install-latest --save"
+  alias npm-upgrade-dev="npm-list-dev | npm-install-latest --save-dev"
+  alias npm-upgrade-peer="npm-list-peer | npm-install-latest --save-peer"
+  alias npm-upgrade-bundled="npm-list-bundled | npm-install-latest --save-bundled"
+  alias npm-upgrade-optional="npm-list-optional | npm-install-latest --save-optional"
+
+  alias npm-upgrade="npm-upgrade-deps && npm-upgrade-dev && npm-upgrade-peer && npm-upgrade-bundled && npm-upgrade-optional"
+fi

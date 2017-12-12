@@ -1,0 +1,28 @@
+#!/usr/bin/env sh
+
+# Open the Github project URL of a directory which is under version control with a
+# Github project.
+github() {
+  if [ ! -d .git ] && ! git rev-parse --git-dir > /dev/null 2>&1
+  then
+    echo "Not a git repository" >&2
+    return 1
+  fi
+
+  ssh_remote="$(git remote get-url origin 2>/dev/null)"
+  if [ -z "$ssh_remote" ]
+  then
+    echo "Origin remote not found" >&2
+    return 1
+  elif [ -z "$(echo $ssh_remote | grep github.com 2>&1)" ]
+  then
+    echo "Not a Github repository: $ssh_remote" >&2
+    return 1
+  else
+    github_url="$(echo $ssh_remote | sed 's/^git@github.com:/https:\/\/github.com\//')"
+    github_url="$(echo $github_url | sed 's/.git$//')"
+    echo "Opening $github_url"
+    open "$github_url"
+    return 0
+  fi
+}
