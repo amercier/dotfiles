@@ -1,0 +1,6 @@
+*
+!.gitignore
+!/.profile.d
+!/.profile.d/**
+!/.zshrc
+!/.zprofile
