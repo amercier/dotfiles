@@ -18,19 +18,6 @@ add_to_path() {
 find "$HOME/.profile.d" \
     -type f \
     -maxdepth 1 \
-    ! -name '*.rc' \
-    ! -name '*.rc.local' \
-    ! -name '*.sh' \
-    ! -name '.*' \
   | while read p; do
     . "$p"
   done;
-
-# Source shell-specific
-shell=$(basename "$SHELL")
-if [ -e "$HOME/.profile.d/$shell.rc" ]; then
-  . "$HOME/.profile.d/$shell.rc"
-fi
-if [ -e "$HOME/.profile.d/$shell.rc.local" ]; then
-  . "$HOME/.profile.d/$shell.rc.local"
-fi
