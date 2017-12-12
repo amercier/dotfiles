@@ -1,5 +1,7 @@
 *
 !.gitignore
+!/.atom
+!/.atom/**
 !/.profile.d
 !/.profile.d/**
 !/.zshrc

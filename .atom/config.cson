@@ -1,0 +1,32 @@
+"*":
+  core:
+    disabledPackages: [
+      "linter"
+    ]
+    telemetryConsent: "no"
+  editor:
+    fontSize: 13
+    showInvisibles: true
+  "exception-reporting":
+    userId: "36449ad6-e838-443c-b68a-e71110c9bc12"
+  "linter-phpcs": {}
+  "linter-ui-default":
+    panelHeight: 300
+    showPanel: true
+  minimap:
+    plugins:
+      "highlight-selected": true
+      "highlight-selectedDecorationsZIndex": 0
+      linter: true
+      linterDecorationsZIndex: 0
+  "php-debug":
+    currentPanelHeight: "268px"
+    currentPanelMode: "bottom"
+  "project-quick-open":
+    projectPaths: "~/Workspace"
+  welcome:
+    showOnStartup: false
+".blade.html.php.text":
+  editor:
+    commentEnd: " --}}"
+    commentStart: "{{-- "
