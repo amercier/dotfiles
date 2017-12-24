@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/amercier/.oh-my-zsh
+export ZSH=~/.oh-my-zsh
 
 fpath=(/usr/local/share/zsh-completions $fpath)
 
@@ -72,7 +72,6 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
-
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"

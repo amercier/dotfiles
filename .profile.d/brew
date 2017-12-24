@@ -1,9 +1,8 @@
 #!/usr/bin/env sh
 
 if which brew >/dev/null 2>&1; then
-  export PATH="/usr/local/bin:$PATH"
+  PATH="/usr/local/bin:$PATH"
   BREW_PATH="$(brew --prefix)/opt"
-  export BREW_PATH
 fi
 
 brew_exists() {

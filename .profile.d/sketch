@@ -3,5 +3,5 @@
 # Sketchtool
 SKETCHTOOL_PATH=/Applications/Sketch.app/Contents/Resources/sketchtool
 if [ -d "$SKETCHTOOL_PATH/bin" ]; then
-  add_to_path "$SKETCHTOOL_PATH/bin"
+  prepend_to_path "$SKETCHTOOL_PATH/bin"
 fi

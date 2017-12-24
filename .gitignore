@@ -4,5 +4,5 @@
 !/.atom/**
 !/.profile.d
 !/.profile.d/**
+!/.bashrc
 !/.zshrc
-!/.zprofile
