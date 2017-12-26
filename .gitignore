@@ -2,6 +2,7 @@
 !.gitignore
 !/.atom
 !/.atom/**
+!/.profile
 !/.profile.d
 !/.profile.d/**
 !/.zshrc

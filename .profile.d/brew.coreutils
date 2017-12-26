@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+if brew_exists coreutils; then
+  prepend_to_path "/usr/local/opt/coreutils/libexec/gnubin"
+fi
