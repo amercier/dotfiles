@@ -1,0 +1,35 @@
+[user]
+  name = Alex Mercier
+  email = pro.alexandre.mercier@gmail.com
+[push]
+  default = simple
+[remote "origin"]
+  fetch = +refs/pull/*/head:refs/remotes/origin/pr/*
+[color]
+  ui = always
+[color "branch"]
+  current = green black
+  local = cyan black
+  remote = magenta black
+[color "diff"]
+  meta = yellow black
+  frag = black black bold
+  new = green black
+  old = red black
+  whitespace = red black reverse
+[color "status"]
+  header = normal black
+  added = blue black
+  updated = green black
+  changed = red black
+  untracked = yellow black
+  unmerged = magenta black
+  branch = cyan black
+  nobranch = black black bold
+[core]
+	excludesfile = ~/.profile.d/utils/gitignore
+	editor = /usr/bin/vim
+[alias]
+  pr  = "!f() { git fetch -fu ${2:-origin} refs/pull/$1/head:pr/$1 && git checkout pr/$1; }; f"
+  pr-clean = "!git for-each-ref refs/heads/pr/* --format='%(refname)' | while read ref ; do branch=${ref#refs/heads/} ; git branch -D $branch ; done"
+  l = "log --graph --pretty=format:'%C(red black)%H%Creset -%C(yellow black)%d%Creset %s %C(green black)(%cr) %C(blue black)<%an>%Creset'"
