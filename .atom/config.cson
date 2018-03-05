@@ -10,9 +10,7 @@
   "exception-reporting":
     userId: "36449ad6-e838-443c-b68a-e71110c9bc12"
   "linter-phpcs": {}
-  "linter-ui-default":
-    panelHeight: 300
-    showPanel: true
+  "linter-ui-default": {}
   minimap:
     plugins:
       "highlight-selected": true
@@ -22,8 +20,14 @@
   "php-debug":
     currentPanelHeight: "268px"
     currentPanelMode: "bottom"
+  "project-folder":
+    gitProjectSearchMaxDepth: 2
+    projectRootDirectories: [
+      "~/Workspace"
+    ]
   "project-quick-open":
     projectPaths: "~/Workspace"
+  "travis-ci-status": {}
   welcome:
     showOnStartup: false
 ".blade.html.php.text":

@@ -27,7 +27,7 @@ packages: [
   "package-sync"
   "php-debug"
   "pinned-tabs"
-  "project-quick-open"
+  "project-folder"
   "seti-ui"
   "sort-lines"
   "todo-show"
