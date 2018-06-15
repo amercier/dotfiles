@@ -61,14 +61,7 @@ ZSH_CUSTOM=$HOME/.profile.d/oh-my-zsh-custom
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  bundler
-  dotenv
-  osx
-  rake
-  rbenv
-  ruby
   zsh-completions
-  yarn
 )
 
 source $ZSH/oh-my-zsh.sh
