@@ -7,6 +7,7 @@
   fetch = +refs/pull/*/head:refs/remotes/origin/pr/*
 [color]
   ui = always
+  branch = auto
 [color "branch"]
   current = green
   local = cyan
