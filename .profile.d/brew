@@ -1,11 +1,16 @@
 #!/usr/bin/env sh
 
 if which brew >/dev/null 2>&1; then
-  export PATH="/usr/local/bin:$PATH"
+  brew_exists() {
+    [ -d "$BREW_PATH/$1" ] && return 0 || return 1;
+  }
+
+  export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
   BREW_PATH="$(brew --prefix)/opt"
   export BREW_PATH
+else
+  brew_exists() {
+    echo 'Warning: brew is not installed.' >&2
+    return 0;
+  }
 fi
-
-brew_exists() {
-  [ -d "$BREW_PATH/$1" ] && return 0 || return 1;
-}
