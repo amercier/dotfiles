@@ -4,15 +4,37 @@
 if brew_exists nvm; then
   export NVM_DIR="$HOME/.nvm"
   [ -d "$NVM_DIR" ] || mkdir -p "$NVM_DIR"
-  . "$(brew --prefix nvm)/nvm.sh"
-  prepend_to_path "$NVM_DIR/current/bin"
-  prepend_to_path "./node_modules/.bin"
 
-  alias npm-list="node -e 'Object.keys(require(\"./package.json\").dependencies || {}).map(function(d) { console.log(d); });'"
-  alias npm-list-dev="node -e 'Object.keys(require(\"./package.json\").devDependencies || {}).map(function(d) { console.log(d); });'"
-  alias npm-list-peer="node -e 'Object.keys(require(\"./package.json\").peerDependencies || {}).map(function(d) { console.log(d); });'"
-  alias npm-list-bundled="node -e 'Object.keys(require(\"./package.json\").bundledDependencies || {}).map(function(d) { console.log(d); });'"
-  alias npm-list-optional="node -e 'Object.keys(require(\"./package.json\").optionalDependencies || {}).map(function(d) { console.log(d); });'"
+  # Taken from https://github.com/nylen/dotfiles/blob/master/.bashrc_nylen_dotfiles
+  # Load nvm but don't use it yet: we need to do some other hacks first.
+  # See https://github.com/creationix/nvm/issues/1261#issuecomment-366879288
+  . /usr/local/opt/nvm/nvm.sh --no-use
+  # I don't need this check, and it's slow (loads npm).
+  # Do not use the npm `prefix` config; do not report related bugs to nvm ;)
+  nvm_die_on_prefix() {
+    return 0
+  }
+  # This also loads npm; let's just skip it.
+  nvm_print_npm_version() {
+    return 0
+  }
+  # nvm_resolve_local_alias can also be slow; cache it.
+  # TODO: add last file modification time checks
+  if [ -s "$NVM_DIR/_default_version" ]; then
+    NVM_AUTO_LOAD_VERSION=$(cat "$NVM_DIR/_default_version")
+  else
+    NVM_AUTO_LOAD_VERSION=$(nvm_resolve_local_alias default)
+    echo "$NVM_AUTO_LOAD_VERSION" > "$NVM_DIR/_default_version"
+  fi
+  nvm use --silent "$NVM_AUTO_LOAD_VERSION"
+
+  prepend_to_path "$NVM_DIR/current/bin"
+
+  alias npm-list="node -e 'Object.keys(require(\"./package\").dependencies || {}).map(function(d) { console.log(d); });'"
+  alias npm-list-dev="node -e 'Object.keys(require(\"./package\").devDependencies || {}).map(function(d) { console.log(d); });'"
+  alias npm-list-peer="node -e 'Object.keys(require(\"./package\").peerDependencies || {}).map(function(d) { console.log(d); });'"
+  alias npm-list-bundled="node -e 'Object.keys(require(\"./package\").bundledDependencies || {}).map(function(d) { console.log(d); });'"
+  alias npm-list-optional="node -e 'Object.keys(require(\"./package\").optionalDependencies || {}).map(function(d) { console.log(d); });'"
 
   alias npm-install-latest="sed 's/$/@latest/' | xargs npm install"
   alias npm-upgrade-deps="npm-list | npm-install-latest --save"
