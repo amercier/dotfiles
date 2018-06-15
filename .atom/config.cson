@@ -30,6 +30,15 @@
     showInvisibles: true
   "exception-reporting":
     userId: "36449ad6-e838-443c-b68a-e71110c9bc12"
+  "linter-eslint":
+    scopes: [
+      "source.js"
+      "source.jsx"
+      "source.js.jsx"
+      "source.babel"
+      "source.js-semantic"
+      "text.html.vue"
+    ]
   "linter-phpcs": {}
   "linter-python":
     executablePath: "/Users/amercier/.pyenv/shims/pylama"
