@@ -1,3 +1,5 @@
+#!/usr/bin/env sh
+
 # Shells configuration
 # ====================
 
@@ -21,8 +23,11 @@ prepend_to_path() {
 }
 
 # Source all files in profile.d
-find "$HOME/.profile.d" -maxdepth 1 -type f | while read filepath
+find "$HOME/.profile.d" -maxdepth 1 -type f | sort | while read filepath
 do
+  # start_time=$(($(gdate +%s%N)/1000000))
   # shellcheck source=~
   . "$filepath"
+  # end_time=$(($(gdate +%s%N)/1000000))
+  # echo "Sourced $filepath in $(expr $end_time - $start_time) ms"
 done
