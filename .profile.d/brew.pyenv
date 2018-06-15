@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+if brew_exists pyenv; then
+  eval "$(pyenv init -)"
+fi
