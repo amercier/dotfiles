@@ -33,3 +33,16 @@
 
 'atom-workspace':
   'ctrl-cmd-p': 'project-folder:add'
+
+'atom-workspace atom-text-editor:not([mini])':
+  # you may have to unset the keybinding if it's already in use.
+
+  # Expand current cursor
+  'cmd-alt-down': 'multi-cursor:expandDown'
+  'cmd-alt-up':   'multi-cursor:expandUp'
+
+  # Move the last cursor.
+  'ctrl-alt-down':  'multi-cursor:move-last-cursor-down'
+  'ctrl-alt-right': 'multi-cursor:move-last-cursor-right'
+  'ctrl-alt-left':  'multi-cursor:move-last-cursor-left'
+  'ctrl-alt-up':    'multi-cursor:move-last-cursor-up'
