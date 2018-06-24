@@ -128,14 +128,19 @@ prompt_git() {
       "0	0") # equal to upstream
         count="" ;;
       "0	"*) # ahead of upstream
-        count="+${counts[(ws:	:)2]}" ;;
+        count="▴${counts[(ws:	:)2]}" ;;
       *"	0") # behind upstream
-        count="-${counts[(ws:	:)1]}" ;;
+        count="▾${counts[(ws:	:)1]}" ;;
       *)      # diverged from upstream
-        count="+${counts[(ws:	:)2]}-${counts[(ws:	:)1]}" ;;
+        count="▾${counts[(ws:	:)1]}▴${counts[(ws:	:)2]}" ;;
       esac
     else
       count="?"
+    fi
+
+    local stash="$(git stash list | wc -l)"
+    if [[ $stash != 0 ]] ; then
+      count="${count}≣${stash}"
     fi
 
     zstyle ':vcs_info:*' enable git
