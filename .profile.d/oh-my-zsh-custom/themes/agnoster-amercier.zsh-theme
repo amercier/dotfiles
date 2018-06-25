@@ -134,6 +134,12 @@ prompt_git() {
       *)      # diverged from upstream
         count="▾${counts[(ws:	:)1]}▴${counts[(ws:	:)2]}" ;;
       esac
+
+      # Remote PR
+      local github_pr=$(git show-ref | grep "$(git rev-parse ${remote})" | egrep "/pr/[0-9]+" | egrep -o '[0-9]+$')
+      if [[ -n ${github_pr} ]] ; then
+        PL_BRANCH_CHAR="${github_pr}⬈${PL_BRANCH_CHAR}"
+      fi
     else
       count="?"
     fi
