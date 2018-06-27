@@ -4,11 +4,10 @@ alias gc='git checkout'
 alias gd='git diff'
 alias gdc='git diff --cached'
 alias gl="git log --graph --pretty=format:'$(echo -e \\t)%C(red)%h%Creset -%C(yellow)%d%Creset %s %C(green)(%cr) %C(blue)<%an>%Creset'"
-alias gll='gl | h10'
 alias gs='git status'
 alias git-merged-branches='git branch --merged | grep -v "\*"'
 alias git-clean-merged-branches='git checkout master && git branch --merged | grep -v "\*" | xargs -n 1 git branch -d'
-function git-pr { git checkout -B "pr$1" "origin/pr/$1"; }
+alias git-pr=git_pr
 alias git-show-files="git show --name-only"
 alias grm='git fetch origin && git rebase origin/master'
 alias gp='git pull --rebase'
@@ -17,5 +16,40 @@ alias gmm='branch="$(git symbolic-ref --short HEAD)"; git checkout master && git
 alias grd='git review dcommit'
 alias git-merge-master='grm && grd && gmm'
 alias git-master="git checkout master && git pull && git-clean-merged-branches"
-alias git-push="git rev-parse --abbrev-ref HEAD | xargs git push -u origin"
 alias git-amend="git commit -a --amend --no-edit"
+alias git-push-one-by-one=git_push_one_by_one
+
+git_pr() {
+  git checkout -B "pr$1" "origin/pr/$1"
+}
+
+gll() {
+  gl "$@" | eval h10
+}
+
+git_push_one_by_one() {
+  if [ "$#" = 0 ]
+  then
+    remote="$(git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null)"
+    if [ -z "$remote" ]
+    then
+      echo "Not connected to a remote" >&2
+      return 1
+    fi
+    remote_name=$(echo "$remote" | egrep -o '^[^/]+')
+    remote_branch=$(echo "$remote" | egrep -o '[^/]+$')
+  elif [ "$#" = 2 ]
+  then
+    remote_name="$1"
+    remote_branch="$2"
+  else
+    echo "Syntax: git_push_one_by_one or git_push_one_by_one REMOTE BRANCH" >&2
+    return 1
+  fi
+
+  git rev-list --reverse "${remote_name}/${remote_branch}..HEAD" --abbrev-commit | while read sha
+  do
+    echo "Pushing ${sha}..."
+    git push "${remote_name}" "${sha}:${remote_branch}"
+  done
+}
