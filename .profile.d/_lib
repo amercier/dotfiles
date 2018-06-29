@@ -1,0 +1,194 @@
+#!/usr/bin/env sh
+
+ANSI_CODES="
+reset 0 0
+bold 1 22
+dim 2 22
+italic 3 23
+underline 4 24
+inverse 7 27
+hidden 8 28
+strikethrough 9 29
+
+black 30 39
+red 31 39
+green 32 39
+yellow 33 39
+blue 34 39
+magenta 35 39
+cyan 36 39
+white 37 39
+gray 90 39
+red_bright 91 39
+green_bright 92 39
+yellow_bright 93 39
+blue_bright 94 39
+magenta_bright 95 39
+cyan_bright 96 39
+white_bright 97 39
+
+bg_black 40 49
+bg_red 41 49
+bg_green 42 49
+bg_yellow 43 49
+bg_blue 44 49
+bg_magenta 45 49
+bg_cyan 46 49
+bg_white 47 49
+bg_black_bright 100 49
+bg_red_bright 101 49
+bg_green_bright 102 49
+bg_yellow_bright 103 49
+bg_blue_bright 104 49
+bg_magenta_bright 105 49
+bg_cyan_bright 106 49
+bg_white_bright 107 49
+"
+
+ansi_printf() {
+  colors=$1
+  if [ -n "$(echo $colors | grep ' ' 2>/dev/null)" ]
+  then
+    color=$(echo $colors | tr ' ' '\n' | head -n 1)
+    nested_colors=$(echo "$colors" | sed 's/[^ ]* //')
+    shift # short for shift 1
+    nested=$(ansi_printf "$nested_colors" "$@")
+    ansi_printf "$(echo $color | head -n 1)" "$nested"
+  else
+    color_codes=$(echo $ANSI_CODES | egrep "^$colors ")
+    printf "\u001B[$(echo $color_codes | sed 's/.* \([0-9]*\) .*/\1/')m" # Color start
+    shift # short for shift 1
+    for i do printf "$i"; done
+    printf "\u001B[$(echo $color_codes | egrep -o '[0-9]+$')m" # Color stop
+  fi
+}
+
+ansi_echo() {
+  echo "$(ansi_printf "$@")"
+}
+
+# printf "Normal  \t"
+# ansi_printf black black ' '
+# ansi_printf red red ' '
+# ansi_printf green green ' '
+# ansi_printf yellow yellow ' '
+# ansi_printf blue blue ' '
+# ansi_printf magenta magenta ' '
+# ansi_printf cyan cyan ' '
+# ansi_printf white white ' '
+# ansi_printf gray gray ' '
+# ansi_printf red_bright red_bright ' '
+# ansi_printf green_bright green_bright ' '
+# ansi_printf yellow_bright yellow_bright ' '
+# ansi_printf blue_bright blue_bright ' '
+# ansi_printf magenta_bright magenta_bright ' '
+# ansi_printf cyan_bright cyan_bright ' '
+# ansi_printf white_bright white_bright '\n'
+#
+# printf "Bold    \t"
+# ansi_printf 'bold black' black ' '
+# ansi_printf 'bold red' red ' '
+# ansi_printf 'bold green' green ' '
+# ansi_printf 'bold yellow' yellow ' '
+# ansi_printf 'bold blue' blue ' '
+# ansi_printf 'bold magenta' magenta ' '
+# ansi_printf 'bold cyan' cyan ' '
+# ansi_printf 'bold white' white ' '
+# ansi_printf 'bold gray' gray ' '
+# ansi_printf 'bold red_bright' red_bright ' '
+# ansi_printf 'bold green_bright' green_bright ' '
+# ansi_printf 'bold yellow_bright' yellow_bright ' '
+# ansi_printf 'bold blue_bright' blue_bright ' '
+# ansi_printf 'bold magenta_bright' magenta_bright ' '
+# ansi_printf 'bold cyan_bright' cyan_bright ' '
+# ansi_printf 'bold white_bright' white_bright '\n'
+#
+# printf "Inverse  \t"
+# ansi_printf 'inverse black' black ' '
+# ansi_printf 'inverse red' red ' '
+# ansi_printf 'inverse green' green ' '
+# ansi_printf 'inverse yellow' yellow ' '
+# ansi_printf 'inverse blue' blue ' '
+# ansi_printf 'inverse magenta' magenta ' '
+# ansi_printf 'inverse cyan' cyan ' '
+# ansi_printf 'inverse white' white ' '
+# ansi_printf 'inverse gray' gray ' '
+# ansi_printf 'inverse red_bright' red_bright ' '
+# ansi_printf 'inverse green_bright' green_bright ' '
+# ansi_printf 'inverse yellow_bright' yellow_bright ' '
+# ansi_printf 'inverse blue_bright' blue_bright ' '
+# ansi_printf 'inverse magenta_bright' magenta_bright ' '
+# ansi_printf 'inverse cyan_bright' cyan_bright ' '
+# ansi_printf 'inverse white_bright' white_bright '\n'
+#
+# printf "Underline\t"
+# ansi_printf 'underline black' black ' '
+# ansi_printf 'underline red' red ' '
+# ansi_printf 'underline green' green ' '
+# ansi_printf 'underline yellow' yellow ' '
+# ansi_printf 'underline blue' blue ' '
+# ansi_printf 'underline magenta' magenta ' '
+# ansi_printf 'underline cyan' cyan ' '
+# ansi_printf 'underline white' white ' '
+# ansi_printf 'underline gray' gray ' '
+# ansi_printf 'underline red_bright' red_bright ' '
+# ansi_printf 'underline green_bright' green_bright ' '
+# ansi_printf 'underline yellow_bright' yellow_bright ' '
+# ansi_printf 'underline blue_bright' blue_bright ' '
+# ansi_printf 'underline magenta_bright' magenta_bright ' '
+# ansi_printf 'underline cyan_bright' cyan_bright ' '
+# ansi_printf 'underline white_bright' white_bright '\n'
+#
+# printf "Italic  \t"
+# ansi_printf 'italic black' black ' '
+# ansi_printf 'italic red' red ' '
+# ansi_printf 'italic green' green ' '
+# ansi_printf 'italic yellow' yellow ' '
+# ansi_printf 'italic blue' blue ' '
+# ansi_printf 'italic magenta' magenta ' '
+# ansi_printf 'italic cyan' cyan ' '
+# ansi_printf 'italic white' white ' '
+# ansi_printf 'italic gray' gray ' '
+# ansi_printf 'italic red_bright' red_bright ' '
+# ansi_printf 'italic green_bright' green_bright ' '
+# ansi_printf 'italic yellow_bright' yellow_bright ' '
+# ansi_printf 'italic blue_bright' blue_bright ' '
+# ansi_printf 'italic magenta_bright' magenta_bright ' '
+# ansi_printf 'italic cyan_bright' cyan_bright ' '
+# ansi_printf 'italic white_bright' white_bright '\n'
+#
+# printf "Strikethrough\t"
+# ansi_printf 'strikethrough black' black ' '
+# ansi_printf 'strikethrough red' red ' '
+# ansi_printf 'strikethrough green' green ' '
+# ansi_printf 'strikethrough yellow' yellow ' '
+# ansi_printf 'strikethrough blue' blue ' '
+# ansi_printf 'strikethrough magenta' magenta ' '
+# ansi_printf 'strikethrough cyan' cyan ' '
+# ansi_printf 'strikethrough white' white ' '
+# ansi_printf 'strikethrough gray' gray ' '
+# ansi_printf 'strikethrough red_bright' red_bright ' '
+# ansi_printf 'strikethrough green_bright' green_bright ' '
+# ansi_printf 'strikethrough yellow_bright' yellow_bright ' '
+# ansi_printf 'strikethrough blue_bright' blue_bright ' '
+# ansi_printf 'strikethrough magenta_bright' magenta_bright ' '
+# ansi_printf 'strikethrough cyan_bright' cyan_bright ' '
+# ansi_printf 'strikethrough white_bright' white_bright '\n'
+#
+# printf "Hidden  \t"
+# ansi_printf 'black hidden' black ' '
+# ansi_printf 'red hidden' red ' '
+# ansi_printf 'green hidden' green ' '
+# ansi_printf 'yellow hidden' yellow ' '
+# ansi_printf 'blue hidden' blue ' '
+# ansi_printf 'magenta hidden' magenta ' '
+# ansi_printf 'cyan hidden' cyan ' '
+# ansi_printf 'white hidden' white ' '
+# ansi_printf 'gray hidden' gray ' '
+# ansi_printf 'red_bright hidden' red_bright ' '
+# ansi_printf 'green_bright hidden' green_bright ' '
+# ansi_printf 'yellow_bright hidden' yellow_bright ' '
+# ansi_printf 'blue_bright hidden' blue_bright ' '
+# ansi_printf 'magenta_bright hidden' magenta_bright ' '
+# ansi_printf 'cyan_bright hidden' cyan_bright ' '
+# ansi_printf 'white_bright hidden' white_bright '\n'

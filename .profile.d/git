@@ -50,6 +50,6 @@ git_push_one_by_one() {
   git rev-list --reverse "${remote_name}/${remote_branch}..HEAD" --abbrev-commit | while read sha
   do
     echo "Pushing ${sha}..."
-    git push "${remote_name}" "${sha}:${remote_branch}"
+    git push "${remote_name}" "${sha}:${remote_branch}" || return 1
   done
 }
