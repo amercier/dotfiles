@@ -51,7 +51,7 @@ git_push_one_by_one() {
   do
     echo "Pushing commit ${sha}..."
     command="git push ${remote_name} ${sha}:${remote_branch}"
-    if [ ! $command ]
+    if ! eval $command
     then
       ansi_printf red "Failed to push commit ${sha}. " 2>&1
       echo "Try:" 2>&1
