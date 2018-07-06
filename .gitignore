@@ -1,6 +1,5 @@
-*
-!/.profile.d/*
+/*
 !/.profile.d/
-!/.profile
 !/.gitconfig
 !/.gitignore
+!/.profile
