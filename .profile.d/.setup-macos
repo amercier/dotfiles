@@ -10,12 +10,12 @@ __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 . ${__dir}/_lib
 
-# Whether an application exists in `/Applications` or `~/Applications`
+# Whether an application exists in `/Applications` or `$HOME/Applications`
 #
 # @param 1 Application name to check, without `.app`
 # @returns `0` if the application directory exists, `1` otherwise
 application_exists() {
-  directory_exists "/Applications/$1.app" || directory_exists -d "~/Applications/$1.app"
+  directory_exists "/Applications/$1.app" || directory_exists -d "$HOME/Applications/$1.app"
 }
 
 # Install App Store upgrades for an application
@@ -114,4 +114,26 @@ install_or_update_brew_cask iTerm iterm2
 if [ -n "$(sysctl hw.model | grep MacBookAir)" ]
 then
   install_or_update_brew_cask Karabiner-Elements karabiner-elements
+fi
+
+# SSH
+if [ ! -e "$HOME/.ssh/id_rsa" ]
+then
+  echo "Generating SSH keys..."
+  ssh-keygen -t rsa -b 4096 -C "$(git config --global user.email)" -f "$HOME/.ssh/id_rsa"
+
+  echo "Adding SSH key to the ssh-agent"
+  eval "$(ssh-agent -s)"
+
+  echo "Seting SSH config to automatically load ssh-agent..."
+  if [ -e "$HOME/.ssh/config" ]
+  then
+    echo "Warning: $HOME/.ssh/config, skipping"
+  else
+    echo "Host *
+      AddKeysToAgent yes
+      UseKeychain yes
+      IdentityFile ~/.ssh/id_rsa" > "$HOME/.ssh/config"
+    echo "Done"
+  fi
 fi
