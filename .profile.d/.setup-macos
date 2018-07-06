@@ -1,0 +1,117 @@
+#!/usr/bin/env sh
+
+set -o errexit
+set -o pipefail
+set -o nounset
+# set -o xtrace
+
+# Set magic variables for current file & dir
+__dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+. ${__dir}/_lib
+
+# Whether an application exists in `/Applications` or `~/Applications`
+#
+# @param 1 Application name to check, without `.app`
+# @returns `0` if the application directory exists, `1` otherwise
+application_exists() {
+  directory_exists "/Applications/$1.app" || directory_exists -d "~/Applications/$1.app"
+}
+
+# Install App Store upgrades for an application
+#
+# @param 1 Name of the application
+install_app_store_upgrades() {
+  softwareupdate --list | grep "* $1" | sed "s/^[^A-Z]*//" | while read update
+  do
+    echo "Installing App Store update: $update"
+    softwareupdate --install "$update" || return 1
+  done || return 0
+}
+
+# Upgrade a Cask
+#
+# @param 1 Cask name
+brew_cask_upgrade() {
+  if [ -n "$(brew cask outdated $1)" ]; then
+    echo "$1 is outdated, upgrading..."
+    # brew cask reinstall $1
+  else
+    echo "$1 is up-to-date"
+  fi
+}
+
+# Upgrade a Brew keg
+#
+# @param 1 Keg name
+brew_upgrade() {
+  if [ -n "$(brew outdated $1)" ]; then
+    echo "$1 is outdated, upgrading..."
+    brew upgrade "$1" --cleanup
+  else
+    echo "$1 is up-to-date"
+  fi
+}
+
+brew_command_exists() {
+  [ -x "$(brew --prefix)/bin/$1" ]
+}
+
+# Install or upgrade a Brew command
+#
+# @param 1 Command name
+install_or_update_brew_command() {
+  install_or_update brew_command "$1" "$1" "brew install $1" "brew_upgrade $1"
+}
+
+# Install or upgrade a Brew cask
+#
+# @param 1 Cask name
+# @param 2 Application name
+install_or_update_brew_cask() {
+  install_or_update application "$1" "$1" "brew cask install $2" "brew_cask_upgrade $2"
+}
+
+# Get ID of a Mac App Store application
+#
+# @param 1 Application name
+mas_id() {
+  mas search "$1" | tr ' ' '\n' | head -n 1
+}
+
+# Install or upgrade a a Mac App Store application
+#
+# @param 1 Application name
+install_or_update_mas_application() {
+  install_or_update application "$1" "$1" "mas install $(mas_id $1)" "mas upgrade $(mas_id $1)"
+}
+
+# Xcode Command Line Tools
+install_or_update directory "$(xcode-select -p)" "Command Line Tools for Xcode" \
+  'xcode-select --install' \
+  'install_app_store_upgrades "Command Line Tools"'
+
+# Brew
+install_or_update command brew Homebrew \
+  '/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"' \
+  'brew update && brew prune && brew cleanup'
+
+# Brew kegs
+install_or_update_brew_command git
+install_or_update_brew_command mas
+install_or_update_brew_command shellcheck
+
+# App Store
+install_or_update_mas_application Dashlane
+install_or_update_mas_application Moom
+
+# Brew casks
+install_or_update_brew_cask Atom atom
+install_or_update_brew_cask Catlight catlight
+install_or_update_brew_cask Flux flux
+install_or_update_brew_cask "Google Chrome" google-chrome
+install_or_update_brew_cask iTerm iterm2
+if [ -n "$(sysctl hw.model | grep MacBookAir)" ]
+then
+  install_or_update_brew_cask Karabiner-Elements karabiner-elements
+fi

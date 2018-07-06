@@ -1,0 +1,22 @@
+#!/usr/bin/env sh
+
+set -o errexit
+set -o pipefail
+set -o nounset
+# set -o xtrace
+
+# Set magic variables for current file & dir
+__dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+if [ "$OSTYPE" = darwin17 ]
+then
+  . ${__dir}/.setup-macos
+elif [ -n "$(echo $OSTYPE) | grep darwin)" ]
+then
+  echo "Your MacOS version is out-of-date: $OSTYPE."
+  echo "Please upgrade to latest version through Apple App Store."
+  exit 1
+else
+  echo "Your operating system is not supported: $OSTYPE."
+  exit 1
+fi

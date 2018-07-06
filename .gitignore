@@ -1,0 +1,5 @@
+*
+!/.profile.d/*
+!/.profile.d/
+!/.profile
+!/.gitignore

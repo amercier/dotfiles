@@ -1,0 +1,51 @@
+#!/usr/bin/env sh
+#
+# Utility functions for .profile.d scripts
+
+# Whether a command exists.
+#
+# @param 1 Command to check
+# @returns `0` if the command was found using `which`, `1` otherwise
+command_exists() {
+  which "$1" >/dev/null 2>&1
+}
+
+# Whether multiple commands exist.
+#
+# @param ... Commands to check
+# @returns `0` if all given commands were found using `which`, `1` otherwise
+commands_exist() {
+  for i; do command_exists "$i" || return 1; done
+  return 0
+}
+
+# Whether a directory exists
+#
+# @param 1 Directory to check
+# @returns `0` if the directory exists, `1` otherwise
+directory_exists() {
+  [ -d "$1" ]
+}
+
+# Install or update a command or an application
+#
+# @param 1 Type of what to install: command or application
+# @param 2 Name of the application or command to check
+# @param 3 Name of the application or command to display
+# @param 4 Install command
+# @param 5 Update command
+install_or_update() {
+  if ! eval "${1}_exists" \'"$2"\'
+  then
+    echo ▶ installing "$3…"
+    eval "$4"
+  elif [ -n "$5" ]
+  then
+    echo ▲ "$3" is already installed, updating...
+    eval "$5"
+    echo ✓ "$3" is up-to-date.
+  else
+    echo ✓ "$3" is already installed, nothing to update.
+  fi
+  echo
+}
