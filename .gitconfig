@@ -5,7 +5,7 @@
 	clone-branch = clone -b
   commit-message = "!git_commit_message() { message="$@"; git commit -m \"$message\"; }; git_commit_message"
 	diff-cached = diff --cached
-	graph = log --graph --pretty=format:'\t%C(red)%h%Creset -%C(yellow)%d%Creset %s %C(green)(%cr) %C(blue)<%an>%Creset'
+	graph = log --graph --pretty=friendly --color=always
 	merged-branches = ! git branch --merged | egrep -v '^\\*'
 	push-all = git_push_all
 	show-files = show --name-only
@@ -13,6 +13,8 @@
 	gpgsign = true
 [core]
 	excludesfile = /Users/amercier/.gitignore_global
+[pretty]
+	friendly = "\t%C(red)%h%C(reset) %C(dim)-%C(reset)%C(yellow)%d%C(reset) %s %C(dim green)(%cr) %C(dim blue)%an%C(reset)"
 [user]
 	name = Alex Mercier
 	email = pro.alexandre.mercier@gmail.com
