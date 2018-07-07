@@ -194,17 +194,22 @@ else
 fi
 echo
 
-# System preferences
-
 # Disable the sound effects on boot
-if [ "$(nvram SystemAudioVolume | sed 's/^SystemAudioVolume.//')" = "%80" ]
+if [ -e /Library/Scripts/macos-mute-off ] && [ -e /Library/Scripts/macos-mute-on ]
 then
   echo ✓ Startup sound already disabled
 else
   echo ▶ Disabling startup sound
-  sudo nvram SystemAudioVolume=%80
+  printf '#!/usr/bin/env sh\n\nosascript -e "set volume without output muted"\n' | sudo tee /Library/Scripts/macos-mute-off > /dev/null
+  printf '#!/usr/bin/env sh\n\nosascript -e "set volume with output muted"\n' | sudo tee /Library/Scripts/macos-mute-on > /dev/null
+  sudo chmod +x /Library/Scripts/macos-mute-off /Library/Scripts/macos-mute-on
+  sudo defaults write com.apple.loginwindow LoginHook "/Library/Scripts/macos-mute-off"
+  sudo defaults write com.apple.loginwindow LogoutHook "/Library/Scripts/macos-mute-on"
   echo ✓ Done
+  echo
 fi
+
+# System preferences
 
 # General
 macos_set_preference NSGlobalDomain NSWindowResizeTime float 0.2
