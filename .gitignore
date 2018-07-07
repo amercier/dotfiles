@@ -4,7 +4,6 @@
 !/.profile.d/
 !/.gitconfig
 !/.gitignore
-!/.gitignore_global
 !/.profile
 !/.zprofile
 !/.zshrc

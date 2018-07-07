@@ -12,7 +12,7 @@
 [commit]
 	gpgsign = true
 [core]
-	excludesfile = /Users/amercier/.gitignore_global
+	excludesfile = /Users/amercier/.profile.d/utils/.gitignore_global
 [pretty]
 	friendly = "\t%C(red)%h%C(reset) %C(dim)-%C(reset)%C(yellow)%d%C(reset) %s %C(dim green)(%cr) %C(dim blue)%an%C(reset)"
 [user]
