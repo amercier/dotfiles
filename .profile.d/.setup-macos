@@ -93,6 +93,7 @@ install_or_update_mas_application() {
 # @param 3 Variable type: bool, ...
 # @param 4 Value to set
 macos_set_preference() {
+
   if [ "$(defaults read $1 $2 2>/dev/null)" = "$4" ]
   then
     echo ✓ System preference "$1" "$2" already set to "$4"
@@ -109,7 +110,12 @@ macos_set_preference() {
     value=false
   fi
   echo ▶ Setting system preference "$1" "$2" to "$value"
-  defaults write "$1" "$2" "-$3" "$value"
+  if [ "$#" = 5 ] && [ -n "$5" ]
+  then
+    sudo defaults write "$1" "$2" "-$3" "$value"
+  else
+    defaults write "$1" "$2" "-$3" "$value"
+  fi
   echo ✓ Done
   echo
 }
@@ -245,5 +251,10 @@ macos_set_preference com.apple.finder FXEnableExtensionChangeWarning bool 0
 macos_set_preference com.apple.finder QLEnableTextSelection bool 1
 macos_set_preference com.apple.finder DisableAllAnimations bool 1
 macos_set_preference com.apple.finder expose-animation-duration float 0.1 # Speed up Mission Control animations
+
+# Other
+macos_set_preference /Library/Preferences/com.apple.loginwindow GuestEnabled bool 0 SUDO
+macos_set_preference /Library/Preferences/SystemConfiguration/com.apple.smb.server AllowGuestAccess bool 0 SUDO
+macos_set_preference /Library/Preferences/com.apple.AppleFileServer guestAccess bool 0 SUDO
 
 echo
