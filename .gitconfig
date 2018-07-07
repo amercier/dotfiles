@@ -7,7 +7,7 @@
 	diff-cached = diff --cached
 	graph = log --graph --pretty=friendly --color=always
 	merged-branches = ! git branch --merged | egrep -v '^\\*'
-	push-all = git_push_all
+	push-all = ! source $HOME/.profile.d/git && git_push_all
 	show-files = show --name-only
 [commit]
 	gpgsign = true

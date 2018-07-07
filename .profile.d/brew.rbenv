@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+if brew_keg_exists rbenv; then
+  eval "$(rbenv init -)"
+fi

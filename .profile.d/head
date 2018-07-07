@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+
+alias h5='head -n 5'
+alias h10='head -n 10'
+alias h20='head -n 20'
+alias h30='head -n 30'
+alias h40='head -n 40'
+alias h50='head -n 50'
+alias h60='head -n 60'
+alias h70='head -n 70'
+alias h80='head -n 80'
+alias h90='head -n 90'
+alias h100='head -n 100'

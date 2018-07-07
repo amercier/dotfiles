@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+if application_exists Sketch
+then
+  export SKETCHTOOL_PATH=/Applications/Sketch.app/Contents/Resources/sketchtool
+  prepend_to_path "$SKETCHTOOL_PATH/bin"
+fi

@@ -1,0 +1,45 @@
+#!/usr/bin/env sh
+# shellcheck source=~
+
+if brew_keg_exists nvm; then
+  export NVM_DIR="$HOME/.nvm"
+  [ -d "$NVM_DIR" ] || mkdir -p "$NVM_DIR"
+
+  # Taken from https://github.com/nylen/dotfiles/blob/master/.bashrc_nylen_dotfiles
+  # Load nvm but don't use it yet: we need to do some other hacks first.
+  # See https://github.com/creationix/nvm/issues/1261#issuecomment-366879288
+  . /usr/local/opt/nvm/nvm.sh --no-use
+  # I don't need this check, and it's slow (loads npm).
+  # Do not use the npm `prefix` config; do not report related bugs to nvm ;)
+  nvm_die_on_prefix() {
+    return 0
+  }
+  # This also loads npm; let's just skip it.
+  nvm_print_npm_version() {
+    return 0
+  }
+  # nvm_resolve_local_alias can also be slow; cache it.
+  # TODO: add last file modification time checks
+  if [ -s "$NVM_DIR/_default_version" ]; then
+    NVM_AUTO_LOAD_VERSION=$(cat "$NVM_DIR/_default_version")
+  else
+    NVM_AUTO_LOAD_VERSION=$(nvm_resolve_local_alias default)
+    echo "$NVM_AUTO_LOAD_VERSION" > "$NVM_DIR/_default_version"
+  fi
+  nvm use --silent "$NVM_AUTO_LOAD_VERSION"
+
+  prepend_to_path "$NVM_DIR/current/bin"
+
+  npm_list() {
+    node -e "Object.keys(require('./package').$1 || {}).map(function(d) { console.log(d); });"
+  }
+
+  alias npm-install-latest="sed 's/$/@latest/' | xargs npm install"
+  alias npm-upgrade-dep="npm_list dependencies | npm-install-latest --save"
+  alias npm-upgrade-dev="npm_list devDependencies | npm-install-latest --save-dev"
+  alias npm-upgrade-peer="npm_list peerDependencies | npm-install-latest --save-peer"
+  alias npm-upgrade-bundled="npm_list bundledDependencies | npm-install-latest --save-bundled"
+  alias npm-upgrade-optional="npm_list optionalDependencies | npm-install-latest --save-optional"
+
+  alias npm-upgrade="npm-upgrade-dep && npm-upgrade-dev && npm-upgrade-peer && npm-upgrade-bundled && npm-upgrade-optional"
+fi
