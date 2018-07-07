@@ -54,7 +54,7 @@ brew_upgrade() {
 }
 
 brew_keg_exists() {
-  [ -x "$(brew --prefix)/bin/$1" ]
+  [ -d "$(brew --prefix)/opt/$1" ]
 }
 
 # Install or upgrade a Brew command
@@ -64,12 +64,23 @@ install_or_update_brew_keg() {
   install_or_update brew_keg "$1" "$1" "brew install $1" "brew_upgrade $1"
 }
 
-# Install or upgrade a Brew cask
+# Install or upgrade a Brew cask application
 #
 # @param 1 Cask name
 # @param 2 Application name
-install_or_update_brew_cask() {
+install_or_update_brew_cask_application() {
   install_or_update application "$1" "$1" "brew cask install $2" "brew_cask_upgrade $2"
+}
+
+brew_cask_exists() {
+  brew cask list | grep $1 >/dev/null 2>&1
+}
+
+# Install or upgrade a Brew cask
+#
+# @param 1 Cask name
+install_or_update_brew_cask() {
+  install_or_update brew_cask "$1" "$1" "brew cask install $1" "brew_cask_upgrade $1"
 }
 
 # Get ID of a Mac App Store application
@@ -139,6 +150,7 @@ install_or_update_brew_keg git
 install_or_update_brew_keg gpg
 install_or_update_brew_keg mas
 install_or_update_brew_keg shellcheck
+install_or_update_brew_keg wget
 install_or_update_brew_keg zsh
 install_or_update_brew_keg zsh-completions
 
@@ -147,18 +159,53 @@ install_or_update_mas_application Dashlane
 install_or_update_mas_application Moom
 
 # Brew casks
-install_or_update_brew_cask Atom atom
-install_or_update_brew_cask Catlight catlight
-install_or_update_brew_cask Flux flux
-install_or_update_brew_cask "Google Chrome" google-chrome
-install_or_update_brew_cask "GPG Keychain" gpg-suite
-install_or_update_brew_cask iTerm iterm2
+install_or_update_brew_cask_application Atom atom
+install_or_update_brew_cask_application Catlight catlight
+install_or_update_brew_cask_application Flux flux
+install_or_update_brew_cask_application "Google Chrome" google-chrome
+install_or_update_brew_cask_application "GPG Keychain" gpg-suite
+install_or_update_brew_cask_application iTerm iterm2
 if [ -n "$(sysctl hw.model | grep MacBookAir)" ]
 then
-  install_or_update_brew_cask Karabiner-Elements karabiner-elements
+  install_or_update_brew_cask_application Karabiner-Elements karabiner-elements
+fi
+
+# Default Shell
+zsh_path="$(which zsh)"
+
+if grep "$zsh_path" /etc/shells > /dev/null
+then
+  echo ✓ $zsh_path exits already in /etc/shells
+else
+  echo ▶ Adding "$zsh_path" to /etc/shells
+  echo "$zsh_path" | sudo tee /etc/shells > /dev/null
+  echo ✓ Done
+fi
+
+if [ "$(dscl . -read /Users/$USER UserShell | sed 's/^[^ ]* //')" = "$zsh_path" ]
+then
+  echo ✓ Default shell already set to $zsh_path.
+else
+  echo ▶ Setting default shell to "$zsh_path"
+  chsh -s "$zsh_path"
+  echo ✓ Done
+  echo
 fi
 
 # Oh My Zsh
+
+for font in "Meslo LG M Bold Italic for Powerline.ttf" "Meslo LG M Bold for Powerline.ttf" "Meslo LG M Italic for Powerline.ttf" "Meslo LG M Regular for Powerline.ttf"
+do
+  if [ -e "$HOME/Library/Fonts/$font" ]
+  then
+    echo ✓ Font $font is already installed.
+  else
+    echo ▶ Installing font $font...
+    wget "https://github.com/powerline/fonts/blob/master/Meslo%20Slashed/$(echo $font | sed 's/ /%20/g')?raw=true" -O "$HOME/Library/Fonts/$font"
+    echo ✓ Done
+    echo
+  fi
+done
 install_or_update directory "$HOME/.oh-my-zsh" "Oh My Zsh" \
   'sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"'  \
   '(cd "$HOME/.oh-my-zsh" && git pull)'
