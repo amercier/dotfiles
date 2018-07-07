@@ -1,10 +1,19 @@
+[alias]
+	amend = commit --amend --no-edit
+	clean-merged-branches = ! git merged-branches | xargs git branch -d
+	cleanup = ! git checkout master && git pull && git clean-merged-branches
+	clone-branch = clone -b
+  commit-message = "!git_commit_message() { message="$@"; git commit -m \"$message\"; }; git_commit_message"
+	diff-cached = diff --cached
+	graph = log --graph --pretty=format:'\t%C(red)%h%Creset -%C(yellow)%d%Creset %s %C(green)(%cr) %C(blue)<%an>%Creset'
+	merged-branches = ! git branch --merged | egrep -v '^\\*'
+	push-all = git_push_all
+	show-files = show --name-only
+[commit]
+	gpgsign = true
+[core]
+	excludesfile = /Users/amercier/.gitignore_global
 [user]
 	name = Alex Mercier
 	email = pro.alexandre.mercier@gmail.com
 	signingkey = A4A0BA9DE4FC1F8D
-[commit]
-	gpgsign = true
-[alias]
-	clone-branch = clone -b
-[core]
-	excludesfile = /Users/amercier/.gitignore_global

@@ -1,0 +1,54 @@
+#!/usr/bin/env sh
+
+# Push commits of a branch one after another
+# @param [1] Remote name
+# @param [2] Remote branch
+git_push_all() {
+  if [ "$#" = 0 ]
+  then
+    remote="$(git rev-parse --abbrev-ref --symbolic-full-name '@{u}' 2>/dev/null)"
+    if [ -z "$remote" ]
+    then
+      echo "Not connected to a remote" >&2
+      return 1
+    fi
+    remote_name=$(echo "$remote" | egrep -o '^[^/]+')
+    remote_branch=$(echo "$remote" | egrep -o '[^/]+$')
+  elif [ "$#" = 2 ]
+  then
+    remote_name="$1"
+    remote_branch="$2"
+  else
+    echo "Syntax: git_push_all or git_push_all REMOTE BRANCH" >&2
+    return 1
+  fi
+
+  git rev-list --reverse "${remote_name}/${remote_branch}..HEAD" --abbrev-commit | while read sha
+  do
+    echo "Pushing commit ${sha}..."
+    command="git push ${remote_name} ${sha}:${remote_branch}"
+    if ! eval $command
+    then
+      ansi_printf red "Failed to push commit ${sha}. " 2>&1
+      echo "Try:" 2>&1
+      echo "$command -f" 2>&1
+      return 1
+    fi
+  done
+}
+
+alias g=git
+alias ga='git add .'
+alias gc='git commit-message'
+alias gca='git amend'
+alias gd='git diff'
+alias gdc='git diff'
+alias gl='git graph'
+alias gll='git graph | head -n 10'
+alias gp='git push'
+alias gpa='git push-all'
+alias gpl='git pull'
+alias gpr='git pull --rebase'
+alias gs='git status'
+alias gh='git show'
+alias ghf='git show-files'
