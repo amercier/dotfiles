@@ -6,3 +6,5 @@
 	gpgsign = true
 [alias]
 	clone-branch = clone -b
+[core]
+	excludesfile = /Users/amercier/.gitignore_global

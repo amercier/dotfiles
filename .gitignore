@@ -1,8 +1,9 @@
 /*
+!/.gnupg/
 !/.profile.d/
 !/.gitconfig
 !/.gitignore
+!/.gitignore_global
 !/.profile
-!/.gnupg
 !/.zprofile
 !/.zshrc
