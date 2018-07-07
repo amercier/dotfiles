@@ -27,6 +27,21 @@ directory_exists() {
   [ -d "$1" ]
 }
 
+# Whether an Atom Package is installed
+#
+# @param 1 Package name
+# @returns `0` if the package is installed, `1` otherwise
+atom_pacakge_exists() {
+  [ -d "$HOME/.atom/packages/$1" ]
+}
+
+# Install or upgrade a Brew command
+#
+# @param 1 Command name
+install_or_update_atom_package() {
+  install_or_update atom_package "$1" "$1" "apm install $1" "apm upgrade $1"
+}
+
 # Install or update a command or an application
 #
 # @param 1 Type of what to install: command or application
