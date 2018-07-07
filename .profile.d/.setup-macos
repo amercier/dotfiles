@@ -53,15 +53,15 @@ brew_upgrade() {
   fi
 }
 
-brew_command_exists() {
+brew_keg_exists() {
   [ -x "$(brew --prefix)/bin/$1" ]
 }
 
 # Install or upgrade a Brew command
 #
 # @param 1 Command name
-install_or_update_brew_command() {
-  install_or_update brew_command "$1" "$1" "brew install $1" "brew_upgrade $1"
+install_or_update_brew_keg() {
+  install_or_update brew_keg "$1" "$1" "brew install $1" "brew_upgrade $1"
 }
 
 # Install or upgrade a Brew cask
@@ -135,10 +135,12 @@ install_or_update command brew Homebrew \
   'brew update && brew prune && brew cleanup'
 
 # Brew kegs
-install_or_update_brew_command git
-install_or_update_brew_command gpg
-install_or_update_brew_command mas
-install_or_update_brew_command shellcheck
+install_or_update_brew_keg git
+install_or_update_brew_keg gpg
+install_or_update_brew_keg mas
+install_or_update_brew_keg shellcheck
+install_or_update_brew_keg zsh
+install_or_update_brew_keg zsh-completions
 
 # App Store
 install_or_update_mas_application Dashlane
@@ -155,6 +157,11 @@ if [ -n "$(sysctl hw.model | grep MacBookAir)" ]
 then
   install_or_update_brew_cask Karabiner-Elements karabiner-elements
 fi
+
+# Oh My Zsh
+install_or_update directory "$HOME/.oh-my-zsh" "Oh My Zsh" \
+  'sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"'  \
+  '(cd "$HOME/.oh-my-zsh" && git pull)'
 
 # SSH
 if [ ! -e "$HOME/.ssh/id_rsa" ]
