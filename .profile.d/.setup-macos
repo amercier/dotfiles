@@ -22,10 +22,10 @@ application_exists() {
 #
 # @param 1 Name of the application
 install_app_store_upgrades() {
-  softwareupdate --list | grep "* $1" | sed "s/^[^A-Z]*//" | while read update
+  softwareupdate --list | grep "\* $1" | sed "s/^[^A-Z]*//" | while read update
   do
     echo "Installing App Store update: $update"
-    softwareupdate --install "$update" || return 1
+    softwareupdate --install --no-scan "$update" || return 1
   done || return 0
 }
 
@@ -86,10 +86,42 @@ install_or_update_mas_application() {
   install_or_update application "$1" "$1" "mas install $(mas_id $1)" "mas upgrade $(mas_id $1)"
 }
 
+# Set System Preference value.
+#
+# @param 1 Domain. Use `defaults domains | tr ', ' '\n'` to list domains
+# @param 2 Variable name
+# @param 3 Variable type: bool, ...
+# @param 4 Value to set
+macos_set_preference() {
+  if [ "$(defaults read $1 $2 2>/dev/null)" = "$4" ]
+  then
+    echo ✓ System preference "$1" "$2" already set to "$4"
+    return
+  fi
+
+  if [ "$3" != "bool" ]
+  then
+    value="$4"
+  elif [ "$4" = "1" ]
+  then
+    value=true
+  else
+    value=false
+  fi
+  echo ▶ Setting system preference "$1" "$2" to "$value"
+  defaults write "$1" "$2" "-$3" "$value"
+  echo ✓ Done
+  echo
+}
+
+# App Store updates
+echo ▲ "Looking for App Store updates..."
+softwareupdate --install --all
+
 # Xcode Command Line Tools
 install_or_update directory "$(xcode-select -p)" "Command Line Tools for Xcode" \
   'xcode-select --install' \
-  'install_app_store_upgrades "Command Line Tools"'
+  ''
 
 # Brew
 install_or_update command brew Homebrew \
@@ -137,6 +169,7 @@ then
       IdentityFile ~/.ssh/id_rsa" > "$HOME/.ssh/config"
     echo "Done"
   fi
+  echo
 fi
 
 # GPG keys
@@ -144,18 +177,60 @@ if [ -z "$(gpg --list-secret-keys)" ]
 then
   echo "✗ No GPG key found. Please create one using: gpg --full-generate-key" >&2
   exit 1
-else
-  gpg_key_id="$(gpg --list-secret-keys --keyid-format LONG | grep 'sec ' | sed 's/^.*rsa4096\/\([^ ]*\).*$/\1/')"
-  echo "✓ Found GPG key: $gpg_key_id"
-  if [ -z "$(git config --global user.signingkey)" ]
-  then
-    echo ▶ Setting git to use GPG key $gpg_key_id
-    git config --global user.signingkey "$gpg_key_id"
-    echo ✓ Done
-  elif [ "$(git config --global user.signingkey)" = "$gpg_key_id" ]
-  then
-    echo ✓ git already set to use GPG key $gpg_key_id
-  else
-    echo "⚠ Warning: git set to use GPG key $(git config --global user.signingkey) instead of $gpg_key_id"
-  fi
 fi
+gpg_key_id="$(gpg --list-secret-keys --keyid-format LONG | grep 'sec ' | sed 's/^.*rsa4096\/\([^ ]*\).*$/\1/')"
+echo "✓ Found GPG key: $gpg_key_id"
+if [ -z "$(git config --global user.signingkey)" ]
+then
+  echo ▶ Setting git to use GPG key $gpg_key_id
+  git config --global user.signingkey "$gpg_key_id"
+  echo ✓ Done
+elif [ "$(git config --global user.signingkey)" = "$gpg_key_id" ]
+then
+  echo ✓ git already set to use GPG key $gpg_key_id
+else
+  echo "⚠ Warning: git set to use GPG key $(git config --global user.signingkey) instead of $gpg_key_id"
+fi
+echo
+
+# System preferences
+
+# Disable the sound effects on boot
+sudo nvram SystemAudioVolume=' '
+
+# General
+macos_set_preference NSGlobalDomain NSWindowResizeTime float 0.2
+macos_set_preference NSGlobalDomain NSNavPanelExpandedStateForSaveMode bool 1
+macos_set_preference NSGlobalDomain PMPrintingExpandedStateForPrint bool 1
+macos_set_preference NSGlobalDomain NSDocumentSaveNewDocumentsToCloud bool 1
+macos_set_preference NSGlobalDomain NSTextShowsControlCharacters bool 1
+macos_set_preference NSGlobalDomain NSDisableAutomaticTermination bool 1
+macos_set_preference NSGlobalDomain DSDontWriteNetworkStores bool 1
+macos_set_preference NSGlobalDomain com.apple.sound.beep.flash bool 1
+macos_set_preference NSGlobalDomain com.apple.springing.delay float 0
+
+# Launch services
+macos_set_preference com.apple.LaunchServices LSQuarantine bool 0
+
+# Help
+macos_set_preference com.apple.helpviewer DevMode bool 1
+
+# Dock
+macos_set_preference com.apple.dock autohide bool 1
+macos_set_preference com.apple.dock launchanim bool 0
+macos_set_preference com.apple.dock minimize-to-application bool 1
+macos_set_preference com.apple.dock autohide-time-modifier float 0.2
+macos_set_preference com.apple.dock mineffect string scale
+macos_set_preference com.apple.dock enable-spring-load-actions-on-all-itemsn bool 1
+
+# Finder
+macos_set_preference com.apple.finder QuitMenuItem bool 1
+macos_set_preference com.apple.finder DisableAllAnimations bool 1
+macos_set_preference com.apple.finder FXDefaultSearchScope string "SCcf" # When performing a search, search the current folder by default
+macos_set_preference com.apple.finder FXPreferredViewStyle string 'Nlsv' # Use list view in all Finder windows by default
+macos_set_preference com.apple.finder FXEnableExtensionChangeWarning bool 0
+macos_set_preference com.apple.finder QLEnableTextSelection bool 1
+macos_set_preference com.apple.finder DisableAllAnimations bool 1
+macos_set_preference com.apple.finder expose-animation-duration float 0.1 # Speed up Mission Control animations
+
+echo
