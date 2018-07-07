@@ -98,6 +98,7 @@ install_or_update command brew Homebrew \
 
 # Brew kegs
 install_or_update_brew_command git
+install_or_update_brew_command gpg
 install_or_update_brew_command mas
 install_or_update_brew_command shellcheck
 
@@ -135,5 +136,26 @@ then
       UseKeychain yes
       IdentityFile ~/.ssh/id_rsa" > "$HOME/.ssh/config"
     echo "Done"
+  fi
+fi
+
+# GPG keys
+if [ -z "$(gpg --list-secret-keys)" ]
+then
+  echo "✗ No GPG key found. Please create one using: gpg --full-generate-key" >&2
+  exit 1
+else
+  gpg_key_id="$(gpg --list-secret-keys --keyid-format LONG | grep 'sec ' | sed 's/^.*rsa4096\/\([^ ]*\).*$/\1/')"
+  echo "✓ Found GPG key: $gpg_key_id"
+  if [ -z "$(git config --global user.signingkey)" ]
+  then
+    echo ▶ Setting git to use GPG key $gpg_key_id
+    git config --global user.signingkey "$gpg_key_id"
+    echo ✓ Done
+  elif [ "$(git config --global user.signingkey)" = "$gpg_key_id" ]
+  then
+    echo ✓ git already set to use GPG key $gpg_key_id
+  else
+    echo "⚠ Warning: git set to use GPG key $(git config --global user.signingkey) instead of $gpg_key_id"
   fi
 fi
