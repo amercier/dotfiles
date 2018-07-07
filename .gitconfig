@@ -2,3 +2,5 @@
 	name = Alex Mercier
 	email = pro.alexandre.mercier@gmail.com
 	signingkey = A4A0BA9DE4FC1F8D
+[commit]
+	gpgsign = true
