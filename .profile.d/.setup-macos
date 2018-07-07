@@ -143,6 +143,7 @@ install_or_update_brew_cask Atom atom
 install_or_update_brew_cask Catlight catlight
 install_or_update_brew_cask Flux flux
 install_or_update_brew_cask "Google Chrome" google-chrome
+install_or_update_brew_cask "GPG Keychain" gpg-suite
 install_or_update_brew_cask iTerm iterm2
 if [ -n "$(sysctl hw.model | grep MacBookAir)" ]
 then
@@ -196,7 +197,14 @@ echo
 # System preferences
 
 # Disable the sound effects on boot
-sudo nvram SystemAudioVolume=' '
+if [ "$(nvram SystemAudioVolume | sed 's/^SystemAudioVolume.//')" = "%80" ]
+then
+  echo ✓ Startup sound already disabled
+else
+  echo ▶ Disabling startup sound
+  sudo nvram SystemAudioVolume=%80
+  echo ✓ Done
+fi
 
 # General
 macos_set_preference NSGlobalDomain NSWindowResizeTime float 0.2
