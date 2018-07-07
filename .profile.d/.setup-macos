@@ -10,14 +10,6 @@ __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 . ${__dir}/_lib
 
-# Whether an application exists in `/Applications` or `$HOME/Applications`
-#
-# @param 1 Application name to check, without `.app`
-# @returns `0` if the application directory exists, `1` otherwise
-application_exists() {
-  directory_exists "/Applications/$1.app" || directory_exists -d "$HOME/Applications/$1.app"
-}
-
 # Install App Store upgrades for an application
 #
 # @param 1 Name of the application
@@ -51,10 +43,6 @@ brew_upgrade() {
   else
     echo "$1 is up-to-date"
   fi
-}
-
-brew_keg_exists() {
-  [ -d "$(brew --prefix)/opt/$1" ]
 }
 
 # Install or upgrade a Brew command

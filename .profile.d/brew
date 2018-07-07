@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+
+if command_exists brew
+then
+  prepend_to_path /usr/local/sbin
+  BREW_PATH="$(brew --prefix)/opt"
+  export BREW_PATH
+fi
