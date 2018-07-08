@@ -55,7 +55,6 @@
     noConfigDisable: true
   "linter-ui-default":
     panelHeight: 300
-    showPanel: true
   "markdown-preview":
     useGitHubStyle: true
   minimap:
@@ -80,7 +79,10 @@
     projectPaths: "~/Workspace"
   "travis-ci-status": {}
   "tree-view":
-    hideVcsIgnoredFiles: true
+    alwaysOpenExisting: true
+    autoReveal: true
+    hideIgnoredNames: true
+    squashDirectoryNames: true
   welcome:
     showOnStartup: false
 ".blade.html.php.text":
