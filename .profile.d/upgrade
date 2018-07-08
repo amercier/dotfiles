@@ -1,0 +1,30 @@
+#!/usr/bin/env sh
+
+LOCKFILE=$HOME/.updating.lock
+
+upgrade_brew() {
+  if which brew >/dev/null 2>&1; then
+    find "$(brew --prefix)" -maxdepth 1 -type d \! -user "$(whoami)" -exec chown "$(whoami):admin" {} \;
+    brew prune
+    brew update
+    brew cleanup
+    brew upgrade
+    if brew cask2 --version >/dev/null 2>&1; then
+      brew cask update
+      brew cask cleanup
+      brew cask upgrade
+    fi
+  fi
+}
+
+upgrade_all() {
+  sudo chown -R "$(whoami)" "$(brew --prefix)"/*
+  upgrade_brew
+}
+
+if [ "$(shuf -i 0-9 -n 1)" = 0 ] && [ ! -f $LOCKFILE ]; then
+  echo 'Starting updates...'
+  touch $LOCKFILE
+  upgrade_all || echo 'Upgrade failed' >&2
+  rm $LOCKFILE
+fi
