@@ -25,8 +25,13 @@
       "multi-cursor"
     ]
     telemetryConsent: "no"
+  docblockr:
+    align_tags: "no"
+    return_tag: "@returns"
+    spacer_between_sections: "after_description"
   editor:
     fontSize: 12
+    preferredLineLength: 100
     showInvisibles: true
   "exception-reporting":
     userId: "36449ad6-e838-443c-b68a-e71110c9bc12"
@@ -39,12 +44,20 @@
       "source.js-semantic"
       "text.html.vue"
     ]
+  "linter-node-markdownlint":
+    disableIfNoMarkdownlintrc: true
   "linter-phpcs": {}
   "linter-python":
     executablePath: "/Users/amercier/.pyenv/shims/pylama"
     withPep8: true
+  "linter-sass-lint":
+    configFile: "node_modules/sass-lint/lib/config/sass-lint.yml"
+    noConfigDisable: true
   "linter-ui-default":
     panelHeight: 300
+    showPanel: true
+  "markdown-preview":
+    useGitHubStyle: true
   minimap:
     plugins:
       "highlight-selected": true
@@ -66,9 +79,14 @@
   "project-quick-open":
     projectPaths: "~/Workspace"
   "travis-ci-status": {}
+  "tree-view":
+    hideVcsIgnoredFiles: true
   welcome:
     showOnStartup: false
 ".blade.html.php.text":
   editor:
     commentEnd: " --}}"
     commentStart: "{{-- "
+".editorconfig.source":
+  editor:
+    preferredLineLength: 100
