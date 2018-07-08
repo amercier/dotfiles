@@ -80,7 +80,10 @@
     projectPaths: "~/Workspace"
   "travis-ci-status": {}
   "tree-view":
-    hideVcsIgnoredFiles: true
+    alwaysOpenExisting: true
+    autoReveal: true
+    hideIgnoredNames: true
+    squashDirectoryNames: true
   welcome:
     showOnStartup: false
 ".blade.html.php.text":
