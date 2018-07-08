@@ -304,3 +304,14 @@ echo
 
 # Atom Packages
 install_or_update_atom_package package-sync
+
+# Workspace
+if directory_exists "$HOME/Workspace"
+then
+  echo ✓ ~/Workspace directory already exists
+else
+  echo ▶ Creating ~/Workspace directory
+  mkdir "$HOME/Workspace"
+  echo ✓ Done
+  echo
+fi
