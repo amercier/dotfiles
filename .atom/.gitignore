@@ -1,4 +1,6 @@
 *
 !/.gitignore
+!/config.cson
 !/init.coffee
+!/keymap.cson
 !/packages.cson
