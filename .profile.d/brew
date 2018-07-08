@@ -3,6 +3,7 @@
 if command_exists brew
 then
   prepend_to_path /usr/local/sbin
+  prepend_to_path /usr/local/bin -f
   BREW_PATH="$(brew --prefix)/opt"
   export BREW_PATH
 fi

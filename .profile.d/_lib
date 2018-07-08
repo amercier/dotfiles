@@ -17,7 +17,13 @@ str_contains() {
 prepend_to_path() {
   if str_contains "$PATH" "$1" :
   then
-    echo "Warning: $1 is already in PATH" >&2
+    if [ "${2-}" = '-f' ]
+    then
+      PATH=$(echo $PATH | tr ':' '\n' | egrep -v "^$1\$" | tr '\n' ':')
+      PATH="$1:$PATH"
+    else
+      echo "Warning: $1 is already in PATH" >&2
+    fi
   else
     PATH="$1:$PATH"
   fi
