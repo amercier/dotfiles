@@ -125,8 +125,7 @@ softwareupdate --install --all
 
 # Xcode Command Line Tools
 install_or_update directory "$(xcode-select -p)" "Command Line Tools for Xcode" \
-  'xcode-select --install' \
-  ''
+  'xcode-select --install'
 
 # Brew
 install_or_update command brew Homebrew \
@@ -134,8 +133,10 @@ install_or_update command brew Homebrew \
   'brew update && brew prune && brew cleanup'
 
 # Brew kegs
+install_or_update_brew_keg coreutils
 install_or_update_brew_keg git
 install_or_update_brew_keg gpg
+install_or_update_brew_keg grep
 install_or_update_brew_keg mas
 install_or_update_brew_keg shellcheck
 install_or_update_brew_keg wget
@@ -196,7 +197,7 @@ do
 done
 install_or_update directory "$HOME/.oh-my-zsh" "Oh My Zsh" \
   'sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"'  \
-  '(cd "$HOME/.oh-my-zsh" && git pull)'
+  '(cd "$HOME/.oh-my-zsh" && git pull --rebase)'
 
 # SSH
 if [ ! -e "$HOME/.ssh/id_rsa" ]

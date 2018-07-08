@@ -96,7 +96,7 @@ install_or_update() {
   then
     echo ▶ installing "$3…"
     eval "$4"
-  elif [ -n "$5" ]
+  elif [ -n "${5-}" ]
   then
     echo ▲ "$3" is already installed, updating...
     eval "$5"
