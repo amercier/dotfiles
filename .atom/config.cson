@@ -20,6 +20,7 @@
   core:
     disabledPackages: [
       "linter"
+      "ide-php"
     ]
     packagesWithKeymapsDisabled: [
       "multi-cursor"
