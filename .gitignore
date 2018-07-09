@@ -4,6 +4,7 @@
 !/.profile.d/
 !/.gitconfig
 !/.gitignore
+!/.hyper.js
 !/.profile
 !/.zprofile
 !/.zshrc
