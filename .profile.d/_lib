@@ -118,7 +118,16 @@ install_or_update() {
 url_decode() {
   if [ "$#" = 0 ]
   then
-    python -c 'import urllib; import sys; sys.stdout.write(urllib.unquote(sys.stdin.read()));'
+    if command_exists ruby
+    then
+      ruby -e 'require "uri"; puts URI.unescape(ARGF.read)'
+    elif command_exists python
+    then
+      python -c 'import urllib; import sys; sys.stdout.write(urllib.unquote(sys.stdin.read()));'
+    else
+      echo 'url_decode: ruby or python command not found' >&2
+      return 1
+    fi
   else
     echo "$@" | url_decode
   fi
