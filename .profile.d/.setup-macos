@@ -8,6 +8,7 @@ set -o nounset
 # Set magic variables for current file & dir
 __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+. ${__dir}/_colors
 . ${__dir}/_lib
 
 # Install App Store upgrades for an application
@@ -181,20 +182,39 @@ else
   echo
 fi
 
-# Oh My Zsh
-
-for font in "Meslo LG M Bold Italic for Powerline.ttf" "Meslo LG M Bold for Powerline.ttf" "Meslo LG M Italic for Powerline.ttf" "Meslo LG M Regular for Powerline.ttf"
+# Fonts
+echo '
+  https://github.com/powerline/fonts/blob/master/Meslo%20Dotted/Meslo%20LG%20L%20DZ%20Bold%20Italic%20for%20Powerline.ttf?raw=true
+  https://github.com/powerline/fonts/blob/master/Meslo%20Dotted/Meslo%20LG%20L%20DZ%20Bold%20for%20Powerline.ttf?raw=true
+  https://github.com/powerline/fonts/blob/master/Meslo%20Dotted/Meslo%20LG%20L%20DZ%20Italic%20for%20Powerline.ttf?raw=true
+  https://github.com/powerline/fonts/blob/master/Meslo%20Dotted/Meslo%20LG%20L%20DZ%20Regular%20for%20Powerline.ttf?raw=true
+  https://github.com/powerline/fonts/blob/master/Meslo%20Dotted/Meslo%20LG%20M%20DZ%20Bold%20Italic%20for%20Powerline.ttf?raw=true
+  https://github.com/powerline/fonts/blob/master/Meslo%20Dotted/Meslo%20LG%20M%20DZ%20Bold%20for%20Powerline.ttf?raw=true
+  https://github.com/powerline/fonts/blob/master/Meslo%20Dotted/Meslo%20LG%20M%20DZ%20Italic%20for%20Powerline.ttf?raw=true
+  https://github.com/powerline/fonts/blob/master/Meslo%20Dotted/Meslo%20LG%20M%20DZ%20Regular%20for%20Powerline.ttf?raw=true
+  https://github.com/powerline/fonts/blob/master/Meslo%20Dotted/Meslo%20LG%20S%20DZ%20Bold%20Italic%20for%20Powerline.ttf?raw=true
+  https://github.com/powerline/fonts/blob/master/Meslo%20Dotted/Meslo%20LG%20S%20DZ%20Bold%20for%20Powerline.ttf?raw=true
+  https://github.com/powerline/fonts/blob/master/Meslo%20Dotted/Meslo%20LG%20S%20DZ%20Italic%20for%20Powerline.ttf?raw=true
+  https://github.com/powerline/fonts/blob/master/Meslo%20Dotted/Meslo%20LG%20S%20DZ%20Regular%20for%20Powerline.ttf?raw=true
+  https://github.com/powerline/fonts/blob/master/Meslo%20Slashed/Meslo%20LG%20L%20Bold%20Italic%20for%20Powerline.ttf?raw=true
+  https://github.com/powerline/fonts/blob/master/Meslo%20Slashed/Meslo%20LG%20L%20Bold%20for%20Powerline.ttf?raw=true
+  https://github.com/powerline/fonts/blob/master/Meslo%20Slashed/Meslo%20LG%20L%20Italic%20for%20Powerline.ttf?raw=true
+  https://github.com/powerline/fonts/blob/master/Meslo%20Slashed/Meslo%20LG%20L%20Regular%20for%20Powerline.ttf?raw=true
+  https://github.com/powerline/fonts/blob/master/Meslo%20Slashed/Meslo%20LG%20M%20Bold%20Italic%20for%20Powerline.ttf?raw=true
+  https://github.com/powerline/fonts/blob/master/Meslo%20Slashed/Meslo%20LG%20M%20Bold%20for%20Powerline.ttf?raw=true
+  https://github.com/powerline/fonts/blob/master/Meslo%20Slashed/Meslo%20LG%20M%20Italic%20for%20Powerline.ttf?raw=true
+  https://github.com/powerline/fonts/blob/master/Meslo%20Slashed/Meslo%20LG%20M%20Regular%20for%20Powerline.ttf?raw=true
+  https://github.com/powerline/fonts/blob/master/Meslo%20Slashed/Meslo%20LG%20S%20Bold%20Italic%20for%20Powerline.ttf?raw=true
+  https://github.com/powerline/fonts/blob/master/Meslo%20Slashed/Meslo%20LG%20S%20Bold%20for%20Powerline.ttf?raw=true
+  https://github.com/powerline/fonts/blob/master/Meslo%20Slashed/Meslo%20LG%20S%20Italic%20for%20Powerline.ttf?raw=true
+  https://github.com/powerline/fonts/blob/master/Meslo%20Slashed/Meslo%20LG%20S%20Regular%20for%20Powerline.ttf?raw=true
+' | trim | \
+while read url
 do
-  if [ -e "$HOME/Library/Fonts/$font" ]
-  then
-    echo ✓ Font $font is already installed.
-  else
-    echo ▶ Installing font $font...
-    wget "https://github.com/powerline/fonts/blob/master/Meslo%20Slashed/$(echo $font | sed 's/ /%20/g')?raw=true" -O "$HOME/Library/Fonts/$font"
-    echo ✓ Done
-    echo
-  fi
+  download_file "$HOME/Library/Fonts" "$url"
 done
+
+# Oh My Zsh
 install_or_update directory "$HOME/.oh-my-zsh" "Oh My Zsh" \
   'sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"'  \
   '(cd "$HOME/.oh-my-zsh" && git pull --rebase)'
