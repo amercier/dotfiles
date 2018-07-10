@@ -126,9 +126,9 @@ url_decode() {
 
 # Trim empty lines
 #
-# @param
+# @param stdin Text to trim
 trim() {
-  sed '/^\s*$/d'
+  sed '/^[[:space:]]*$/d'
 }
 
 # File name from an URL
