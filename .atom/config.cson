@@ -56,7 +56,6 @@
     noConfigDisable: true
   "linter-ui-default":
     panelHeight: 300
-    showPanel: true
   "markdown-preview":
     useGitHubStyle: true
   minimap:
