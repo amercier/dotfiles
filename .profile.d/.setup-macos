@@ -154,11 +154,15 @@ install_or_update_brew_cask_application Catlight catlight
 install_or_update_brew_cask_application Flux flux
 install_or_update_brew_cask_application "Google Chrome" google-chrome
 install_or_update_brew_cask_application "GPG Keychain" gpg-suite
+install_or_update_brew_cask java
 install_or_update_brew_cask_application Hyper hyper
 if [ -n "$(sysctl hw.model | grep MacBookAir)" ]
 then
   install_or_update_brew_cask_application Karabiner-Elements karabiner-elements
 fi
+
+# Brew kegs with casks dependencies
+install_or_update_brew_keg ant # requires java
 
 # Default Shell
 zsh_path="$(which zsh)"
