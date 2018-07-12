@@ -289,7 +289,7 @@ macos_set_preference NSGlobalDomain NSTextShowsControlCharacters bool 1
 macos_set_preference NSGlobalDomain NSDisableAutomaticTermination bool 1
 macos_set_preference NSGlobalDomain DSDontWriteNetworkStores bool 1
 macos_set_preference NSGlobalDomain com.apple.sound.beep.flash bool 1
-macos_set_preference NSGlobalDomain com.apple.springing.delay float 0
+macos_set_preference NSGlobalDomain com.apple.springing.delay float 1
 
 # Launch services
 macos_set_preference com.apple.LaunchServices LSQuarantine bool 0
@@ -303,7 +303,7 @@ macos_set_preference com.apple.dock launchanim bool 0
 macos_set_preference com.apple.dock minimize-to-application bool 1
 macos_set_preference com.apple.dock autohide-time-modifier float 0.2
 macos_set_preference com.apple.dock mineffect string scale
-macos_set_preference com.apple.dock enable-spring-load-actions-on-all-itemsn bool 1
+macos_set_preference com.apple.dock enable-spring-load-actions-on-all-items bool 1
 
 # Finder
 macos_set_preference com.apple.finder QuitMenuItem bool 1
