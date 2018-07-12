@@ -1,5 +1,3 @@
-#!/usr/bin/env sh
-#
 # Utility functions for .profile.d scripts
 
 # Check if a string contains agiven substring
@@ -22,7 +20,7 @@ prepend_to_path() {
       PATH=$(echo $PATH | tr ':' '\n' | egrep -v "^$1\$" | tr '\n' ':')
       PATH="$1:$PATH"
     else
-      echo "Warning: $1 is already in PATH" >&2
+      echo "$(yellow Warning:) $(magenta $1) is already in $(cyan PATH)" >&2
     fi
   else
     PATH="$1:$PATH"
@@ -100,15 +98,15 @@ application_exists() {
 install_or_update() {
   if ! eval "${1}_exists" \'"$2"\'
   then
-    echo ▶ installing "$3…"
+    echo "$(blue ▶) installing $(magenta $3)..."
     eval "$4"
   elif [ -n "${5-}" ]
   then
-    echo ▲ "$3" is already installed, updating...
+    echo "$(blue ▲) $(magenta $3) is already installed, updating..."
     eval "$5"
-    echo ✓ "$3" is up-to-date.
+    echo "$(green ✓) $(magenta $3) is up-to-date."
   else
-    echo ✓ "$3" is already installed, nothing to update.
+    echo "$(green ✓) $(magenta $3) is already installed, nothing to update."
   fi
   echo
 }
@@ -171,11 +169,11 @@ download_file() {
   fullpath="$1/$filename"
   if [ -e "$fullpath" ]
   then
-    echo $(ansi_printf green ✓) File $(ansi_printf cyan $filename) already exists in $(ansi_printf magenta $1).
+    echo $(green ✓) File $(magenta $filename) already exists in $(cyan $1).
   else
-    echo $(ansi_printf blue ▼) Downloading $(ansi_printf cyan $2) to $(ansi_printf magenta $1)…
+    echo $(blue ▼) Downloading $(magenta $2) to $(cyan $1)…
     echo curl -# -L "$2" > "$fullpath"
-    echo $(ansi_printf green ✓) Done.
+    echo $(green ✓) Done.
     echo
   fi
 }

@@ -8,8 +8,10 @@ set -o nounset
 # Set magic variables for current file & dir
 __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-. ${__dir}/_colors
-. ${__dir}/_lib
+. $__dir/_colors.sh
+echo "$(green ✓) Loaded $(magenta colors) library"
+. $__dir/_lib.sh
+echo "$(green ✓) Loaded $(magenta lib) library"
 
 # Install App Store upgrades for an application
 #
@@ -17,7 +19,7 @@ __dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 install_app_store_upgrades() {
   softwareupdate --list | grep "\* $1" | sed "s/^[^A-Z]*//" | while read update
   do
-    echo "Installing App Store update: $update"
+    echo "$(blue ▲) Installing App Store update: $update"
     softwareupdate --install --no-scan "$update" || return 1
   done || return 0
 }
@@ -96,7 +98,7 @@ macos_set_preference() {
 
   if [ "$(defaults read $1 $2 2>/dev/null)" = "$4" ]
   then
-    echo ✓ System preference "$1" "$2" already set to "$4"
+    echo "$(green ✓) System preference $(magenta $1 $2) already set to $(cyan $4)"
     return
   fi
 
@@ -109,20 +111,20 @@ macos_set_preference() {
   else
     value=false
   fi
-  echo ▶ Setting system preference "$1" "$2" to "$value"
+  echo $(blue ▶) Setting system preference "$1" "$2" to "$value"
   if [ "$#" = 5 ] && [ -n "$5" ]
   then
     sudo defaults write "$1" "$2" "-$3" "$value"
   else
     defaults write "$1" "$2" "-$3" "$value"
   fi
-  echo ✓ Done
+  echo $(green ✓) Done
   echo
 }
 
 # App Store updates
-echo ▲ "Looking for App Store updates..."
-softwareupdate --install --all
+# echo "$(blue ▶) Looking for App Store updates..."
+# softwareupdate --install --all
 
 # Xcode Command Line Tools
 install_or_update directory "$(xcode-select -p)" "Command Line Tools for Xcode" \
@@ -175,20 +177,20 @@ zsh_path="$(which zsh)"
 
 if grep "$zsh_path" /etc/shells > /dev/null
 then
-  echo ✓ $zsh_path exits already in /etc/shells
+  echo $(green ✓) $zsh_path exits already in /etc/shells
 else
-  echo ▶ Adding "$zsh_path" to /etc/shells
+  echo $(blue ▶) Adding "$zsh_path" to /etc/shells
   echo "$zsh_path" | sudo tee /etc/shells > /dev/null
-  echo ✓ Done
+  echo $(green ✓) Done
 fi
 
 if [ "$(dscl . -read /Users/$USER UserShell | sed 's/^[^ ]* //')" = "$zsh_path" ]
 then
-  echo ✓ Default shell already set to $zsh_path.
+  echo $(green ✓) Default shell already set to $zsh_path.
 else
-  echo ▶ Setting default shell to "$zsh_path"
+  echo $(blue ▶) Setting default shell to "$zsh_path"
   chsh -s "$zsh_path"
-  echo ✓ Done
+  echo $(green ✓) Done
   echo
 fi
 
@@ -255,36 +257,36 @@ fi
 # GPG keys
 if [ -z "$(gpg --list-secret-keys)" ]
 then
-  echo "✗ No GPG key found. Please create one using: gpg --full-generate-key" >&2
+  echo "$(red '✗ No GPG key found.') Please create one using: gpg --full-generate-key" >&2
   exit 1
 fi
 gpg_key_id="$(gpg --list-secret-keys --keyid-format LONG | grep 'sec ' | sed 's/^.*rsa4096\/\([^ ]*\).*$/\1/')"
-echo "✓ Found GPG key: $gpg_key_id"
+echo "$(green ✓) Found GPG key: $gpg_key_id"
 if [ -z "$(git config --global user.signingkey)" ]
 then
-  echo ▶ Setting git to use GPG key $gpg_key_id
+  echo $(blue ▶) Setting git to use GPG key $gpg_key_id
   git config --global user.signingkey "$gpg_key_id"
-  echo ✓ Done
+  echo $(green ✓) Done
 elif [ "$(git config --global user.signingkey)" = "$gpg_key_id" ]
 then
-  echo ✓ git already set to use GPG key $gpg_key_id
+  echo $(green ✓) git already set to use GPG key $gpg_key_id
 else
-  echo "⚠ Warning: git set to use GPG key $(git config --global user.signingkey) instead of $gpg_key_id"
+  echo "$(yellow '⚠ Warning:') git set to use GPG key $(git config --global user.signingkey) instead of $gpg_key_id"
 fi
 echo
 
 # Disable the sound effects on boot
 if [ -e /Library/Scripts/macos-mute-off ] && [ -e /Library/Scripts/macos-mute-on ]
 then
-  echo ✓ Startup sound already disabled
+  echo $(green ✓) Startup sound already disabled
 else
-  echo ▶ Disabling startup sound
+  echo $(blue ▶) Disabling startup sound
   printf '#!/usr/bin/env sh\n\nosascript -e "set volume without output muted"\n' | sudo tee /Library/Scripts/macos-mute-off > /dev/null
   printf '#!/usr/bin/env sh\n\nosascript -e "set volume with output muted"\n' | sudo tee /Library/Scripts/macos-mute-on > /dev/null
   sudo chmod +x /Library/Scripts/macos-mute-off /Library/Scripts/macos-mute-on
   sudo defaults write com.apple.loginwindow LoginHook "/Library/Scripts/macos-mute-off"
   sudo defaults write com.apple.loginwindow LogoutHook "/Library/Scripts/macos-mute-on"
-  echo ✓ Done
+  echo $(green ✓) Done
   echo
 fi
 
@@ -338,10 +340,10 @@ install_or_update_atom_package package-sync
 # Workspace
 if directory_exists "$HOME/Workspace"
 then
-  echo ✓ ~/Workspace directory already exists
+  echo $(green ✓) $(magenta ~/Workspace) directory already exists
 else
-  echo ▶ Creating ~/Workspace directory
+  echo $(blue ▶) Creating $(magenta ~/Workspace) directory...
   mkdir "$HOME/Workspace"
-  echo ✓ Done
+  echo $(green ✓) Done
   echo
 fi
