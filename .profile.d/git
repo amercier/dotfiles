@@ -38,7 +38,8 @@ git_push_all() {
 }
 
 alias g=git
-alias ga='git add .'
+alias ga='git add'
+alias gaa='git add .'
 alias gc='git commit-message'
 alias gca='git amend'
 alias gd='git diff'
