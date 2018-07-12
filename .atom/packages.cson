@@ -13,6 +13,7 @@ packages: [
   "intentions"
   "language-ansi-styles"
   "language-apache"
+  "language-applescript"
   "language-blade"
   "language-groovy"
   "language-pug"
