@@ -156,9 +156,15 @@ install_or_update_brew_cask_application "Google Chrome" google-chrome
 install_or_update_brew_cask_application "GPG Keychain" gpg-suite
 install_or_update_brew_cask java
 install_or_update_brew_cask_application Hyper hyper
+
 if [ -n "$(sysctl hw.model | grep MacBookAir)" ]
 then
   install_or_update_brew_cask_application Karabiner-Elements karabiner-elements
+fi
+
+if [ -n "$(sysctl hw.model | grep iMac)" ]
+then
+  install_or_update_brew_cask_application Discord discord
 fi
 
 # Brew kegs with casks dependencies
