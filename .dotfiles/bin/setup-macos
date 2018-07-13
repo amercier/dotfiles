@@ -81,11 +81,31 @@ mas_id() {
   mas search "$1" | tr ' ' '\n' | head -n 1
 }
 
-# Install or upgrade a a Mac App Store application
+# Install or upgrade a Mac App Store application
 #
 # @param 1 Application name
 install_or_update_mas_application() {
   install_or_update application "$1" "$1" "mas install $(mas_id $1)" "mas upgrade $(mas_id $1)"
+}
+
+# Whether a NVM Node.js version is installed
+#
+# @param 1 Version or alias
+# @returns `0` if the version is installed, `1` otherwise
+nvm_node_version_exists() {
+  if [ "$1" = '--lts' ]
+  then
+    directory_exists "$HOME/.nvm/versions/lts"
+  else
+    directory_exists "$HOME/.nvm/versions/$1"
+  fi
+}
+
+# Install or upgrade a NVM Node.js Version
+#
+# @param 1 Version or alias
+install_or_update_nvm_node_version() {
+  install_or_update nvm_node_version "$1" "Node.js $1" "nvm install $1" "nvm install $1"
 }
 
 # Set System Preference value.
@@ -140,6 +160,7 @@ install_or_update_brew_keg coreutils
 install_or_update_brew_keg git
 install_or_update_brew_keg grep
 install_or_update_brew_keg mas
+install_or_update_brew_keg nvm
 install_or_update_brew_keg shellcheck
 install_or_update_brew_keg wget
 install_or_update_brew_keg zsh
@@ -335,6 +356,14 @@ echo
 
 # Atom Packages
 install_or_update_atom_package package-sync
+
+# Node versions
+install_or_update_nvm_node_version node
+install_or_update_nvm_node_version --lts
+install_or_update_nvm_node_version 6
+install_or_update_nvm_node_version 4
+install_or_update_nvm_node_version 0.12
+install_or_update_nvm_node_version 0.10
 
 # Workspace
 if directory_exists "$HOME/Workspace"

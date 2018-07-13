@@ -2,6 +2,7 @@
 !/.atom/
 !/.gnupg/
 !/.dotfiles/
+!/.nvm/
 !/.gitconfig
 !/.gitignore
 !/.hyper.js
