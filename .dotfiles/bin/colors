@@ -2,7 +2,7 @@
 
 # Set magic variables for current file & dir
 __dir=${0:a:h}
-. ${__dir}/../_colors.sh
+. ${__dir}/../lib/colors.sh
 
 printf "Normal  \t"
 black black ' '

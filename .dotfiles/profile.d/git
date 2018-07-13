@@ -29,8 +29,7 @@ git_push_all() {
     command="git push ${remote_name} ${sha}:${remote_branch}"
     if ! eval $command
     then
-      red "Failed to push commit ${sha}. " 2>&1
-      echo "Try:" 2>&1
+      echo "$(red '✗ Failed to push commit '${sha}.) Try:" 2>&1
       echo "$command -f" 2>&1
       return 1
     fi

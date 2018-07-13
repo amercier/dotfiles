@@ -54,7 +54,7 @@ ZSH_THEME="agnoster-amercier"
 # HIST_STAMPS="mm/dd/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
-ZSH_CUSTOM=$HOME/.profile.d/oh-my-zsh-custom
+ZSH_CUSTOM=$HOME/.dotfiles/extra/oh-my-zsh-custom
 
 ZSH_DISABLE_COMPFIX=true
 

@@ -1,17 +1,17 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 set -o errexit
 set -o pipefail
 set -o nounset
 # set -o xtrace
 
-# Set magic variables for current file & dir
-__dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-. $__dir/_colors.sh
-echo "$(green ✓) Loaded $(magenta colors) library"
-. $__dir/_lib.sh
-echo "$(green ✓) Loaded $(magenta lib) library"
+# shellcheck source=../lib/colors.sh
+. $dir/../lib/colors.sh
+
+# shellcheck source=../lib/lib.sh
+. $dir/../lib/lib.sh
 
 # Install App Store upgrades for an application
 #
@@ -123,8 +123,8 @@ macos_set_preference() {
 }
 
 # App Store updates
-# echo "$(blue ▶) Looking for App Store updates..."
-# softwareupdate --install --all
+echo "$(blue ▶) Looking for App Store updates..."
+softwareupdate --install --all
 
 # Xcode Command Line Tools
 install_or_update directory "$(xcode-select -p)" "Command Line Tools for Xcode" \
@@ -138,7 +138,6 @@ install_or_update command brew Homebrew \
 # Brew kegs
 install_or_update_brew_keg coreutils
 install_or_update_brew_keg git
-install_or_update_brew_keg gpg
 install_or_update_brew_keg grep
 install_or_update_brew_keg mas
 install_or_update_brew_keg shellcheck
