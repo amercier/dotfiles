@@ -6,9 +6,11 @@ ansi() {
   then
     cat
   else
+    prefix=""
     for i
     do
-      printf "$i"
+      printf -- "$prefix$i"
+      prefix=" "
     done
   fi
   printf "\033[${end}m" # Color end
