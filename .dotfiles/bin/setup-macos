@@ -10,137 +10,15 @@ dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck source=../lib/colors.sh
 . $dir/../lib/colors.sh
 
-# shellcheck source=../lib/lib.sh
-. $dir/../lib/lib.sh
-
-# Install App Store upgrades for an application
-#
-# @param 1 Name of the application
-install_app_store_upgrades() {
-  softwareupdate --list | grep "\* $1" | sed "s/^[^A-Z]*//" | while read update
-  do
-    echo "$(blue ▲) Installing App Store update: $update"
-    softwareupdate --install --no-scan "$update" || return 1
-  done || return 0
-}
-
-# Upgrade a Cask
-#
-# @param 1 Cask name
-brew_cask_upgrade() {
-  if [ -n "$(brew cask outdated $1)" ]; then
-    echo "$1 is outdated, upgrading..."
-    # brew cask reinstall $1
-  else
-    echo "$1 is up-to-date"
-  fi
-}
-
-# Upgrade a Brew keg
-#
-# @param 1 Keg name
-brew_upgrade() {
-  if [ -n "$(brew outdated $1)" ]; then
-    echo "$1 is outdated, upgrading..."
-    brew upgrade "$1" --cleanup
-  else
-    echo "$1 is up-to-date"
-  fi
-}
-
-# Install or upgrade a Brew command
-#
-# @param 1 Command name
-install_or_update_brew_keg() {
-  install_or_update brew_keg "$1" "$1" "brew install $1" "brew_upgrade $1"
-}
-
-# Install or upgrade a Brew cask application
-#
-# @param 1 Cask name
-# @param 2 Application name
-install_or_update_brew_cask_application() {
-  install_or_update application "$1" "$1" "brew cask install $2" "brew_cask_upgrade $2"
-}
-
-brew_cask_exists() {
-  brew cask list | grep $1 >/dev/null 2>&1
-}
-
-# Install or upgrade a Brew cask
-#
-# @param 1 Cask name
-install_or_update_brew_cask() {
-  install_or_update brew_cask "$1" "$1" "brew cask install $1" "brew_cask_upgrade $1"
-}
-
-# Get ID of a Mac App Store application
-#
-# @param 1 Application name
-mas_id() {
-  mas search "$1" | tr ' ' '\n' | head -n 1
-}
-
-# Install or upgrade a Mac App Store application
-#
-# @param 1 Application name
-install_or_update_mas_application() {
-  install_or_update application "$1" "$1" "mas install $(mas_id $1)" "mas upgrade $(mas_id $1)"
-}
-
-# Whether a NVM Node.js version is installed
-#
-# @param 1 Version or alias
-# @returns `0` if the version is installed, `1` otherwise
-nvm_node_version_exists() {
-  if [ "$1" = '--lts' ]
-  then
-    directory_exists "$HOME/.nvm/versions/lts"
-  else
-    directory_exists "$HOME/.nvm/versions/$1"
-  fi
-}
-
-# Install or upgrade a NVM Node.js Version
-#
-# @param 1 Version or alias
-install_or_update_nvm_node_version() {
-  install_or_update nvm_node_version "$1" "Node.js $1" "nvm install $1" "nvm install $1"
-}
-
-# Set System Preference value.
-#
-# @param 1 Domain. Use `defaults domains | tr ', ' '\n'` to list domains
-# @param 2 Variable name
-# @param 3 Variable type: bool, ...
-# @param 4 Value to set
-macos_set_preference() {
-
-  if [ "$(defaults read $1 $2 2>/dev/null)" = "$4" ]
-  then
-    echo "$(green ✓) System preference $(magenta $1 $2) already set to $(cyan $4)"
-    return
-  fi
-
-  if [ "$3" != "bool" ]
-  then
-    value="$4"
-  elif [ "$4" = "1" ]
-  then
-    value=true
-  else
-    value=false
-  fi
-  echo $(blue ▶) Setting system preference "$1" "$2" to "$value"
-  if [ "$#" = 5 ] && [ -n "$5" ]
-  then
-    sudo defaults write "$1" "$2" "-$3" "$value"
-  else
-    defaults write "$1" "$2" "-$3" "$value"
-  fi
-  echo $(green ✓) Done
-  echo
-}
+filepaths=$(find "$dir/../lib" -type f -not -name '.*' -not -name '*.example' -not -name 'colors.sh')
+for filepath in $filepaths
+do
+  # shellcheck source=.
+  . "$filepath"
+  relative_path=$(realpath --relative-to="$dir/../lib" "$filepath")
+  echo "$(green ✓) Loaded $(magenta $relative_path) library"
+done
+echo
 
 # App Store updates
 echo "$(blue ▶) Looking for App Store updates..."

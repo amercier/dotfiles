@@ -6,7 +6,7 @@
 # Source all files in lib and profile.d directories
 for dir in lib profile.d
 do
-  find "$HOME/.dotfiles/$dir" -maxdepth 1 -type f -not -name '.*' -not -name '*.example' | sort | while read filepath
+  find "$HOME/.dotfiles/$dir" -type f -not -name '.*' -not -name '*.example' | sort | while read filepath
   do
     # start_time=$(($(gdate +%s%N)/1000000))
     # shellcheck source=.

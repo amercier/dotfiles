@@ -10,9 +10,6 @@ dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck source=../lib/colors.sh
 . $dir/../lib/colors.sh
 
-# shellcheck source=../lib/lib.sh
-. $dir/../lib/lib.sh
-
 if [ "$OSTYPE" = darwin17 ]
 then
   ${dir}/setup-macos
