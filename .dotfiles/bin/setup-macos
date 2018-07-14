@@ -236,6 +236,7 @@ echo
 install_or_update_atom_package package-sync
 
 # Node versions
+. /usr/local/opt/nvm/nvm.sh
 install_or_update_nvm_node_version node
 install_or_update_nvm_node_version --lts
 install_or_update_nvm_node_version 6
