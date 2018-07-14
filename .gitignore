@@ -5,6 +5,7 @@
 !/.nvm/
 !/.gitconfig
 !/.gitignore
+!/.editorconfig
 !/.hyper.js
 !/.profile
 !/.zprofile
