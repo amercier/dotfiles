@@ -245,12 +245,4 @@ install_or_update_nvm_node_version 0.12
 install_or_update_nvm_node_version 0.10
 
 # Workspace
-if directory_exists "$HOME/Workspace"
-then
-  echo $(green ✓) $(magenta ~/Workspace) directory already exists
-else
-  echo $(blue ▶) Creating $(magenta ~/Workspace) directory...
-  mkdir "$HOME/Workspace"
-  echo $(green ✓) Done
-  echo
-fi
+create_directory_if_not_exists "$HOME/Workspace"

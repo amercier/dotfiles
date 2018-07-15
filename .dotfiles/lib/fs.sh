@@ -48,3 +48,18 @@ download_file() {
     echo
   fi
 }
+
+# Create a directory if it does not exist.
+#
+# @param 1 Direactory path.
+create_directory_if_not_exists() {
+  if directory_exists "$1"
+  then
+    echo "$(green ✓) $(magenta $1) directory already exists"
+  else
+    echo "$(blue ▶) Creating $(magenta $1) directory..."
+    mkdir -p "$1"
+    echo "$(green ✓) Done"
+    echo
+  fi
+}
