@@ -6,7 +6,7 @@
 # @param 1 Application name to check, without `.app`
 # @returns `0` if the application directory exists, `1` otherwise
 application_exists() {
-  directory_exists "/Applications/$1.app" || directory_exists -d "$HOME/Applications/$1.app"
+  directory_exists "/Applications/$1.app" || directory_exists "$HOME/Applications/$1.app"
 }
 
 # Install App Store upgrades for an application
