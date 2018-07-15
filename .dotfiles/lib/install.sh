@@ -13,13 +13,14 @@ install_or_update() {
   then
     echo "$(blue ▶) installing $(magenta $3)..."
     eval "$4" && echo "$(green ✓) Done" || echo "$(red ✗) Failed"
+    echo
   elif [ -n "${5-}" ]
   then
     echo "$(blue ▲) $(magenta $3) is already installed, updating..."
     eval "$5"
     echo "$(green ✓) $(magenta $3) is up-to-date."
+    echo
   else
     echo "$(green ✓) $(magenta $3) is already installed, nothing to update."
   fi
-  echo
 }

@@ -175,8 +175,8 @@ echo
 
 # Setup.app
 create_directory_if_not_exists "$HOME/Applications"
-install_or_update application "Setup" "Setup" \
-  "osacompile -o '$HOME/Applications/Setup.app' '$dir/../src/setup.applescript'"
+install_or_update application "Setup" "Setup application" "osacompile -o '$HOME/Applications/Setup.app' '$dir/../src/setup.applescript'"
+install_or_update login_item "Setup" "Setup login item" "add_login_item '$HOME/Applications/Setup.app'"
 
 # Disable the sound effects on boot
 if [ -e /Library/Scripts/macos-mute-off ] && [ -e /Library/Scripts/macos-mute-on ]
