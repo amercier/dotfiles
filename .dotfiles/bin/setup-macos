@@ -124,10 +124,14 @@ do
   download_file "$HOME/Library/Fonts" "$url"
 done
 
-# Oh My Zsh
-install_or_update directory "$HOME/.oh-my-zsh" "Oh My Zsh" \
-  'sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"'  \
-  '(cd "$HOME/.oh-my-zsh" && git pull --rebase)'
+# Prezto
+install_or_update directory "$HOME/.zprezto" "Zprezto" \
+  "git clone --recursive https://github.com/sorin-ionescu/prezto.git '$HOME/.zprezto'"  \
+  "(cd '$HOME/.zprezto' && git pull --rebase --recurse-submodules)"
+
+# Lean prompt
+install_or_update directory "$HOME/.zprezto/modules/prompt/external/lean" "Lean Prompt" \
+  "(cd '$HOME/.zprezto' && git submodule add git@github.com:amercier/lean.git modules/prompt/external/lean 2>/dev/null && git submodule update --init --recursive && cd modules/prompt/functions && ln -s ../external/lean/prompt_lean_setup && cd '$HOME/.zprezto' && git add . && git commit -m 'Added lean submodule')"
 
 # SSH
 if [ ! -e "$HOME/.ssh/id_rsa" ]

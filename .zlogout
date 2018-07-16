@@ -1,0 +1,1 @@
+/Users/amercier/.zprezto/runcoms/zlogout

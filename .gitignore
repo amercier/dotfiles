@@ -8,5 +8,9 @@
 !/.editorconfig
 !/.hyper.js
 !/.profile
+!/.zlogin
+!/.zlogout
+!/.zpreztorc
 !/.zprofile
+!/.zshenv
 !/.zshrc
