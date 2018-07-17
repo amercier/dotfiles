@@ -1,13 +1,15 @@
 /*
 !/.atom/
-!/.gnupg/
 !/.dotfiles/
+!/.github/
+!/.gnupg/
 !/.nvm/
+!/.editorconfig
 !/.gitconfig
 !/.gitignore
-!/.editorconfig
 !/.hyper.js
 !/.profile
+!/.travis.yml
 !/.zlogin
 !/.zlogout
 !/.zpreztorc

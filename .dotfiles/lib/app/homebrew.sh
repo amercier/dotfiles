@@ -18,7 +18,7 @@ brew_keg_exists() {
 #
 # @param 1 Cask name
 brew_cask_upgrade() {
-  if [ -n "$(brew cask outdated $1)" ]; then
+  if [ -n "$(brew cask outdated "$1")" ]; then
     echo "$1 is outdated, upgrading..."
     # brew cask reinstall $1
   else
@@ -30,7 +30,7 @@ brew_cask_upgrade() {
 #
 # @param 1 Keg name
 brew_upgrade() {
-  if [ -n "$(brew outdated $1)" ]; then
+  if [ -n "$(brew outdated "$1")" ]; then
     echo "$1 is outdated, upgrading..."
     brew upgrade "$1" --cleanup
   else
@@ -54,7 +54,7 @@ install_or_update_brew_cask_application() {
 }
 
 brew_cask_exists() {
-  brew cask list | grep $1 >/dev/null 2>&1
+  brew cask list | grep "$1" >/dev/null 2>&1
 }
 
 # Install or upgrade a Brew cask

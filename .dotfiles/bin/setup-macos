@@ -7,16 +7,14 @@ set -o nounset
 
 dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# shellcheck source=../lib/colors.sh
-. $dir/../lib/colors.sh
+. "$dir/../lib/colors.sh"
 
 filepaths=$(find "$dir/../lib" -type f -not -name '.*' -not -name '*.example' -not -name 'colors.sh')
 for filepath in $filepaths
 do
-  # shellcheck source=.
   . "$filepath"
   relative_path=$(realpath --relative-to="$dir/../lib" "$filepath")
-  echo "$(green ✓) Loaded $(magenta $relative_path) library"
+  echo "$(green ✓) Loaded $(cyan "$relative_path") library"
 done
 echo
 
@@ -30,7 +28,7 @@ install_or_update directory "$(xcode-select -p)" "Command Line Tools for Xcode" 
 
 # Brew
 install_or_update command brew Homebrew \
-  '/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"' \
+  "curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install | /usr/bin/env ruby" \
   'brew update && brew prune && brew cleanup'
 
 # Brew kegs
@@ -57,12 +55,12 @@ install_or_update_brew_cask_application "GPG Keychain" gpg-suite
 install_or_update_brew_cask java
 install_or_update_brew_cask_application Hyper hyper
 
-if [ -n "$(sysctl hw.model | grep MacBookAir)" ]
+if sysctl hw.model | grep -q MacBookAir
 then
   install_or_update_brew_cask_application Karabiner-Elements karabiner-elements
 fi
 
-if [ -n "$(sysctl hw.model | grep iMac)" ]
+if sysctl hw.model | grep -q iMac
 then
   install_or_update_brew_cask_application Discord discord
 fi
@@ -71,24 +69,24 @@ fi
 install_or_update_brew_keg ant # requires java
 
 # Default Shell
-zsh_path="$(which zsh)"
+zsh_path="$(command -v zsh)"
 
 if grep "$zsh_path" /etc/shells > /dev/null
 then
-  echo $(green ✓) $zsh_path exits already in /etc/shells
+  echo "$(green ✓) $(cyan "$zsh_path") exits already in /etc/shells"
 else
-  echo $(blue ▶) Adding "$zsh_path" to /etc/shells
+  echo "$(blue ▶) Adding $(cyan "$zsh_path") to $(yellow /etc/shells)"
   echo "$zsh_path" | sudo tee /etc/shells > /dev/null
-  echo $(green ✓) Done
+  echo "$(green ✓) Done"
 fi
 
-if [ "$(dscl . -read /Users/$USER UserShell | sed 's/^[^ ]* //')" = "$zsh_path" ]
+if [ "$(dscl . -read "/Users/$USER" UserShell | sed 's/^[^ ]* //')" = "$zsh_path" ]
 then
-  echo $(green ✓) Default shell already set to $zsh_path.
+  echo "$(green ✓) Default shell already set to $(cyan "$zsh_path")."
 else
-  echo $(blue ▶) Setting default shell to "$zsh_path"
+  echo "$(blue ▶) Setting default shell to $(cyan "$zsh_path")..."
   chsh -s "$zsh_path"
-  echo $(green ✓) Done
+  echo "$(green ✓) Done"
   echo
 fi
 
@@ -119,7 +117,7 @@ echo '
   https://github.com/powerline/fonts/blob/master/Meslo%20Slashed/Meslo%20LG%20S%20Italic%20for%20Powerline.ttf?raw=true
   https://github.com/powerline/fonts/blob/master/Meslo%20Slashed/Meslo%20LG%20S%20Regular%20for%20Powerline.ttf?raw=true
 ' | trim | \
-while read url
+while read -r url
 do
   download_file "$HOME/Library/Fonts" "$url"
 done
@@ -162,12 +160,12 @@ gpg_key_id="$(gpg --list-secret-keys --keyid-format LONG | grep 'sec ' | sed 's/
 echo "$(green ✓) Found GPG key: $gpg_key_id"
 if [ -z "$(git config --global user.signingkey)" ]
 then
-  echo $(blue ▶) Setting git to use GPG key $gpg_key_id
+  echo "$(blue ▶) Setting git to use GPG key $gpg_key_id"
   git config --global user.signingkey "$gpg_key_id"
-  echo $(green ✓) Done
+  echo "$(green ✓) Done"
 elif [ "$(git config --global user.signingkey)" = "$gpg_key_id" ]
 then
-  echo $(green ✓) git already set to use GPG key $gpg_key_id
+  echo "$(green ✓) git already set to use GPG key $gpg_key_id"
 else
   echo "$(yellow '⚠ Warning:') git set to use GPG key $(git config --global user.signingkey) instead of $gpg_key_id"
 fi
@@ -181,15 +179,15 @@ install_or_update login_item "Setup" "Setup login item" "add_login_item '$HOME/A
 # Disable the sound effects on boot
 if [ -e /Library/Scripts/macos-mute-off ] && [ -e /Library/Scripts/macos-mute-on ]
 then
-  echo $(green ✓) Startup sound already disabled
+  echo "$(green ✓) Startup sound already disabled"
 else
-  echo $(blue ▶) Disabling startup sound
+  echo "$(blue ▶) Disabling startup sound"
   printf '#!/usr/bin/env sh\n\nosascript -e "set volume without output muted"\n' | sudo tee /Library/Scripts/macos-mute-off > /dev/null
   printf '#!/usr/bin/env sh\n\nosascript -e "set volume with output muted"\n' | sudo tee /Library/Scripts/macos-mute-on > /dev/null
   sudo chmod +x /Library/Scripts/macos-mute-off /Library/Scripts/macos-mute-on
   sudo defaults write com.apple.loginwindow LoginHook "/Library/Scripts/macos-mute-off"
   sudo defaults write com.apple.loginwindow LogoutHook "/Library/Scripts/macos-mute-on"
-  echo $(green ✓) Done
+  echo "$(green ✓) Done"
   echo
 fi
 

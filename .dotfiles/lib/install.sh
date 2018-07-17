@@ -11,16 +11,16 @@
 install_or_update() {
   if ! eval "${1}_exists" \'"$2"\'
   then
-    echo "$(blue ▶) installing $(magenta $3)..."
+    echo "$(blue ▶) installing $(cyan "$3")..."
     eval "$4" && echo "$(green ✓) Done" || echo "$(red ✗) Failed"
     echo
   elif [ -n "${5-}" ]
   then
-    echo "$(blue ▲) $(magenta $3) is already installed, updating..."
+    echo "$(blue ▲) $(cyan "$3") is already installed, updating..."
     eval "$5"
-    echo "$(green ✓) $(magenta $3) is up-to-date."
+    echo "$(green ✓) $(cyan "$3") is up-to-date."
     echo
   else
-    echo "$(green ✓) $(magenta $3) is already installed, nothing to update."
+    echo "$(green ✓) $(cyan "$3") is already installed, nothing to update."
   fi
 }

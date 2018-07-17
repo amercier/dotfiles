@@ -7,7 +7,7 @@
 # @param 2 Substring to look for
 # @param 3 Delimiter. Defaults to `[:space:]` (see `man tr`)
 str_contains() {
-  echo "$1" | tr -s "${3-[:space:]}" '\n' | egrep "^$2\$" >/dev/null
+  echo "$1" | tr -s "${3-[:space:]}" '\n' | grep -E "^$2\$" >/dev/null
 }
 
 # Decode a URL-encoded string
@@ -35,4 +35,14 @@ url_decode() {
 # @param stdin Text to trim
 trim() {
   sed '/^[[:space:]]*$/d'
+}
+
+# Escape a SED regular expression
+sed_escape() {
+  if [ "$#" = 0 ]
+  then
+    sed 's/\//\\\//g'
+  else
+    echo "$@" | sed_escape
+  fi
 }
