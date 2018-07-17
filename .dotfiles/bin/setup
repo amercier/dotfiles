@@ -7,7 +7,6 @@ set -o nounset
 
 dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# shellcheck source=.dotfiles/lib/colors.sh
 . "$dir/../lib/colors.sh"
 
 if [ "$OSTYPE" = darwin17 ]

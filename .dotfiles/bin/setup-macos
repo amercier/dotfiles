@@ -7,13 +7,11 @@ set -o nounset
 
 dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# shellcheck source=.dotfiles/lib/colors.sh
 . "$dir/../lib/colors.sh"
 
 filepaths=$(find "$dir/../lib" -type f -not -name '.*' -not -name '*.example' -not -name 'colors.sh')
 for filepath in $filepaths
 do
-  # shellcheck source=/dev/null
   . "$filepath"
   relative_path=$(realpath --relative-to="$dir/../lib" "$filepath")
   echo "$(green ✓) Loaded $(cyan "$relative_path") library"
@@ -241,7 +239,6 @@ echo
 install_or_update_atom_package package-sync
 
 # Node versions
-# shellcheck source=/dev/null
 . /usr/local/opt/nvm/nvm.sh
 install_or_update_nvm_node_version node
 install_or_update_nvm_node_version --lts
