@@ -15,3 +15,7 @@ fi
 # Single-line prompt
 prompt_newline='%666v'
 PROMPT=" $PROMPT"
+
+# Pure arrows
+PURE_GIT_UP_ARROW=↑
+PURE_GIT_DOWN_ARROW=↓
