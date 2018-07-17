@@ -1,0 +1,10 @@
+language: shell
+script:
+  - |
+    find .dotfiles -type f | while read f; \
+    do
+      if egrep '^#!/usr/bin/env (ba)?sh$' "$f" >/dev/null;
+      then
+        shellcheck --external-sources "$f" || return 1;
+      fi;
+    done
