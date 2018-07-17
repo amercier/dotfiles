@@ -7,18 +7,18 @@ set -o nounset
 
 dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# shellcheck source=../lib/colors.sh
-. $dir/../lib/colors.sh
+# shellcheck source=.dotfiles/lib/colors.sh
+. "$dir/../lib/colors.sh"
 
 if [ "$OSTYPE" = darwin17 ]
 then
-  ${dir}/setup-macos
-elif echo $OSTYPE | grep darwin > /dev/null
+  "${dir}/setup-macos"
+elif echo "$OSTYPE" | grep darwin > /dev/null
 then
-  echo "$(red ✗ ERROR:) Your MacOS version is out-of-date: $(red $OSTYPE)." >&2
+  echo "$(red ✗ ERROR:) Your MacOS version is out-of-date: $(red "$OSTYPE")." >&2
   echo "Please upgrade to latest version through Apple App Store." >&2
   exit 1
 else
-  echo "$(red ✗ ERROR:) Your operating system is not supported: $(red $OSTYPE)." >&2
+  echo "$(red ✗ ERROR:) Your operating system is not supported: $(red "$OSTYPE")." >&2
   exit 1
 fi
