@@ -16,7 +16,7 @@ do
   # shellcheck source=/dev/null
   . "$filepath"
   relative_path=$(realpath --relative-to="$dir/../lib" "$filepath")
-  echo "$(green ✓) Loaded $(magenta "$relative_path") library"
+  echo "$(green ✓) Loaded $(cyan "$relative_path") library"
 done
 echo
 
@@ -75,18 +75,18 @@ zsh_path="$(command -v zsh)"
 
 if grep "$zsh_path" /etc/shells > /dev/null
 then
-  echo "$(green ✓) $(magenta "$zsh_path") exits already in /etc/shells"
+  echo "$(green ✓) $(cyan "$zsh_path") exits already in /etc/shells"
 else
-  echo "$(blue ▶) Adding $(magenta "$zsh_path") to $(cyan /etc/shells)"
+  echo "$(blue ▶) Adding $(cyan "$zsh_path") to $(yellow /etc/shells)"
   echo "$zsh_path" | sudo tee /etc/shells > /dev/null
   echo "$(green ✓) Done"
 fi
 
 if [ "$(dscl . -read "/Users/$USER" UserShell | sed 's/^[^ ]* //')" = "$zsh_path" ]
 then
-  echo "$(green ✓) Default shell already set to $(magenta "$zsh_path")."
+  echo "$(green ✓) Default shell already set to $(cyan "$zsh_path")."
 else
-  echo "$(blue ▶) Setting default shell to $(magenta "$zsh_path")..."
+  echo "$(blue ▶) Setting default shell to $(cyan "$zsh_path")..."
   chsh -s "$zsh_path"
   echo "$(green ✓) Done"
   echo

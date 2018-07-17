@@ -12,7 +12,7 @@ prepend_to_path() {
       PATH=$(echo $PATH | tr ':' '\n' | egrep -v "^$1\$" | tr '\n' ':')
       PATH="$1:$PATH"
     else
-      echo "$(yellow Warning:) $(magenta $1) is already in $(cyan PATH)" >&2
+      echo "$(yellow Warning:) $(cyan $1) is already in $(cyan PATH)" >&2
     fi
   else
     PATH="$1:$PATH"

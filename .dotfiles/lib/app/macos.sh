@@ -44,7 +44,7 @@ macos_set_preference() {
 
   if [ "$(defaults read $1 $2 2>/dev/null)" = "$4" ]
   then
-    echo "$(green ✓) System preference $(magenta $1 $2) already set to $(cyan $4)"
+    echo "$(green ✓) System preference $(cyan $1 $2) already set to $(cyan $4)"
     return
   fi
 

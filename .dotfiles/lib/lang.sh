@@ -36,3 +36,13 @@ url_decode() {
 trim() {
   sed '/^[[:space:]]*$/d'
 }
+
+# Escape a SED regular expression
+sed_escape() {
+  if [ "$#" = 0 ]
+  then
+    sed 's/\//\\\//g'
+  else
+    echo "$@" | sed_escape
+  fi
+}

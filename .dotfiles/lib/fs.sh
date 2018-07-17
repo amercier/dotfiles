@@ -38,13 +38,14 @@ download_file() {
     filename=$(echo "$2" | url_to_filename)
   fi
   fullpath="$1/$filename"
+  relative_path=$(readlink -f "$1" | sed "s/$(sed_escape "$HOME")/~/" | sed "s/$(sed_escape "$(pwd)")/./")
   if [ -e "$fullpath" ]
   then
-    echo $(green ✓) File $(magenta $filename) already exists in $(cyan $1).
+    echo "$(green ✓) File $(cyan $filename) already exists in $(cyan $relative_path)."
   else
-    echo $(blue ▼) Downloading $(magenta $2) to $(cyan $1)...
+    echo "$(blue ▼) Downloading $(cyan $2) to $(cyan $relative_path)..."
     echo curl -# -L "$2" > "$fullpath"
-    echo $(green ✓) Done.
+    echo "$(green ✓) Done."
     echo
   fi
 }
@@ -55,9 +56,9 @@ download_file() {
 create_directory_if_not_exists() {
   if directory_exists "$1"
   then
-    echo "$(green ✓) $(magenta $1) directory already exists"
+    echo "$(green ✓) $(cyan $1) directory already exists"
   else
-    echo "$(blue ▶) Creating $(magenta $1) directory..."
+    echo "$(blue ▶) Creating $(cyan $1) directory..."
     mkdir -p "$1"
     echo "$(green ✓) Done"
     echo
