@@ -9,10 +9,10 @@ prepend_to_path() {
   then
     if [ "${2-}" = '-f' ]
     then
-      PATH=$(echo $PATH | tr ':' '\n' | egrep -v "^$1\$" | tr '\n' ':')
+      PATH=$(echo "$PATH" | tr ':' '\n' | grep -E -v "^$1\$" | tr '\n' ':')
       PATH="$1:$PATH"
     else
-      echo "$(yellow Warning:) $(cyan $1) is already in $(cyan PATH)" >&2
+      echo "$(yellow Warning:) $(cyan "$1") is already in $(cyan PATH)" >&2
     fi
   else
     PATH="$1:$PATH"

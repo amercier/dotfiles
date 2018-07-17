@@ -1,6 +1,8 @@
+# shellcheck disable=SC2059
+
 ansi() {
   end="$2"
-  printf "\033[${1}m" # Color start
+  printf "\\033[${1}m" # Color start
   shift 2
   if [ $# = 0 ]
   then
@@ -9,11 +11,11 @@ ansi() {
     prefix=""
     for i
     do
-      printf -- "$prefix$i"
+      printf -- "${prefix}${i}"
       prefix=" "
     done
   fi
-  printf "\033[${end}m" # Color end
+  printf "\\033[${end}m" # Color end
 }
 
 reset() { ansi 0 0 "$@"; }

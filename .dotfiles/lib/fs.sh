@@ -15,11 +15,11 @@ directory_exists() {
 # @param 1 Replacement string. Defaults to '-'
 url_to_filename() {
   replacement="${1--}"
-  while read line
+  while read -r line
   do
     echo "$line" \
-    | egrep -o '[^/]+$' \
-    | egrep -o '^[^?#]+' \
+    | grep -E -o '[^/]+$' \
+    | grep -E -o '^[^?#]+' \
     | url_decode \
     | sed "s/[<>:\"/\\|?*]/$replacement/g"
   done
@@ -41,9 +41,9 @@ download_file() {
   relative_path=$(readlink -f "$1" | sed "s/$(sed_escape "$HOME")/~/" | sed "s/$(sed_escape "$(pwd)")/./")
   if [ -e "$fullpath" ]
   then
-    echo "$(green ✓) File $(cyan $filename) already exists in $(cyan $relative_path)."
+    echo "$(green ✓) File $(cyan "$filename") already exists in $(cyan "$relative_path")."
   else
-    echo "$(blue ▼) Downloading $(cyan $2) to $(cyan $relative_path)..."
+    echo "$(blue ▼) Downloading $(cyan "$2") to $(cyan "$relative_path")..."
     echo curl -# -L "$2" > "$fullpath"
     echo "$(green ✓) Done."
     echo
@@ -56,9 +56,9 @@ download_file() {
 create_directory_if_not_exists() {
   if directory_exists "$1"
   then
-    echo "$(green ✓) $(cyan $1) directory already exists"
+    echo "$(green ✓) $(cyan "$1") directory already exists"
   else
-    echo "$(blue ▶) Creating $(cyan $1) directory..."
+    echo "$(blue ▶) Creating $(cyan "$1") directory..."
     mkdir -p "$1"
     echo "$(green ✓) Done"
     echo

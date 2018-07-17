@@ -7,7 +7,7 @@
 # @param 2 Substring to look for
 # @param 3 Delimiter. Defaults to `[:space:]` (see `man tr`)
 str_contains() {
-  echo "$1" | tr -s "${3-[:space:]}" '\n' | egrep "^$2\$" >/dev/null
+  echo "$1" | tr -s "${3-[:space:]}" '\n' | grep -E "^$2\$" >/dev/null
 }
 
 # Decode a URL-encoded string

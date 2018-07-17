@@ -13,7 +13,7 @@ application_exists() {
 #
 # @param 1 Name of the application
 install_app_store_upgrades() {
-  softwareupdate --list | grep "\* $1" | sed "s/^[^A-Z]*//" | while read update
+  softwareupdate --list | grep "\\* $1" | sed "s/^[^A-Z]*//" | while read -r update
   do
     echo "$(blue ▲) Installing App Store update: $update"
     softwareupdate --install --no-scan "$update" || return 1
@@ -31,7 +31,7 @@ mas_id() {
 #
 # @param 1 Application name
 install_or_update_mas_application() {
-  install_or_update application "$1" "$1" "mas install $(mas_id $1)" "mas upgrade $(mas_id $1)"
+  install_or_update application "$1" "$1" "mas install $(mas_id "$1")" "mas upgrade $(mas_id "$1")"
 }
 
 # Set System Preference value.
@@ -42,9 +42,9 @@ install_or_update_mas_application() {
 # @param 4 Value to set
 macos_set_preference() {
 
-  if [ "$(defaults read $1 $2 2>/dev/null)" = "$4" ]
+  if [ "$(defaults read "$1" "$2" 2>/dev/null)" = "$4" ]
   then
-    echo "$(green ✓) System preference $(cyan $1 $2) already set to $(cyan $4)"
+    echo "$(green ✓) System preference $(cyan "$1" "$2") already set to $(cyan "$4")"
     return
   fi
 
@@ -57,14 +57,14 @@ macos_set_preference() {
   else
     value=false
   fi
-  echo $(blue ▶) Setting system preference "$1" "$2" to "$value"
+  echo "$(blue ▶) Setting system preference $(cyan "$1" "$2") to $(cyan "$value")"
   if [ "$#" = 5 ] && [ -n "$5" ]
   then
     sudo defaults write "$1" "$2" "-$3" "$value"
   else
     defaults write "$1" "$2" "-$3" "$value"
   fi
-  echo $(green ✓) Done
+  echo "$(green ✓) Done"
   echo
 }
 
@@ -73,7 +73,7 @@ macos_set_preference() {
 # @param 1 Application name to check, without `.app`
 # @returns `0` if the application directory exists, `1` otherwise
 login_item_exists() {
-  osascript -e 'tell application "System Events" to get the name of every login item' | sed 's/, /\n/g' | egrep "^$1\$" > /dev/null
+  osascript -e 'tell application "System Events" to get the name of every login item' | sed 's/, /\n/g' | grep -E "^$1\$" > /dev/null
 }
 
 # Add a MacOS login item
