@@ -63,3 +63,8 @@ Display ANSI shell colors
 Install development software and tools.
 
 ![setup script output](../.dotfiles/extra/img/setup.png)
+
+License
+-------
+
+[![License](https://img.shields.io/badge/license-ISC-brightgreen.svg)](./LICENSE.md)
