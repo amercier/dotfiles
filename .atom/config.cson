@@ -54,6 +54,9 @@
   "linter-sass-lint":
     configFile: "node_modules/sass-lint/lib/config/sass-lint.yml"
     noConfigDisable: true
+  "linter-shellcheck":
+    enableNotice: true
+    userParameters: "--shell=sh "
   "linter-ui-default":
     panelHeight: 300
   "markdown-preview":
