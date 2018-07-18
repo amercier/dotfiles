@@ -40,9 +40,18 @@ brew_upgrade() {
 
 # Install or upgrade a Brew command
 #
-# @param 1 Command name
+# @param 1 Brew keg name
 install_or_update_brew_keg() {
   install_or_update brew_keg "$1" "$1" "brew install $1" "brew_upgrade $1"
+}
+
+# Install or upgrade a Brew service
+#
+# @param 1 Brew keg name
+install_or_update_brew_service() {
+  install_or_update brew_keg "$1" "$1" \
+    "brew install $1 && sudo brew services start $1" \
+    "sudo brew services stop $1 && brew_upgrade $1 && sudo brew services start $1"
 }
 
 # Install or upgrade a Brew cask application

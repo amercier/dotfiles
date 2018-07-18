@@ -59,7 +59,7 @@ create_directory_if_not_exists() {
     echo "$(green ✓) $(cyan "$1") directory already exists"
   else
     echo "$(blue ▶) Creating $(cyan "$1") directory..."
-    mkdir -p "$1"
+    mkdir -pv "$1"
     echo "$(green ✓) Done"
     echo
   fi

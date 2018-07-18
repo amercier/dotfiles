@@ -33,8 +33,15 @@ url_decode() {
 # Trim empty lines
 #
 # @param stdin Text to trim
-trim() {
+trim_empty_lines() {
   sed '/^[[:space:]]*$/d'
+}
+
+# Trim leading and trailing spaces
+#
+# @param stdin Text to trim
+trim() {
+  sed 's/^[[:space:]]*//; s/[[:space:]]*$//'
 }
 
 # Escape a SED regular expression
