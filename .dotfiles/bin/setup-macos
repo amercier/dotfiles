@@ -232,6 +232,7 @@ macos_set_preference com.apple.finder expose-animation-duration float 0.1 # Spee
 macos_set_preference /Library/Preferences/com.apple.loginwindow GuestEnabled bool 0 SUDO
 macos_set_preference /Library/Preferences/SystemConfiguration/com.apple.smb.server AllowGuestAccess bool 0 SUDO
 macos_set_preference /Library/Preferences/com.apple.AppleFileServer guestAccess bool 0 SUDO
+macos_set_preference org.R-project.R force.LANG string en_US.UTF-8 # Fix 'tar: Failed to set default locale' warning
 
 echo
 
