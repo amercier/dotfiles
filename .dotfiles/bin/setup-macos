@@ -153,21 +153,21 @@ fi
 # GPG keys
 if [ -z "$(gpg --list-secret-keys)" ]
 then
-  echo "$(red '✗ No GPG key found.') Please create one using: gpg --full-generate-key" >&2
+  echo "$(red ✗ No GPG key found.) Please create one using: $(yellow gpg --full-generate-key)" >&2
   exit 1
 fi
 gpg_key_id="$(gpg --list-secret-keys --keyid-format LONG | grep 'sec ' | sed 's/^.*rsa4096\/\([^ ]*\).*$/\1/')"
-echo "$(green ✓) Found GPG key: $gpg_key_id"
+echo "$(green ✓) Found GPG key: $(cyan "$gpg_key_id")"
 if [ -z "$(git config --global user.signingkey)" ]
 then
-  echo "$(blue ▶) Setting git to use GPG key $gpg_key_id"
+  echo "$(blue ▶) Setting git to use GPG key $(cyan "$gpg_key_id")"
   git config --global user.signingkey "$gpg_key_id"
   echo "$(green ✓) Done"
 elif [ "$(git config --global user.signingkey)" = "$gpg_key_id" ]
 then
-  echo "$(green ✓) git already set to use GPG key $gpg_key_id"
+  echo "$(green ✓) git already set to use GPG key $(cyan "$gpg_key_id")"
 else
-  echo "$(yellow '⚠ Warning:') git set to use GPG key $(git config --global user.signingkey) instead of $gpg_key_id"
+  echo "$(yellow '⚠ Warning:') git set to use GPG key $(magenta "$(git config --global user.signingkey)") instead of $(cyan "$gpg_key_id")"
 fi
 echo
 
