@@ -72,13 +72,16 @@ then
   install_or_update_brew_cask_application Discord discord
 fi
 
-# Brew kegs with casks dependencies
-install_or_update_brew_keg ant # requires java
-
 # Brew services
 install_or_update_brew_service dnsmasq SUDO
-install_or_update_brew_service httpd SUDO \
-  "replace_inline 'Listen 8080' 'Listen 80' /usr/local/etc/httpd/httpd.conf"
+install_or_update_brew_service httpd "" "\
+  replace_inline 'DocumentRoot \"/usr/local/var/www\"' 'DocumentRoot \"$HOME/Workspace\"' /usr/local/etc/httpd/httpd.conf && \
+  replace_inline '<Directory \"/usr/local/var/www\">' '<Directory \"$HOME/Workspace\">' /usr/local/etc/httpd/httpd.conf \
+"
+
+# Brew kegs with casks dependencies
+install_or_update_brew_keg ant # requires java
+install_or_update_brew_keg php # requires httpd
 
 # Apache SSL setup
 if [ -e /usr/local/etc/httpd/server.crt ]
@@ -89,7 +92,6 @@ else
   uncomment 'LoadModule socache_shmcb_module lib/httpd/modules/mod_socache_shmcb.so' /usr/local/etc/httpd/httpd.conf
   uncomment 'LoadModule ssl_module lib/httpd/modules/mod_ssl.so' /usr/local/etc/httpd/httpd.conf
   uncomment 'Include /usr/local/etc/httpd/extra/httpd-ssl.conf' /usr/local/etc/httpd/httpd.conf
-  replace_inline 'Listen 8443' 'Listen 443' /usr/local/etc/httpd/extra/httpd-ssl.conf
   replace_inline '<VirtualHost _default_:8443>' '<VirtualHost _default_:443>' /usr/local/etc/httpd/extra/httpd-ssl.conf
   replace_inline 'ServerName www.example.com:8443' 'ServerName localhost:443' /usr/local/etc/httpd/extra/httpd-ssl.conf
   [ ! -e /tmp/server.cnf ] || rm -rf /tmp/server.cnf
@@ -99,8 +101,31 @@ else
   rm -rf /tmp/server.cnf
   echo "Open $(magenta 'chrome://flags/#allow-insecure-localhost') in Google Chrome to disable SSL warnings for localhost."
   open '/Applications/Utilities/Keychain Access.app' /usr/local/etc/httpd/server.crt
-  sudo brew services restart httpd
+  brew services restart httpd
   echo "$(green ✓) Done"
+fi
+
+# PHP
+if [ ! -e /usr/local/etc/httpd/extra/httpd-php.conf ]
+then
+  cat <<EOF | trim | tee /usr/local/etc/httpd/extra/httpd-php.conf > /dev/null
+    LoadModule php7_module /usr/local/opt/php/lib/httpd/modules/libphp7.so
+
+    <FilesMatch \\.php$>
+        SetHandler application/x-httpd-php
+    </FilesMatch>
+
+    DirectoryIndex index.php index.html
+EOF
+fi
+
+# TODO More elegant solution
+pecl list | grep -q xdebug || pecl install xdebug
+
+if ! grep -q php /usr/local/etc/httpd/httpd.conf
+then
+  printf '\nInclude /usr/local/etc/httpd/extra/httpd-php.conf\n' >> /usr/local/etc/httpd/httpd.conf
+  brew services restart httpd
 fi
 
 # Default Shell
@@ -328,3 +353,7 @@ install_or_update_nvm_node_version 0.10
 
 # Workspace
 create_directory_if_not_exists "$HOME/Workspace"
+if [ ! -e "$HOME/Workspace/phpinfo.php" ]
+then
+  echo '<?php phpinfo(); ?>' > "$HOME/Workspace/phpinfo.php"
+fi
