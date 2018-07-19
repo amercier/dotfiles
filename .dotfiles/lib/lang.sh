@@ -53,3 +53,22 @@ sed_escape() {
     echo "$@" | sed_escape
   fi
 }
+
+# Replace a string by another one, in a given file
+#
+# @param 1 Substring to search
+# @param 2 Replacement string
+# @param 3 File path
+replace_inline() {
+  sed -i.tmp "s/$(sed_escape "$1")/$2/" "$3" && rm -rf "$3.tmp"
+}
+
+# Uncomment a line starting with a given substring
+#
+# @param 1 Start of the line
+# @param 2 File path
+# @param 3 Comment string. Defaults to '#'
+uncomment() {
+  char=${3-#}
+  replace_inline "${char}[[:space:]]*${1}" "$1" "$2"
+}

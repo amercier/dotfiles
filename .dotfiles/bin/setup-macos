@@ -31,6 +31,13 @@ install_or_update command brew Homebrew \
   "curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install | /usr/bin/env ruby" \
   'brew update && brew prune && brew cleanup'
 
+# Stop and uninstall built-in Apache if http is not installed
+if ! brew_keg_exists httpd
+then
+  sudo apachectl stop
+  disable_launch_daemon org.apache.httpd
+fi
+
 # Brew kegs
 install_or_update_brew_keg coreutils
 install_or_update_brew_keg git
@@ -69,7 +76,10 @@ fi
 install_or_update_brew_keg ant # requires java
 
 # Brew services
-install_or_update_brew_service dnsmasq
+install_or_update_brew_service dnsmasq SUDO
+install_or_update_brew_service httpd SUDO " \
+  replace_inline 'Listen 8080' 'Listen 80' /usr/local/etc/httpd/httpd.conf && \
+"
 
 # Default Shell
 zsh_path="$(command -v zsh)"

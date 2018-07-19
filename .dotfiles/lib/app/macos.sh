@@ -90,3 +90,17 @@ add_login_item() {
   fi
   osascript -e "tell application \"System Events\" to make login item at end with properties {$properties}"
 }
+
+# Disable launch daemon
+#
+# @param 1 Daemon name. Ex: org.apache.httpd
+disable_launch_daemon() {
+  if sudo launchctl list | grep -q "$1"
+  then
+    echo "$(blue ▶) Disabling Launch daemon $(cyan "$1")..."
+    sudo launchctl unload -w "/System/Library/LaunchDaemons/$1.plist"
+    echo "$(green ✓) Done"
+  else
+    echo "$(green ✓) Launch daemon $(cyan "$1") is already disabled"
+  fi
+}

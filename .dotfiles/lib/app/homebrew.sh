@@ -49,7 +49,25 @@ install_or_update_brew_keg() {
 #
 # @param 1 Brew keg name
 install_or_update_brew_service() {
-  install_or_update brew_keg "$1" "$1" "brew install $1 && sudo brew services start $1" "brew_upgrade $1"
+  if [ -n "${3-}" ]
+  then
+    cmd="&& $3"
+  else
+    cmd=""
+  fi
+  echo "cmd: $cmd"
+
+  service="$(echo "$1" | sed 's/ .*//')"
+  if [ -n "$2" ]
+  then
+    install_or_update brew_keg "$1" "$1" \
+      "brew install $1 $cmd && sudo brew services start $service" \
+      "brew_upgrade $1"
+  else
+    install_or_update brew_keg "$1" "$1" \
+      "brew install $1 $cmd && brew services start $service" \
+      "brew services stop $service && brew_upgrade $1 && brew services start $service"
+  fi
 }
 
 # Install or upgrade a Brew cask application
