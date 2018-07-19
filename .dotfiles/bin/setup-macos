@@ -77,9 +77,31 @@ install_or_update_brew_keg ant # requires java
 
 # Brew services
 install_or_update_brew_service dnsmasq SUDO
-install_or_update_brew_service httpd SUDO " \
-  replace_inline 'Listen 8080' 'Listen 80' /usr/local/etc/httpd/httpd.conf && \
-"
+install_or_update_brew_service httpd SUDO \
+  "replace_inline 'Listen 8080' 'Listen 80' /usr/local/etc/httpd/httpd.conf"
+
+# Apache SSL setup
+if [ -e /usr/local/etc/httpd/server.crt ]
+then
+  echo "$(green ✓) $(cyan Apache SSL) is already configured"
+else
+  echo "$(blue ▶) Setting up $(cyan Apache SSL)..."
+  uncomment 'LoadModule socache_shmcb_module lib/httpd/modules/mod_socache_shmcb.so' /usr/local/etc/httpd/httpd.conf
+  uncomment 'LoadModule ssl_module lib/httpd/modules/mod_ssl.so' /usr/local/etc/httpd/httpd.conf
+  uncomment 'Include /usr/local/etc/httpd/extra/httpd-ssl.conf' /usr/local/etc/httpd/httpd.conf
+  replace_inline 'Listen 8443' 'Listen 443' /usr/local/etc/httpd/extra/httpd-ssl.conf
+  replace_inline '<VirtualHost _default_:8443>' '<VirtualHost _default_:443>' /usr/local/etc/httpd/extra/httpd-ssl.conf
+  replace_inline 'ServerName www.example.com:8443' 'ServerName localhost:443' /usr/local/etc/httpd/extra/httpd-ssl.conf
+  [ ! -e /tmp/server.cnf ] || rm -rf /tmp/server.cnf
+  cat /usr/local/etc/openssl/openssl.cnf > /tmp/server.cnf
+  printf '[SAN]\nsubjectAltName=DNS:localhost\n' >> /tmp/server.cnf
+  openssl req -x509 -sha256 -nodes -days 3650 -newkey rsa:2048 -keyout /usr/local/etc/httpd/server.key -out /usr/local/etc/httpd/server.crt -subj /CN=localhost -reqexts SAN -extensions SAN -config /tmp/server.cnf
+  rm -rf /tmp/server.cnf
+  echo "Open $(magenta 'chrome://flags/#allow-insecure-localhost') in Google Chrome to disable SSL warnings for localhost."
+  open '/Applications/Utilities/Keychain Access.app' /usr/local/etc/httpd/server.crt
+  sudo brew services restart httpd
+  echo "$(green ✓) Done"
+fi
 
 # Default Shell
 zsh_path="$(command -v zsh)"

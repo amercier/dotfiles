@@ -55,7 +55,6 @@ install_or_update_brew_service() {
   else
     cmd=""
   fi
-  echo "cmd: $cmd"
 
   service="$(echo "$1" | sed 's/ .*//')"
   if [ -n "$2" ]

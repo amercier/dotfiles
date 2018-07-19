@@ -60,7 +60,7 @@ sed_escape() {
 # @param 2 Replacement string
 # @param 3 File path
 replace_inline() {
-  sed -i.tmp "s/$(sed_escape "$1")/$2/" "$3" && rm -rf "$3.tmp"
+  sed -i.tmp "s/$(sed_escape "$1")/$(sed_escape "$2")/" "$3" && rm -rf "$3.tmp"
 }
 
 # Uncomment a line starting with a given substring
