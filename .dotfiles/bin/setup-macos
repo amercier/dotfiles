@@ -75,6 +75,8 @@ fi
 # Brew services
 install_or_update_brew_service dnsmasq SUDO
 install_or_update_brew_service httpd "" "\
+  uncomment 'ServerName www.example.com:8080' /usr/local/etc/httpd/httpd.conf && \
+  replace_inline 'ServerName www.example.com:8080' 'ServerName localhost' /usr/local/etc/httpd/httpd.conf && \
   replace_inline 'DocumentRoot \"/usr/local/var/www\"' 'DocumentRoot \"$HOME/Workspace\"' /usr/local/etc/httpd/httpd.conf && \
   replace_inline '<Directory \"/usr/local/var/www\">' '<Directory \"$HOME/Workspace\">' /usr/local/etc/httpd/httpd.conf \
 "
