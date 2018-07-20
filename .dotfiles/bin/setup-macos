@@ -77,9 +77,18 @@ install_or_update_brew_service dnsmasq SUDO
 install_or_update_brew_service httpd "" "\
   uncomment 'ServerName www.example.com:8080' /usr/local/etc/httpd/httpd.conf && \
   replace_inline 'ServerName www.example.com:8080' 'ServerName localhost' /usr/local/etc/httpd/httpd.conf && \
-  replace_inline 'DocumentRoot \"/usr/local/var/www\"' 'DocumentRoot \"$HOME/Workspace\"' /usr/local/etc/httpd/httpd.conf && \
-  replace_inline '<Directory \"/usr/local/var/www\">' '<Directory \"$HOME/Workspace\">' /usr/local/etc/httpd/httpd.conf \
+  uncomment 'Include /usr/local/etc/httpd/extra/httpd-vhosts.conf' /usr/local/etc/httpd/httpd.conf && \
+  replace_inline 'httpd-vhosts.conf$' 'httpd-vhosts.conf.d/*.conf' '/usr/local/etc/httpd/httpd.conf' && \
+  uncomment 'LoadModule rewrite_module' /usr/local/etc/httpd/httpd.conf && \
+  uncomment 'LoadModule macro_module' /usr/local/etc/httpd/httpd.conf && \
+  uncomment 'LoadModule expires_module' /usr/local/etc/httpd/httpd.conf \
 "
+
+# TODO More elegant solution
+if [ ! -e /usr/local/etc/httpd/extra/httpd-vhosts.d ]
+then
+  ln -s "$HOME/.dotfiles/httpd-vhosts.conf.d" /usr/local/etc/httpd/extra/httpd-vhosts.conf.d
+fi
 
 # Brew kegs with casks dependencies
 install_or_update_brew_keg ant # requires java
@@ -94,8 +103,7 @@ else
   uncomment 'LoadModule socache_shmcb_module lib/httpd/modules/mod_socache_shmcb.so' /usr/local/etc/httpd/httpd.conf
   uncomment 'LoadModule ssl_module lib/httpd/modules/mod_ssl.so' /usr/local/etc/httpd/httpd.conf
   uncomment 'Include /usr/local/etc/httpd/extra/httpd-ssl.conf' /usr/local/etc/httpd/httpd.conf
-  replace_inline '<VirtualHost _default_:8443>' '<VirtualHost _default_:443>' /usr/local/etc/httpd/extra/httpd-ssl.conf
-  replace_inline 'ServerName www.example.com:8443' 'ServerName localhost:443' /usr/local/etc/httpd/extra/httpd-ssl.conf
+
   [ ! -e /tmp/server.cnf ] || rm -rf /tmp/server.cnf
   cat /usr/local/etc/openssl/openssl.cnf > /tmp/server.cnf
   printf '[SAN]\nsubjectAltName=DNS:localhost\n' >> /tmp/server.cnf
@@ -124,6 +132,8 @@ fi
 # TODO More elegant solution
 pecl list | grep -q xdebug || pecl install xdebug
 
+# TODO More elegant solution
+replace_inline 'memory_limit = 128M' 'memory_limit = 1024M' /usr/local/etc/php/7.2/php.ini
 if ! grep -q php /usr/local/etc/httpd/httpd.conf
 then
   printf '\nInclude /usr/local/etc/httpd/extra/httpd-php.conf\n' >> /usr/local/etc/httpd/httpd.conf
