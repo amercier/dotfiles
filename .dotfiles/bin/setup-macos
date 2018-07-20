@@ -86,7 +86,7 @@ install_or_update_brew_service httpd "" "\
 "
 
 # TODO More elegant solution
-if [ ! -e /usr/local/etc/httpd/extra/httpd-vhosts.d ]
+if [ ! -e /usr/local/etc/httpd/extra/httpd-vhosts.conf.d ]
 then
   ln -s "$HOME/.dotfiles/httpd-vhosts.conf.d" /usr/local/etc/httpd/extra/httpd-vhosts.conf.d
 fi
