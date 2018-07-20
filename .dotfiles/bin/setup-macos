@@ -79,9 +79,10 @@ install_or_update_brew_service httpd "" "\
   replace_inline 'ServerName www.example.com:8080' 'ServerName localhost' /usr/local/etc/httpd/httpd.conf && \
   uncomment 'Include /usr/local/etc/httpd/extra/httpd-vhosts.conf' /usr/local/etc/httpd/httpd.conf && \
   replace_inline 'httpd-vhosts.conf$' 'httpd-vhosts.conf.d/*.conf' '/usr/local/etc/httpd/httpd.conf' && \
-  uncomment 'LoadModule rewrite_module' /usr/local/etc/httpd/httpd.conf && \
+  uncomment 'LoadModule deflate_module' /usr/local/etc/httpd/httpd.conf && \
+  uncomment 'LoadModule expires_module' /usr/local/etc/httpd/httpd.conf && \
   uncomment 'LoadModule macro_module' /usr/local/etc/httpd/httpd.conf && \
-  uncomment 'LoadModule expires_module' /usr/local/etc/httpd/httpd.conf \
+  uncomment 'LoadModule rewrite_module' /usr/local/etc/httpd/httpd.conf \
 "
 
 # TODO More elegant solution
@@ -115,7 +116,38 @@ else
   echo "$(green ✓) Done"
 fi
 
+# Apache GZip setup
+# TODO Separate function
+if [ ! -e /usr/local/etc/httpd/extra/httpd-deflate.conf ]
+then
+  echo "$(green ✓) $(cyan Apache deflate module) is already configured"
+else
+  echo "$(blue ▶) Setting up $(cyan Apache deflate module)..."
+  cat <<EOF | trim | tee /usr/local/etc/httpd/extra/httpd-deflate.conf > /dev/null
+    <IfModule deflate_module>
+      SetOutputFilter DEFLATE
+
+      # You can't compress what is already compressed
+      SetEnvIfNoCase Request_URI \\.(?:gif|jpe?g|png)$ no-gzip dont-vary
+      SetEnvIfNoCase Request_URI \\.(?:exe|t?gz|zip|bz2|sit|rar)$ no-gzip dont-vary
+
+      # Make proxies work as they should.
+      <IfModule headers_module>
+        Header append Vary User-Agent
+      </IfModule>
+    </IfModule>
+EOF
+  if ! grep -q httpd-deflate /usr/local/etc/httpd/httpd.conf
+  then
+    printf '\nInclude /usr/local/etc/httpd/extra/httpd-deflate.conf\n' >> /usr/local/etc/httpd/httpd.conf
+    brew services restart httpd
+  fi
+  brew services restart httpd
+  echo "$(green ✓) Done"
+fi
+
 # PHP
+# TODO Separate function
 if [ ! -e /usr/local/etc/httpd/extra/httpd-php.conf ]
 then
   cat <<EOF | trim | tee /usr/local/etc/httpd/extra/httpd-php.conf > /dev/null
