@@ -120,7 +120,7 @@ fi
 
 # Apache GZip setup
 # TODO Separate function
-if [ ! -e /usr/local/etc/httpd/extra/httpd-deflate.conf ]
+if [ -e /usr/local/etc/httpd/extra/httpd-deflate.conf ]
 then
   echo "$(green ✓) $(cyan Apache deflate module) is already configured"
 else
