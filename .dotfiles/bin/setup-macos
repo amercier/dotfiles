@@ -324,6 +324,10 @@ ping -c 1 foo.test >/dev/null
 install_or_update application "Setup" "Setup application" "osacompile -o '/Applications/Setup.app' '$dir/../src/setup.applescript'"
 install_or_update login_item "Setup" "Setup login item" "add_login_item '/Applications/Setup.app'"
 
+# Minimize.app
+install_or_update application "Minimize" "Minimize application" "osacompile -o '/Applications/Minimize.app' '$dir/../src/minimize.applescript'"
+install_or_update login_item "Minimize" "Minimize login item" "add_login_item '/Applications/Minimize.app' 1"
+
 # Disable the sound effects on boot
 if [ -e /Library/Scripts/macos-mute-off ] && [ -e /Library/Scripts/macos-mute-on ]
 then
