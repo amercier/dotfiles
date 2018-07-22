@@ -1,3 +1,5 @@
+# shellcheck disable=SC2148
+
 # MacOS-related utility function
 # ==============================
 

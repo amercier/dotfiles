@@ -1,4 +1,8 @@
+# shellcheck disable=SC2148
 # shellcheck disable=SC2059
+# shellcheck disable=SC1090
+# shellcheck disable=SC2119
+# shellcheck disable=SC2120
 
 ansi() {
   end="$2"

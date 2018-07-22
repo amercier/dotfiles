@@ -58,7 +58,7 @@
     noConfigDisable: true
   "linter-shellcheck":
     enableNotice: true
-    userParameters: "--shell=sh "
+    userParameters: "-e SC1071"
   "linter-ui-default": {}
   "markdown-preview":
     useGitHubStyle: true

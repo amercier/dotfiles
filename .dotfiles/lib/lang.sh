@@ -1,3 +1,7 @@
+# shellcheck disable=SC2148
+# shellcheck disable=SC2119
+# shellcheck disable=SC2120
+
 # Language utility functions
 # ==========================
 

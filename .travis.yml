@@ -1,11 +1,11 @@
 language: shell
 script:
-  - find .dotfiles -type f -name '*.sh' -exec shellcheck --shell=sh --external-sources --exclude=SC1091,SC2119,SC2120 {} \;
+  - find .dotfiles -type f -name '*.sh' -exec shellcheck --shell=sh --external-sources {} \;
   - |
     find .dotfiles -type f -not -name '*.sh' | while read f;
     do
       if egrep '^#!/usr/bin/env (ba)?sh$' "$f" >/dev/null;
       then
-        shellcheck "$f" --exclude=SC1090,SC1091 || return 1;
+        shellcheck "$f" || return 1;
       fi;
     done

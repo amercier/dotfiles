@@ -1,3 +1,5 @@
+# shellcheck disable=SC2148
+
 # Homebew-related utility functions
 # =================================
 
@@ -56,7 +58,7 @@ install_or_update_brew_service() {
     cmd=""
   fi
 
-  service="$(echo "$1" | sed 's/ .*//')"
+  service="$(printf "%s" "$1" | sed 's/ .*//')"
   if [ -n "$2" ]
   then
     install_or_update brew_keg "$1" "$1" \

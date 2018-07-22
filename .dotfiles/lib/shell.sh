@@ -1,3 +1,5 @@
+# shellcheck disable=SC2148
+
 # Shell-related utility functions
 # ===============================
 

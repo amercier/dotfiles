@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-# shellcheck source=~
+# shellcheck disable=SC1091
 
 if brew_keg_exists nvm; then
   export NVM_DIR="$HOME/.nvm"
