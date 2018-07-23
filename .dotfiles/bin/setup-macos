@@ -93,9 +93,10 @@ then
   ln -s "$HOME/.dotfiles/httpd-vhosts.conf.d" /usr/local/etc/httpd/extra/httpd-vhosts.conf.d
 fi
 
-# Brew kegs with casks dependencies
+# Brew kegs with casks/services dependencies
 install_or_update_brew_keg ant # requires java
 install_or_update_brew_keg php # requires httpd
+install_or_update_brew_keg composer # requires php
 
 # Apache SSL setup
 if [ -e /usr/local/etc/httpd/server.crt ]
@@ -389,8 +390,11 @@ macos_set_preference org.R-project.R force.LANG string en_US.UTF-8 # Fix 'tar: F
 
 echo
 
-# Atom Packages
+# Atom packages
 install_or_update_atom_package package-sync
+
+# Atom packages dependencies
+composer global require squizlabs/php_codesniffer # linter-phpcs
 
 # Node versions
 . /usr/local/opt/nvm/nvm.sh
