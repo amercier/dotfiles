@@ -47,7 +47,8 @@
     ]
   "linter-node-markdownlint":
     disableIfNoMarkdownlintrc: true
-  "linter-phpcs": {}
+  "linter-phpcs":
+    codeStandardOrConfigFile: "PSR1,PSR2,PSR12"
   "linter-python":
     executablePath: "/Users/amercier/.pyenv/shims/pylama"
     withPep8: true
