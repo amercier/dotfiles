@@ -59,7 +59,7 @@ install_or_update_brew_service() {
   fi
 
   service="$(printf "%s" "$1" | sed 's/ .*//')"
-  if [ -n "$2" ]
+  if [ -n "${2-}" ]
   then
     install_or_update brew_keg "$1" "$1" \
       "brew install $1 $cmd && sudo brew services start $service" \
