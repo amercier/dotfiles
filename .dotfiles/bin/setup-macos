@@ -353,16 +353,17 @@ fi
 # System preferences
 
 # General
-macos_set_preference NSGlobalDomain NSWindowResizeTime float 0.2
-macos_set_preference NSGlobalDomain NSNavPanelExpandedStateForSaveMode bool 1
-macos_set_preference NSGlobalDomain PMPrintingExpandedStateForPrint bool 1
-macos_set_preference NSGlobalDomain NSDocumentSaveNewDocumentsToCloud bool 1
-macos_set_preference NSGlobalDomain NSTextShowsControlCharacters bool 1
-macos_set_preference NSGlobalDomain NSDisableAutomaticTermination bool 1
-macos_set_preference NSGlobalDomain DSDontWriteNetworkStores bool 1
+macos_set_preference NSGlobalDomain ApplePersistence bool 0
 macos_set_preference NSGlobalDomain com.apple.sound.beep.flash bool 1
 macos_set_preference NSGlobalDomain com.apple.springing.delay float 1
-macos_set_preference NSGlobalDomain ApplePersistence bool 0
+macos_set_preference NSGlobalDomain com.apple.swipescrolldirection bool 0
+macos_set_preference NSGlobalDomain DSDontWriteNetworkStores bool 1
+macos_set_preference NSGlobalDomain NSDisableAutomaticTermination bool 1
+macos_set_preference NSGlobalDomain NSDocumentSaveNewDocumentsToCloud bool 1
+macos_set_preference NSGlobalDomain NSNavPanelExpandedStateForSaveMode bool 1
+macos_set_preference NSGlobalDomain NSTextShowsControlCharacters bool 1
+macos_set_preference NSGlobalDomain NSWindowResizeTime float 0.2
+macos_set_preference NSGlobalDomain PMPrintingExpandedStateForPrint bool 1
 
 # Launch services
 macos_set_preference com.apple.LaunchServices LSQuarantine bool 0
