@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+if brew_keg_exists sqlite; then
+  prepend_to_path /usr/local/opt/sqlite/bin
+fi
