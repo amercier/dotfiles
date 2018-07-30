@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+if brew_keg_exists mysql@5.7; then
+  prepend_to_path /usr/local/opt/mysql@5.7/bin
+fi

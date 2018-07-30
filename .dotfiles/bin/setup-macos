@@ -79,7 +79,7 @@ fi
 
 # Brew services
 install_or_update_brew_service dnsmasq SUDO
-install_or_update_brew_service mysql@5.7 "" "brew link mysql@5.7 --force"
+install_or_update_brew_service mysql@5.7
 install_or_update_brew_service postgres
 install_or_update_brew_service mongodb
 install_or_update_brew_service httpd "" "\
