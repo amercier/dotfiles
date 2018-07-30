@@ -26,5 +26,5 @@ prepend_to_path() {
 # @param 1 Command to check
 # @returns `0` if the command was found using `which`, `1` otherwise
 command_exists() {
-  command -v brew "$1" >/dev/null
+  type -p "$1" >/dev/null
 }
