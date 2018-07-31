@@ -359,7 +359,7 @@ macos_set_preference NSGlobalDomain com.apple.springing.delay float 1
 macos_set_preference NSGlobalDomain com.apple.swipescrolldirection bool 0
 macos_set_preference NSGlobalDomain DSDontWriteNetworkStores bool 1
 macos_set_preference NSGlobalDomain NSDisableAutomaticTermination bool 1
-macos_set_preference NSGlobalDomain NSDocumentSaveNewDocumentsToCloud bool 1
+macos_set_preference NSGlobalDomain NSDocumentSaveNewDocumentsToCloud bool 0
 macos_set_preference NSGlobalDomain NSNavPanelExpandedStateForSaveMode bool 1
 macos_set_preference NSGlobalDomain NSTextShowsControlCharacters bool 1
 macos_set_preference NSGlobalDomain NSWindowResizeTime float 0.2
