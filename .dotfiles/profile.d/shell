@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+# Sets tabs to 4 chars long
+tabs -4
