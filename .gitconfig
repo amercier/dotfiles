@@ -9,6 +9,7 @@
 	graph = log --graph --pretty=friendly --color=always
 	merged-branches = ! git branch --merged | egrep -v '^\\*'
 	push-all = ! source $HOME/.profile.d/git && git_push_all
+	push-upstream = "! git push --set-upstream \"$(git remote | head -n 1)\" \"$(git current)\""
 	show-files = show --name-only
 [commit]
 	gpgsign = true
