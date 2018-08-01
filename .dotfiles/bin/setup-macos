@@ -48,6 +48,7 @@ install_or_update_brew_keg mas
 install_or_update_brew_keg nvm
 install_or_update_brew_keg shellcheck
 install_or_update_brew_keg sqlite
+install_or_update_brew_keg watchman
 install_or_update_brew_keg wget
 install_or_update_brew_keg zsh
 install_or_update_brew_keg zsh-completions
