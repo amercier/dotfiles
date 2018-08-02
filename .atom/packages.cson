@@ -37,6 +37,7 @@ packages: [
   "multi-cursor"
   "package-sync"
   "php-debug"
+  "pigments"
   "pinned-tabs"
   "project-folder"
   "seti-ui"
