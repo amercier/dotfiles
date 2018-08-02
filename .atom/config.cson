@@ -1,7 +1,5 @@
 "*":
   "atom-ide-ui":
-    "atom-ide-diagnostics-ui":
-      autoVisibility: true
     use:
       "atom-ide-busy-signal": "default"
       "atom-ide-code-actions": "default"
