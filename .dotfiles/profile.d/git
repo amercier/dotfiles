@@ -25,10 +25,12 @@ git_push_all() {
 
   git rev-list --reverse "${remote_name}/${remote_branch}..HEAD" --abbrev-commit | while read -r sha
   do
-    echo "Pushing commit ${sha}..."
+    echo "Pushing commit $(cyan "${sha}")..."
     command="git push ${remote_name} ${sha}:${remote_branch}"
-    if ! eval "$command"
+    if eval "$command"
     then
+      green "✓ Done\\n\\n"
+    else
       echo "$(red "✗ Failed to push commit ${sha}.") Try:" 2>&1
       echo "$command -f" 2>&1
       return 1
