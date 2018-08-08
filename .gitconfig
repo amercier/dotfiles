@@ -36,7 +36,7 @@
 	excludesfile = /Users/amercier/.dotfiles/extra/.gitignore_global
 	pager = less -x1,5
 [pretty]
-	friendly = "\t%C(black)%h%C(reset) %<(44,trunc)%s %C(cyan)%>(10,trunc)%cr %C(dim white)%<(8,trunc)%aN%C(reset) %C(reset)%C(auto)%d%C(reset)"
+	friendly = "\t%C(black)%h%C(reset) %<(64,trunc)%s %C(cyan)%>(10,trunc)%cr %C(dim white)%<(8,trunc)%aN%C(reset) %C(reset)%C(auto)%d%C(reset)"
 [user]
 	name = Alex Mercier
 	email = pro.alexandre.mercier@gmail.com
