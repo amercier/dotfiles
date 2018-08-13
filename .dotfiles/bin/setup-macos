@@ -336,7 +336,7 @@ install_or_update login_item "Setup" "Setup login item" "add_login_item '$HOME/A
 
 # Minimize.app
 install_or_update application "Minimize" "Minimize application" "osacompile -o '$HOME/Applications/Minimize.app' '$dir/../src/minimize.applescript'"
-install_or_update login_item "Minimize" "Minimize login item" "add_login_item '$HOME/Applications/Minimize.app' 1"
+install_or_update login_item "Minimize" "Minimize login item" "add_login_item '$HOME/Applications/Minimize.app'"
 
 # Disable the sound effects on boot
 if [ -e /Library/Scripts/macos-mute-off ] && [ -e /Library/Scripts/macos-mute-on ]

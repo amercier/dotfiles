@@ -75,7 +75,7 @@ macos_set_preference() {
 # @param 1 Application name to check, without `.app`
 # @returns `0` if the application directory exists, `1` otherwise
 login_item_exists() {
-  osascript -e 'tell application "System Events" to get the name of every login item' | sed 's/, /\n/g' | grep -E "^$1\$" > /dev/null
+  osascript -e 'tell application "System Events" to get the name of every login item' | sed 's/, /,/g' | tr ',' '\n' | grep -E "^$1\$" > /dev/null
 }
 
 # Add a MacOS login item
