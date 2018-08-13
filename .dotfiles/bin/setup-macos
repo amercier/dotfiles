@@ -331,12 +331,12 @@ ping -c 1 foo.localhost >/dev/null
 ping -c 1 foo.test >/dev/null
 
 # Setup.app
-install_or_update application "Setup" "Setup application" "osacompile -o '/Applications/Setup.app' '$dir/../src/setup.applescript'"
-install_or_update login_item "Setup" "Setup login item" "add_login_item '/Applications/Setup.app'"
+install_or_update application "Setup" "Setup application" "osacompile -o '$HOME/Applications/Setup.app' '$dir/../src/setup.applescript'"
+install_or_update login_item "Setup" "Setup login item" "add_login_item '$HOME/Applications/Setup.app'"
 
 # Minimize.app
-install_or_update application "Minimize" "Minimize application" "osacompile -o '/Applications/Minimize.app' '$dir/../src/minimize.applescript'"
-install_or_update login_item "Minimize" "Minimize login item" "add_login_item '/Applications/Minimize.app' 1"
+install_or_update application "Minimize" "Minimize application" "osacompile -o '$HOME/Applications/Minimize.app' '$dir/../src/minimize.applescript'"
+install_or_update login_item "Minimize" "Minimize login item" "add_login_item '$HOME/Applications/Minimize.app' 1"
 
 # Disable the sound effects on boot
 if [ -e /Library/Scripts/macos-mute-off ] && [ -e /Library/Scripts/macos-mute-on ]
@@ -407,13 +407,19 @@ install_or_update_atom_package package-sync
 composer global require squizlabs/php_codesniffer # linter-phpcs
 
 # Node versions
-. /usr/local/opt/nvm/nvm.sh
 install_or_update_nvm_node_version node
 install_or_update_nvm_node_version --lts
 install_or_update_nvm_node_version 6
 install_or_update_nvm_node_version 4
 install_or_update_nvm_node_version 0.12
 install_or_update_nvm_node_version 0.10
+nvm_outdated_versions | while read v
+do
+  echo "Uninstalling Node $(cyan $v)..."
+  bash -c ". /usr/local/opt/nvm/nvm.sh && nvm uninstall \"$v\""
+  rm -rf "$NVM_DIR/_default_version"
+  echo "$(green ✓) Done"
+done
 
 # Workspace
 create_directory_if_not_exists "$HOME/Workspace"
