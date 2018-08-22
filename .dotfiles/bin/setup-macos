@@ -413,9 +413,9 @@ install_or_update_nvm_node_version 6
 install_or_update_nvm_node_version 4
 install_or_update_nvm_node_version 0.12
 install_or_update_nvm_node_version 0.10
-nvm_outdated_versions | while read v
+nvm_outdated_versions | while read -r v
 do
-  echo "Uninstalling Node $(cyan $v)..."
+  echo "Uninstalling Node $(cyan "$v")..."
   bash -c ". /usr/local/opt/nvm/nvm.sh && nvm uninstall \"$v\""
   rm -rf "$NVM_DIR/_default_version"
   echo "$(green ✓) Done"
