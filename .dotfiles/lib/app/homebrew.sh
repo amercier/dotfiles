@@ -67,7 +67,7 @@ install_or_update_brew_service() {
   else
     install_or_update brew_keg "$1" "$1" \
       "brew install $1 $cmd && brew services start $service" \
-      "brew services stop $service && brew_upgrade $1 && brew services start $service"
+      "brew services list | grep -q \"^$service.*stopped\" || brew services stop $service && brew_upgrade $1 && brew services start $service"
   fi
 }
 
