@@ -14,6 +14,7 @@ packages: [
   "language-ansi-styles"
   "language-apache"
   "language-applescript"
+  "language-babel"
   "language-blade"
   "language-groovy"
   "language-pug"
