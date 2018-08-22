@@ -24,15 +24,11 @@ install_or_update_nvm_node_version() {
   install_or_update nvm_node_version "$1" "Node.js $1" "$cmd" "$cmd"
 }
 
-nvm_all_versions() {
-  ls ~/.nvm | grep --color=never -E v[0-9] && ls ~/.nvm/versions/node | grep --color=never -E v[0-9]
-}
-
 # Display latest version for a given version
 #
 # @param 1 Major version number. Ex: 10
 nvm_latest_version() {
-  nvm_all_versions | grep "v$1." | tail -n 1
+  nvm_ls | grep "v$1." | tail -n 1
 }
 
 # Get the major version number for a given Node version
@@ -61,8 +57,8 @@ nvm_is_latest_version() {
 # List outdated versions
 #
 nvm_outdated_versions() {
-  nvm_all_versions | while read v
+  nvm_ls | while read -r v
   do
-    nvm_is_latest_version "$v" || echo $v
+    nvm_is_latest_version "$v" || echo "$v"
   done
 }
