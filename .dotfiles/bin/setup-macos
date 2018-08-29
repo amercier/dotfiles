@@ -401,7 +401,7 @@ macos_set_preference org.R-project.R force.LANG string en_US.UTF-8 # Fix 'tar: F
 echo
 
 # Atom packages
-install_or_update_atom_package package-sync
+install_or_update_atom_package manage-packages
 
 # Atom packages dependencies
 composer global require squizlabs/php_codesniffer # linter-phpcs

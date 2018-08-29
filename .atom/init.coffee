@@ -9,5 +9,3 @@
 # atom.workspace.observeTextEditors (editor) ->
 #   editor.onDidSave ->
 #     console.log "Saved! #{editor.getPath()}"
-
-atom.commands.dispatch(atom.views.getView(atom.workspace), 'package-sync:sync');
