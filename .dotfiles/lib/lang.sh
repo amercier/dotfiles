@@ -76,3 +76,11 @@ uncomment() {
   char=${3-#}
   replace_inline "${char}[[:space:]]*${1}" "$1" "$2"
 }
+
+# List files contained in a given directory
+#
+# @param 1 Directory
+# @param 2 File name pattern. Optional (defaults to "*").
+list_files() {
+  find "$1" -mindepth 1 -maxdepth 1 -name "${2-*}" | grep -Eo '[^/]*$'
+}
