@@ -11,8 +11,11 @@ nvm_node_version_exists() {
   if [ "$1" = '--lts' ]
   then
     directory_exists "$HOME/.nvm/versions/lts"
+  elif [ "$1" = '0.10' ]
+  then
+    list_files "$HOME/.nvm/" "v$1.*" > /dev/null
   else
-    directory_exists "$HOME/.nvm/versions/$1"
+    list_files "$HOME/.nvm/versions/node" "v$1.*" > /dev/null
   fi
 }
 
