@@ -21,6 +21,8 @@
     ]
   "linter-node-markdownlint":
     disableIfNoMarkdownlintrc: true
+  "linter-phpcs":
+    codeStandardOrConfigFile: "PSR12"
   "linter-sass-lint":
     configFile: "node_modules/sass-lint/lib/config/sass-lint.yml"
     noConfigDisable: true
