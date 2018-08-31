@@ -81,7 +81,6 @@ then
 fi
 
 # Brew services
-install_or_update_brew_service dnsmasq SUDO
 install_or_update_brew_service mysql@5.7
 install_or_update_brew_service postgres
 install_or_update_brew_service mongodb
@@ -286,49 +285,6 @@ else
   echo "$(yellow '⚠ Warning:') git set to use GPG key $(magenta "$(git config --global user.signingkey)") instead of $(cyan "$gpg_key_id")"
 fi
 echo
-
-# Dnsmasq
-# TODO Find a more elegant solution
-dnsmasq_config="$(brew --prefix)/etc/dnsmasq.conf"
-
-if [ -e "$dnsmasq_config.bak" ]
-then
-  echo "$(green ✓) File already exists: $(cyan "$dnsmasq_config.bak")"
-else
-  mv "$dnsmasq_config" "$dnsmasq_config.bak"
-fi
-
-if [ -e "$dnsmasq_config" ]
-then
-  echo "$(green ✓) File already exists: $(cyan "$dnsmasq_config")"
-else
-  create_directory_if_not_exists "$(brew --prefix)/etc"
-
-  cat <<EOF | trim | tee "$dnsmasq_config" > /dev/null
-    # Configuration file for dnsmasq.
-    # See "/usr/sbin/dnsmasq --help" or "man 8 dnsmasq" for details.
-
-    listen-address=127.0.0.1
-    address=/local/127.0.0.1
-    address=/localhost/127.0.0.1
-    address=/test/127.0.0.1
-EOF
-  sudo brew services restart dnsmasq
-  dig foo.test @localhost | grep -qE '^foo\.test\..*127\.0\.0\.1'
-  dig foo.local @localhost | grep -qE '^foo\.local\..*127\.0\.0\.1'
-  dig foo.localhost @localhost | grep -qE '^foo\.localhost\..*127\.0\.0\.1'
-fi
-
-# TODO Find a more elegant solution
-[ -d /etc/resolver ] || sudo mkdir /etc/resolver
-
-# TODO Find a more elegant solution
-[ -e /etc/resolver/local ] || sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/local'
-[ -e /etc/resolver/localhost ] || sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/localhost'
-[ -e /etc/resolver/test ] || sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/test'
-# ping -c 1 foo.local >/dev/null # Bonjour service overrides this
-ping -c 1 foo.localhost >/dev/null
-ping -c 1 foo.test >/dev/null
 
 # Setup.app
 install_or_update application "Setup" "Setup application" "osacompile -o '$HOME/Applications/Setup.app' '$dir/../src/setup.applescript'"
