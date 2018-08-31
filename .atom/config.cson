@@ -19,6 +19,9 @@
       ".json"
       ".node"
     ]
+  "linter-eslint":
+    fixOnSave: true
+    lintHtmlFiles: true
   "linter-node-markdownlint":
     disableIfNoMarkdownlintrc: true
   "linter-phpcs":
