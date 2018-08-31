@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+if brew_keg_exists php; then
+  prepend_to_path "$HOME/.composer/vendor/bin"
+fi
