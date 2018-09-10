@@ -32,6 +32,8 @@
   "linter-shellcheck":
     enableNotice: true
     userParameters: "-e SC1071"
+  "linter-ui-default":
+    panelHeight: 500
   "markdown-preview":
     useGitHubStyle: true
   minimap:
