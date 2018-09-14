@@ -11,6 +11,7 @@ packages: [
   "language-applescript"
   "language-babel"
   "language-blade"
+  "language-dotenv"
   "language-vue"
   "linter"
   "linter-eslint"
