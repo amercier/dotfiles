@@ -56,6 +56,10 @@
     squashDirectoryNames: true
   welcome:
     showOnStartup: false
+".blade.html.php.text":
+  editor:
+    commentEnd: " --}}"
+    commentStart: "{{-- "
 ".editorconfig.source":
   editor:
     preferredLineLength: 100

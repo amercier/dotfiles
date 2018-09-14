@@ -10,6 +10,7 @@ packages: [
   "js-hyperclick"
   "language-applescript"
   "language-babel"
+  "language-blade"
   "language-vue"
   "linter"
   "linter-eslint"
