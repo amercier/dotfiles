@@ -7,6 +7,7 @@
 	current = symbolic-ref --short HEAD
 	current-remote = rev-parse --abbrev-ref --symbolic-full-name @{u}
 	diff-cached = diff --cached
+	forked = ! git graph $(git current) $(git current-remote)
 	graph = log --graph --pretty=friendly --color=always
 	merged-branches = ! git branch --merged | egrep -v '^\\*'
 	new = ! git graph $(git current) --not $(git current-remote)
