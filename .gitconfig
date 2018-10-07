@@ -14,6 +14,8 @@
 	old = ! git graph $(git current-remote) --not $(git current)
 	push-all = ! source $HOME/.dotfiles/lib/colors.sh && source $HOME/.dotfiles/profile.d/git && git_push_all
 	push-upstream = ! git push --set-upstream $(git remote | head -n 1) $(git current)
+	renew = ! git rework $(git log --format=format:%H $(git current) --not $(git current-remote) | tail -n 1)
+	renew-all = ! git renew && git push-all
 	rework = ! source $HOME/.dotfiles/lib/colors.sh && source $HOME/.dotfiles/profile.d/git && git_rework
 	show-files = show --name-only
 [color "advice"]
