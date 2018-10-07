@@ -38,6 +38,43 @@ git_push_all() {
   done
 }
 
+# Force-push a commit to the current remote branch.
+# @param [1] Commit, defaults to HEAD
+git_rework() {
+  commit=${1-HEAD}
+  branch=$(git current-remote)
+  if [ "$(git rev-parse --short "$branch")" = "$(git rev-parse --short "$commit")" ]
+  then
+    echo "Branch $(cyan "$branch") is already at $(magenta "$(git rev-parse --short "$branch")"), aborting." >&2
+    return 1
+  fi
+
+  echo "Reworking $(magenta "$(git rev-parse --short "$branch")") -> $(magenta "$(git rev-parse --short "$commit")") to $(cyan "$branch"):"
+  git log --pretty=friendly "$branch" --not "$commit" --no-color | while read -r line; do
+    red "- $line\\n"
+  done
+  git log --pretty=friendly "HEAD" --not "$commit" --no-color | while read -r line; do
+    black "* $line\\n"
+  done
+  git log --pretty=friendly "$commit" --not "$branch" --no-color | while read -r line; do
+    green "+ $line\\n"
+  done
+  git log -2 --pretty=friendly "$(git merge-base "$commit" "$branch")" | tail -n 3 | while read -r line; do
+    echo "  $line"
+  done
+  command="git push $(echo "$branch" | tr / '\n' | head -n 1) $commit:$(echo "$branch" | tr / '\n' | tail -n 1) -f"
+  echo
+  while
+    printf "Proceed with: %s ? [y/n] " "$(yellow "$command")" && read -r answer
+  do
+    case $answer in
+      [Yy]* ) $command; return 0;;
+      [Nn]* ) echo "Aborted." >&2; return 1;;
+      * ) echo "Please enter 'y' or 'n'.";;
+    esac
+  done
+}
+
 alias g=git
 alias ga='git add'
 alias gaa='git add .'
@@ -57,6 +94,6 @@ alias gp='git push'
 alias gpa='git push-all'
 alias gpf='git push -f'
 alias gpu='git push-upstream'
-alias gr='git pull --rebase'
+alias gr='git rework'
 alias gs='git status --short'
 alias gu='git pull'
