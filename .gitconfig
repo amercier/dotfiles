@@ -5,11 +5,14 @@
 	clone-branch = clone -b
 	commit-message = "!git_commit_message() { message="$@"; git commit -m \"$message\"; }; git_commit_message"
 	current = symbolic-ref --short HEAD
+	current-remote = rev-parse --abbrev-ref --symbolic-full-name @{u}
 	diff-cached = diff --cached
 	graph = log --graph --pretty=friendly --color=always
 	merged-branches = ! git branch --merged | egrep -v '^\\*'
+	new = ! git graph $(git current) --not $(git current-remote)
+	old = ! git graph $(git current-remote) --not $(git current)
 	push-all = ! source $HOME/.dotfiles/lib/colors.sh && source $HOME/.dotfiles/profile.d/git && git_push_all
-	push-upstream = "! git push --set-upstream \"$(git remote | head -n 1)\" \"$(git current)\""
+	push-upstream = ! git push --set-upstream $(git remote | head -n 1) $(git current)
 	show-files = show --name-only
 [color "advice"]
 	hint = black
