@@ -22,7 +22,6 @@ packages: [
   "linter-shellcheck"
   "linter-ui-default"
   "manage-packages"
-  "merge-conflicts"
   "minimap"
   "minimap-highlight-selected"
   "minimap-linter"
