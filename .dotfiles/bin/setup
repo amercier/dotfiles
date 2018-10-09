@@ -10,7 +10,7 @@ dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 . "$dir/../lib/colors.sh"
 
-if [ "$OSTYPE" = darwin17 ]
+if [ "$OSTYPE" = darwin17 ] || [ "$OSTYPE" = darwin18 ]
 then
   "${dir}/setup-macos"
 elif echo "$OSTYPE" | grep darwin > /dev/null
