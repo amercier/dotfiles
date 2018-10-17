@@ -23,7 +23,7 @@ brew_cask_upgrade() {
   if [ -n "$(brew cask outdated "$1")" ]; then
     echo "$1 is outdated, upgrading..."
     brew cask upgrade "$1"
-    brew cask cleanup
+    brew cleanup
   else
     echo "$1 is up-to-date"
   fi
