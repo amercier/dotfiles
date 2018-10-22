@@ -4,8 +4,8 @@
 	cleanup = ! git checkout master && git pull && git clean-merged-branches
 	clone-branch = clone -b
 	commit-message = "!git_commit_message() { message="$@"; git commit -m \"$message\"; }; git_commit_message"
-	current = symbolic-ref --short HEAD
-	current-remote = rev-parse --abbrev-ref --symbolic-full-name @{u}
+	current = ! source $HOME/.dotfiles/lib/colors.sh && source $HOME/.dotfiles/profile.d/git && git_current
+	current-remote = ! git rev-parse --abbrev-ref --symbolic-full-name $(git current)@{u}
 	diff-cached = diff --cached
 	forked = ! git graph $(git current) $(git current-remote)
 	graph = log --graph --pretty=friendly --color=always

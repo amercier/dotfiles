@@ -1,5 +1,25 @@
 #!/usr/bin/env sh
 
+# Get the current branch name, even when rebasing/merging
+git_current() {
+  branch="$(git rev-parse --abbrev-ref HEAD)"
+  if [ -z "$branch" ]; then
+      exit 2
+  fi
+  if [ "$branch" = "HEAD" ]; then
+      # check if we are in a rebase
+      head_name_file="$(git rev-parse --git-dir)/rebase-merge/head-name"
+      if [ -f "${head_name_file}" ]; then
+          branch=$(cut -f3- -d/ "$head_name_file")
+      else
+          # ignore DETACHED HEAD state.
+          echo "Error: repository is in a DETACHED HEAD state." >&2
+          exit 1
+      fi
+  fi
+  echo "$branch"
+}
+
 # Push commits of a branch one after another
 # @param [1] Remote name
 # @param [2] Remote branch
