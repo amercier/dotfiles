@@ -25,7 +25,6 @@
       ".env.example"
     ]
   "linter-eslint":
-    fixOnSave: true
     lintHtmlFiles: true
   "linter-node-markdownlint":
     disableIfNoMarkdownlintrc: true
@@ -47,6 +46,12 @@
       "highlight-selectedDecorationsZIndex": 0
       linter: true
       linterDecorationsZIndex: 0
+  "prettier-atom":
+    formatOnSaveOptions:
+      enabled: true
+      isDisabledIfNotInPackageJson: true
+    useEslint: true
+    useStylelint: true
   "project-folder":
     gitProjectSearchMaxDepth: 1
     projectRootDirectories: [

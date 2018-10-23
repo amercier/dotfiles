@@ -28,6 +28,7 @@ packages: [
   "minimap-linter"
   "multi-cursor"
   "php-hyperclick"
+  "prettier-atom"
   "project-folder"
   "sort-lines"
 ]
