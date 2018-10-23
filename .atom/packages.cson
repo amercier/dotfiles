@@ -15,6 +15,7 @@ packages: [
   "language-vue"
   "linter"
   "linter-eslint"
+  "linter-flow"
   "linter-jsonlint"
   "linter-node-markdownlint"
   "linter-phpcs"
