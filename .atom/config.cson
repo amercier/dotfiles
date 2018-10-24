@@ -1,4 +1,8 @@
 "*":
+  "atom-package-deps":
+    ignored: [
+      "linter-node-markdownlint"
+    ]
   core:
     telemetryConsent: "no"
   docblockr:
