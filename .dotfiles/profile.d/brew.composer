@@ -2,4 +2,13 @@
 
 if brew_keg_exists php; then
   prepend_to_path "$HOME/.composer/vendor/bin"
+
+  composer_list() {
+    node -e "Object.keys(require('./composer')['$1'] || {}).map(function(d) { console.log(d); });"
+  }
+
+  alias composer-upgrade-dep="composer_list require | xargs composer require"
+  alias composer-upgrade-dev="composer_list require-dev | xargs composer require --dev"
+
+  alias composer-upgrade="composer-upgrade-dep && composer-upgrade-dev"
 fi

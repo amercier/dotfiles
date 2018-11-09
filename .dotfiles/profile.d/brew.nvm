@@ -31,7 +31,7 @@ if brew_keg_exists nvm; then
   prepend_to_path "$NVM_DIR/current/bin"
 
   npm_list() {
-    node -e "Object.keys(require('./package').$1 || {}).map(function(d) { console.log(d); });"
+    node -e "Object.keys(require('./package')['$1'] || {}).map(function(d) { console.log(d); });"
   }
 
   alias npm-install-latest="sed 's/$/@latest/' | xargs npm install"
