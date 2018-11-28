@@ -5,6 +5,7 @@
     ]
   core:
     telemetryConsent: "no"
+    useTreeSitterParsers: false
   docblockr:
     align_tags: "no"
     return_tag: "@returns"
