@@ -4,11 +4,13 @@
 	cleanup = ! git checkout master && git pull && git clean-merged-branches
 	clone-branch = clone -b
 	commit-message = "!git_commit_message() { message="$@"; git commit -m \"$message\"; }; git_commit_message"
+	conflicts = ! atom $(git list-conflicts)
 	current = ! source $HOME/.dotfiles/lib/colors.sh && source $HOME/.dotfiles/profile.d/git && git_current
 	current-remote = ! git rev-parse --abbrev-ref --symbolic-full-name $(git current)@{u}
 	diff-cached = diff --cached
 	forked = ! git graph $(git current) $(git current-remote)
 	graph = log --graph --pretty=friendly --color=always
+	list-conflicts = diff --name-only --diff-filter=U
 	merged-branches = ! git branch --merged | egrep -v '^\\*'
 	new = ! git graph $(git current) --not $(git current-remote)
 	old = ! git graph $(git current-remote) --not $(git current)
