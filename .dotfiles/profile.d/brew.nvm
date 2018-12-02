@@ -40,6 +40,13 @@ if brew_keg_exists nvm; then
   alias npm-upgrade-peer="npm_list peerDependencies | npm-install-latest --save-peer"
   alias npm-upgrade-bundled="npm_list bundledDependencies | npm-install-latest --save-bundled"
   alias npm-upgrade-optional="npm_list optionalDependencies | npm-install-latest --save-optional"
-
   alias npm-upgrade="npm-upgrade-dep && npm-upgrade-dev && npm-upgrade-peer && npm-upgrade-bundled && npm-upgrade-optional"
+
+  alias yarn-install-latest="sed 's/$/@latest/' | xargs yarn add"
+  alias yarn-upgrade-dep="npm_list dependencies | yarn-install-latest --save"
+  alias yarn-upgrade-dev="npm_list devDependencies | yarn-install-latest --save-dev"
+  alias yarn-upgrade-peer="npm_list peerDependencies | yarn-install-latest --save-peer"
+  alias yarn-upgrade-bundled="npm_list bundledDependencies | yarn-install-latest --save-bundled"
+  alias yarn-upgrade-optional="npm_list optionalDependencies | yarn-install-latest --save-optional"
+  alias yarn-upgrade="yarn-upgrade-dep && yarn-upgrade-dev && yarn-upgrade-peer && yarn-upgrade-bundled && yarn-upgrade-optional"
 fi
