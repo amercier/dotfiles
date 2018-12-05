@@ -15,11 +15,12 @@
 	new = ! git graph $(git current) --not $(git current-remote)
 	old = ! git graph $(git current-remote) --not $(git current)
 	push-all = ! source $HOME/.dotfiles/lib/colors.sh && source $HOME/.dotfiles/profile.d/git && git_push_all
-	push-upstream = ! git push --set-upstream $(git remote | head -n 1) $(git current)
+	push-upstream = "! if git unique-remote; then git push --set-upstream $(git unique-remote) $(git current); else echo \"Found multiple remotes: $(echo $(git remote) | sed 's/ /, /g')\"; exit 1; fi"
 	renew = ! git rework $(git log --format=format:%H $(git current) --not $(git current-remote) | tail -n 1)
 	renew-all = ! git renew && git push-all
 	rework = ! source $HOME/.dotfiles/lib/colors.sh && source $HOME/.dotfiles/profile.d/git && git_rework
 	show-files = show --name-only
+	unique-remote = "! git_unique_remote() { remotes=\"$(git remote)\"; if [ \"$(echo \"$remotes\" | wc -l)\" = 1 ]; then echo \"$remotes\" >&2; else return 1; fi; }; git_unique_remote"
 [color "advice"]
 	hint = black
 [color "branch"]
