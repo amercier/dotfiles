@@ -3,7 +3,7 @@
 	clean-merged-branches = ! git merged-branches | xargs git branch -d
 	cleanup = ! git checkout master && git pull && git clean-merged-branches
 	clone-branch = clone -b
-	commit-message = "!git_commit_message() { message="$@"; git commit -m \"$message\"; }; git_commit_message"
+	commit-message = "! git_commit_message() { d=\"${GIT_DATE-0}\"; shift 1; message=\"$@\"; git commit -m \"$message\" --date=\"$(date --date=\"$d day ago\")\"; }; git_commit_message"
 	conflicts = ! atom $(git list-conflicts)
 	current = ! source $HOME/.dotfiles/lib/colors.sh && source $HOME/.dotfiles/profile.d/git && git_current
 	current-remote = ! git rev-parse --abbrev-ref --symbolic-full-name $(git current)@{u}
