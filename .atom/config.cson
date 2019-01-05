@@ -54,7 +54,9 @@
   "prettier-atom":
     formatOnSaveOptions:
       enabled: true
-      isDisabledIfNotInPackageJson: true
+      isDisabledIfNoConfigFile: true
+      showInStatusBar: true
+    prettierEslintOptions: {}
     useEslint: true
     useStylelint: true
   "project-folder":
