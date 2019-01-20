@@ -361,10 +361,11 @@ composer global require squizlabs/php_codesniffer # linter-phpcs
 
 # Node versions
 . /usr/local/opt/nvm/nvm.sh
-install_or_update_nvm_node_version node
-install_or_update_nvm_node_version --lts
-install_or_update_nvm_node_version 6
-install_or_update_nvm_node_version 4
+install_or_update_nvm_node_version node && nvm use node
+install_or_update_nvm_node_version lts/dubnium
+install_or_update_nvm_node_version lts/carbon
+install_or_update_nvm_node_version lts/boron
+install_or_update_nvm_node_version lts/argon
 install_or_update_nvm_node_version 0.12
 install_or_update_nvm_node_version 0.10
 nvm_outdated_versions | while read -r v
