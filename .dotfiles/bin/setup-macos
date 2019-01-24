@@ -376,6 +376,10 @@ do
   echo "$(green ✓) Done"
 done
 
+# Globally-installed NPM packages
+# TODO Do not reinstall every time
+npm install -g npm yarn
+
 # Workspace
 create_directory_if_not_exists "$HOME/Workspace"
 if [ ! -e "$HOME/Workspace/phpinfo.php" ]
