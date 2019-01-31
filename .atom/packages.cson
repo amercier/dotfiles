@@ -30,4 +30,5 @@ packages: [
   "prettier-atom"
   "project-folder"
   "sort-lines"
+  "videoplayer"
 ]
