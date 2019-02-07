@@ -376,6 +376,10 @@ do
   echo "$(green ✓) Done"
 done
 
+# Set default NodeJS version
+nvm alias --no-colors | grep -e '^default -> ' -q || nvm alias default node
+nvm use default
+
 # Globally-installed NPM packages
 # TODO Do not reinstall every time
 npm install -g npm yarn
