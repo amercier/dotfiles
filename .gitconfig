@@ -4,6 +4,7 @@
 	cleanup = ! git checkout master && git pull && git clean-merged-branches
 	clone-branch = clone -b
 	commit-message = "! git_commit_message() { d=\"${GIT_DATE-0}\"; message=\"$@\"; git commit -m \"$message\" --date=\"$(date --date=\"$d day ago\")\"; }; git_commit_message"
+	commit-wip = commit --no-verify -m wip
 	conflicts = ! atom $(git list-conflicts)
 	current-local-branch = ! source $HOME/.dotfiles/profile.d/git && git_current_local_branch
 	current-remote-branch = ! git rev-parse --abbrev-ref --symbolic-full-name $(git current-local-branch)@{u}
