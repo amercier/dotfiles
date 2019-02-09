@@ -1,22 +1,27 @@
 #!/usr/bin/env sh
 
-# Get the current branch name, even when rebasing/merging
-git_current() {
+# Get the current local branch name, even when rebasing/merging
+git_current_local_branch() {
   branch="$(git rev-parse --abbrev-ref HEAD)"
-  if [ -z "$branch" ]; then
-      exit 2
+  if [ -z "$branch" ]
+  then
+    return 2
   fi
-  if [ "$branch" = "HEAD" ]; then
-      # check if we are in a rebase
-      head_name_file="$(git rev-parse --git-dir)/rebase-merge/head-name"
-      if [ -f "${head_name_file}" ]; then
-          branch=$(cut -f3- -d/ "$head_name_file")
-      else
-          # ignore DETACHED HEAD state.
-          echo "Error: repository is in a DETACHED HEAD state." >&2
-          exit 1
-      fi
+
+  if [ "$branch" = "HEAD" ]
+  then
+    # Check if we are in a rebase/merge
+    head_name_file="$(git rev-parse --git-dir)/rebase-merge/head-name"
+    if [ -f "${head_name_file}" ]
+    then
+      branch=$(cut -f3- -d/ "$head_name_file")
+    else
+      # Ignore DETACHED HEAD state.
+      echo "Error: repository is in a DETACHED HEAD state." >&2
+      return 1
+    fi
   fi
+
   echo "$branch"
 }
 
@@ -62,7 +67,7 @@ git_push_all() {
 # @param [1] Commit, defaults to HEAD
 git_rework() {
   commit=${1-HEAD}
-  branch=$(git current-remote)
+  branch=$(git current-remote-branch)
   if [ "$(git rev-parse --short "$branch")" = "$(git rev-parse --short "$commit")" ]
   then
     echo "Branch $(cyan "$branch") is already at $(magenta "$(git rev-parse --short "$branch")"), aborting." >&2

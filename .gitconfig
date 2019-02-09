@@ -5,18 +5,18 @@
 	clone-branch = clone -b
 	commit-message = "! git_commit_message() { d=\"${GIT_DATE-0}\"; message=\"$@\"; git commit -m \"$message\" --date=\"$(date --date=\"$d day ago\")\"; }; git_commit_message"
 	conflicts = ! atom $(git list-conflicts)
-	current = ! source $HOME/.dotfiles/lib/colors.sh && source $HOME/.dotfiles/profile.d/git && git_current
-	current-remote = ! git rev-parse --abbrev-ref --symbolic-full-name $(git current)@{u}
+	current-local-branch = ! source $HOME/.dotfiles/profile.d/git && git_current_local_branch
+	current-remote-branch = ! git rev-parse --abbrev-ref --symbolic-full-name $(git current-local-branch)@{u}
 	diff-cached = diff --cached
-	forked = ! git graph $(git current) $(git current-remote)
+	forked = ! git graph $(git current-local-branch) $(git current-remote-branch)
 	graph = log --graph --pretty=friendly --color=always
 	list-conflicts = diff --name-only --diff-filter=U
 	merged-branches = ! git branch --merged | egrep -v '^\\*'
-	new = ! git graph $(git current) --not $(git current-remote)
-	old = ! git graph $(git current-remote) --not $(git current)
+	new = ! git graph $(git current-local-branch) --not $(git current-remote-branch)
+	old = ! git graph $(git current-remote-branch) --not $(git current-local-branch)
 	push-all = ! source $HOME/.dotfiles/lib/colors.sh && source $HOME/.dotfiles/profile.d/git && git_push_all
-	push-upstream = "! if git unique-remote >/dev/null; then git push --set-upstream \"$(git unique-remote)\" \"$(git current)\"; else echo \"Found multiple remotes: $(echo $(git remote) | sed 's/ /, /g')\"; exit 1; fi"
-	renew = ! git rework $(git log --format=format:%H $(git current) --not $(git current-remote) | tail -n 1)
+	push-upstream = "! if git unique-remote >/dev/null; then git push --set-upstream \"$(git unique-remote)\" \"$(git current-local-branch)\"; else echo \"Found multiple remotes: $(echo $(git remote) | sed 's/ /, /g')\"; exit 1; fi"
+	renew = ! git rework $(git log --format=format:%H $(git current-local-branch) --not $(git current-remote-branch) | tail -n 1)
 	renew-all = ! git renew && git push-all
 	rework = ! source $HOME/.dotfiles/lib/colors.sh && source $HOME/.dotfiles/profile.d/git && git_rework
 	show-files = show --name-only
