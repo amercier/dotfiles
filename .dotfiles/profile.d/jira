@@ -1,0 +1,74 @@
+#!/usr/bin/env sh
+
+# Open the JIRA ticket associated with the current local branch, or any ticket.
+#
+# SYNTAX
+#
+#   jira            # Try to determine local branch
+#
+#   jira TICKET_ID
+#
+# EXAMPLE
+#
+# - git local branch: "feat/xxx-123-my-awesome-feature"
+# - JIRA_URL set to "https://my-company.atlassian.net"
+#
+#     $ jira
+#     Opening https://my-company.atlassian.net/browse/XXX-123
+#
+#     $ jira yyy-456
+#     Opening https://my-company.atlassian.net/browse/YYY-456
+#
+# NOTES
+#
+# - Ticket ID can be of any case if local branch.
+# - Ticket ID must be uppercased in JIRA.
+# - The first sequence of <letters>-<digits> of the local branch name is used as the ticket ID. This
+#   can be overriden by setting JIRA_ID_FORMAT. Default value: `[a-zA-Z]+-[0-9]+`.
+jira() {
+  if [ -z "$JIRA_URL" ]
+  then
+    echo "Please set JIRA_URL enviroment variable" >&2
+    return 1
+  fi
+
+  if [ -n "$1" ]
+  then
+    ticket_id="$1"
+  else
+    # Try to determine ticket from local Git branch
+
+    if [ ! -d .git ] && ! git rev-parse --git-dir > /dev/null 2>&1
+    then
+      echo "Not a git repository" >&2
+      return 1
+    fi
+
+    # Retrieve local branch name using "current-local-branch" alias if it exists, otherwise default
+    # to a naive approach (doesn't work while merging/rebasing).
+    if git config --get-regexp alias | grep -E '^alias.current-local-branch ' -q
+    then
+      local_branch=$(git current-local-branch)
+    else
+      local_branch=$(git branch | grep -E '^\*' | cut -d ' ' -f2)
+    fi
+    if [ -z "$local_branch" ]
+    then
+      echo "No local branch found" >&2
+      return 1
+    fi
+
+    jira_id_format=${JIRA_ID_FORMAT-[a-zA-Z]+-[0-9]+}
+    ticket_id=$(echo "$local_branch" | grep -E -o "$jira_id_format" | head -1)
+    if [ -z "$ticket_id" ]
+    then
+      echo "Could not determine JIRA ticket ID from local branch \"$local_branch\"." >&2
+      echo "Alternatively, you can specify the ticket ID explicitely: jira TICKET_ID" >&2
+      return 1
+    fi
+  fi
+
+  ticket_url="${JIRA_URL}/browse/$(echo "$ticket_id" | tr '[:lower:]' '[:upper:]')"
+  echo "Opening $ticket_url"
+  open "$ticket_url"
+}
