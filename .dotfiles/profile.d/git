@@ -101,6 +101,7 @@ git_rework() {
 }
 
 alias g=git
+alias g0='git checkout master'
 alias ga='git add'
 alias gaa='git add .'
 alias gaac='git add . && git commit-message'
