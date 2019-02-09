@@ -1,0 +1,48 @@
+#!/usr/bin/env sh
+
+# Look for:
+# - .travis.yml file
+#
+# TODO Support Circle CI
+# TODO Support Gitlab CI
+# TODO Support Codeship
+
+if [ -f '.travis.yml' ]
+then
+  ci_origin="https://travis-ci.org"
+  ci_suffix="/branches"
+else
+  echo "No .travis.yml file found" >&2
+  return 1
+fi
+
+if [ ! -d .git ] && ! git rev-parse --git-dir > /dev/null 2>&1
+then
+  echo "Not a git repository" >&2
+  return 1
+fi
+
+remote_branch=$(git rev-parse --abbrev-ref --symbolic-full-name '@{u}' 2>/dev/null)
+if [ -z "$remote_branch" ]
+then
+  echo "Not connected to a remote branch" >&2
+  return 1
+fi
+remote_name=$(echo "$remote_branch" | grep -E -o '^[^/]*')
+
+ssh_remote="$(git remote get-url "$remote_name" 2>/dev/null)"
+if [ -z "$ssh_remote" ]
+then
+  echo "${remote_name} remote not found" >&2
+  return 1
+elif ! echo "$ssh_remote" | grep -q github.com
+then
+  echo "Not a Github repository: $ssh_remote" >&2
+  return 1
+fi
+
+project_slug=$(echo "$ssh_remote" | sed "s/^git@github.com://" | sed 's/.git$//')
+ci_url="${ci_origin}/${project_slug}${ci_suffix}"
+
+echo "Opening $ci_url"
+open "$ci_url"
