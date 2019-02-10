@@ -5,8 +5,15 @@ set -o pipefail
 set -o nounset
 # set -o xtrace
 
-# Open the Github project URL of a directory which is under version control with a
-# Github project.
+# Open the GitHub project page of a directory which is under version control with a GitHub project,
+# based on:
+# - the name of the current remote branch. Ex: "origin/master"
+# - the URL of the associated origin. Ex: origin=git@github.com:facebook/react.git
+#
+# Tries to open the most accurate page:
+# - if on master branch, open https://github.com/<REPO>/
+# - otherwise, if a Pull Request exists, opens https://github.com/<REPO>/pull/<PR>,
+# - otherwise, opens the branch page https://github.com/<REPO>/tree/<BRANCH>
 
 if [ ! -d .git ] && ! git rev-parse --git-dir > /dev/null 2>&1
 then
@@ -14,14 +21,16 @@ then
   exit 1
 fi
 
-remote_branch=$(git rev-parse --abbrev-ref --symbolic-full-name '@{u}' 2>/dev/null)
+remote_branch=$(git rev-parse --abbrev-ref --symbolic-full-name '@{u}' 2>/dev/null || echo)
 if [ -z "$remote_branch" ]
 then
-  echo "Not connected to a remote branch" >&2
+  echo 'Not connected to a remote branch.' >&2
+  echo 'Please run "git push --set-upstream origin BRANCH_NAME" to set one.' >&2
   exit 1
 fi
-remote_name=$(echo "$remote_branch" | grep -E -o '^[^/]*')
-branch_name=$(echo "$remote_branch" | sed 's/[^/]*\///')
+
+remote_name="$(echo "$remote_branch" | cut -d / -f1)"
+branch_name="$(echo "$remote_branch" | cut -d / -f2)"
 
 ssh_remote="$(git remote get-url "$remote_name" 2>/dev/null)"
 if [ -z "$ssh_remote" ]
@@ -30,17 +39,26 @@ then
   exit 1
 elif ! echo "$ssh_remote" | grep -q github.com
 then
-  echo "Not a Github repository: $ssh_remote" >&2
+  echo "Not a GitHub repository: $ssh_remote" >&2
   exit 1
 fi
 
-github_url=$(echo "$ssh_remote" | sed 's/^git@github.com:/https:\/\/github.com\//')
-github_url=$(echo "$github_url" | sed 's/.git$//')
+github_url="$(echo "$ssh_remote" | sed 's/^git@github.com:/https:\/\/github.com\//; s/.git$//')"
 
 # Look for associated PR
 if [ ! "$branch_name" = 'master' ]
 then
-  github_pr=$(git show-ref | grep "$(git rev-parse "$remote_branch")" | grep -E " refs/remotes/$remote_name/pr/[0-9]+" | grep -E -o '[0-9]+$')
+  # Tries show-ref (local)
+  if git show-ref | grep "refs/remotes/$remote_name/pr/" -q
+  then
+    github_pr="$(git show-ref | grep "$(git rev-parse "$remote_branch") refs/remotes/$remote_name/pr/" | cut -d / -f5 || echo)"
+  # Otherwise default to ls-remote (remote), with a warning
+  else
+    echo 'Warning: could not find any "pr/XXX" ref, please run:' >&2
+    echo "git config --add remote.$remote_name.fetch '+refs/pull/*/head:refs/remotes/$remote_name/pr/*'" >&2
+    github_pr=$(git ls-remote 2>/dev/null | grep "$(git rev-parse "$remote_branch")\\srefs/pull" | cut -d / -f3  || echo)
+  fi
+
   if [ -n "$github_pr" ]
   then
     github_url="$github_url/pull/$github_pr"
