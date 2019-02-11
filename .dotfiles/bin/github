@@ -5,6 +5,8 @@ set -o pipefail
 set -o nounset
 # set -o xtrace
 
+# DESCRIPTION
+#
 # Open the GitHub project page of a directory which is under version control with a GitHub project,
 # based on:
 # - the name of the current remote branch. Ex: "origin/master"
@@ -14,6 +16,12 @@ set -o nounset
 # - if on master branch, open https://github.com/<REPO>/
 # - otherwise, if a Pull Request exists, opens https://github.com/<REPO>/pull/<PR>,
 # - otherwise, opens the branch page https://github.com/<REPO>/tree/<BRANCH>
+#
+# SYNTAX
+#
+#     github                # Opens the GitHub URL of the project
+#
+#     github FILE_1 FILE_2  # Opens FILE_1 and FILE_2 GitHub URLs
 
 if [ ! -d .git ] && ! git rev-parse --git-dir > /dev/null 2>&1
 then
@@ -22,15 +30,17 @@ then
 fi
 
 remote_branch=$(git rev-parse --abbrev-ref --symbolic-full-name '@{u}' 2>/dev/null || echo)
-if [ -z "$remote_branch" ]
+if [ -n "$remote_branch" ]
 then
-  echo 'Not connected to a remote branch.' >&2
+  remote_name="$(echo "$remote_branch" | cut -d / -f1)"
+  branch_name="$(echo "$remote_branch" | cut -d / -f2)"
+else
+  echo 'Warning: Not connected to a remote branch.' >&2
   echo 'Please run "git push --set-upstream origin BRANCH_NAME" to set one.' >&2
-  exit 1
+  remote_name="$(git remote | head -n 1)"
+  branch_name="master"
+  echo "Defaulting to \"$remote_name/$branch_name\""
 fi
-
-remote_name="$(echo "$remote_branch" | cut -d / -f1)"
-branch_name="$(echo "$remote_branch" | cut -d / -f2)"
 
 ssh_remote="$(git remote get-url "$remote_name" 2>/dev/null)"
 if [ -z "$ssh_remote" ]
@@ -45,8 +55,8 @@ fi
 
 github_url="$(echo "$ssh_remote" | sed 's/^git@github.com:/https:\/\/github.com\//; s/.git$//')"
 
-# Look for associated PR
-if [ ! "$branch_name" = 'master' ]
+# Look for associated PR (only when no argument is provided)
+if [ "$#" = 0 ]
 then
   # Tries show-ref (local)
   if git show-ref | grep "refs/remotes/$remote_name/pr/" -q
@@ -58,14 +68,30 @@ then
     echo "git config --add remote.$remote_name.fetch '+refs/pull/*/head:refs/remotes/$remote_name/pr/*'" >&2
     github_pr=$(git ls-remote 2>/dev/null | grep "$(git rev-parse "$remote_branch")\\srefs/pull" | cut -d / -f3  || echo)
   fi
-
-  if [ -n "$github_pr" ]
-  then
-    github_url="$github_url/pull/$github_pr"
-  else
-    github_url="$github_url/tree/$branch_name"
-  fi
 fi
 
-echo "Opening $github_url"
-open "$github_url"
+# Add URL path when needed
+if [ "$#" != 0 ] || [ "$branch_name" != "master" ]
+then
+  github_url="$github_url/tree/$branch_name"
+elif [ -n "$github_pr" ]
+then
+  github_url="$github_url/pull/$github_pr"
+fi
+
+if [ "$#" = 0 ]
+then
+  echo "Opening $github_url"
+  open "$github_url"
+else
+  for path in "$@"; do
+    if [ -e "$path" ]
+    then
+      # TODO: Cleanup path
+      echo "Opening $github_url/$path"
+      open "$github_url/$path"
+    else
+      echo "File does not exist, skipping: $path" >&2
+    fi
+  done
+fi
