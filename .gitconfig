@@ -9,6 +9,8 @@
 	current-local-branch = ! source $HOME/.dotfiles/profile.d/git && git_current_local_branch
 	current-remote-branch = ! git rev-parse --abbrev-ref --symbolic-full-name $(git current-local-branch)@{u}
 	diff-cached = diff --cached
+	edit = ! "$EDITOR" . "$(git edit-list)"
+	edit-list = ! git status --porcelain | grep -v 'D ' | sed 's/.* //'
 	forked = ! git graph $(git current-local-branch) $(git current-remote-branch)
 	graph = log --graph --pretty=friendly --color=always
 	list-conflicts = diff --name-only --diff-filter=U
