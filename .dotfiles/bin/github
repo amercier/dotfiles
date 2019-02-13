@@ -30,17 +30,16 @@ then
 fi
 
 remote_branch=$(git rev-parse --abbrev-ref --symbolic-full-name '@{u}' 2>/dev/null || echo)
-if [ -n "$remote_branch" ]
+if [ -z "$remote_branch" ]
 then
-  remote_name="$(echo "$remote_branch" | cut -d / -f1)"
-  branch_name="$(echo "$remote_branch" | cut -d / -f2)"
-else
   echo 'Warning: Not connected to a remote branch.' >&2
   echo 'Please run "git push --set-upstream origin BRANCH_NAME" to set one.' >&2
-  remote_name="$(git remote | head -n 1)"
-  branch_name="master"
-  echo "Defaulting to \"$remote_name/$branch_name\""
+  remote_branch="$(git remote | head -n 1)/master"
+  echo "Defaulting to \"$remote_branch\""
 fi
+remote_name="$(echo "$remote_branch" | cut -d / -f1)"
+branch_name="$(echo "$remote_branch" | cut -d / -f2)"
+
 
 ssh_remote="$(git remote get-url "$remote_name" 2>/dev/null)"
 if [ -z "$ssh_remote" ]
