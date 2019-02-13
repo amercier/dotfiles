@@ -259,12 +259,18 @@ install_or_update_nvm_node_version lts/boron
 install_or_update_nvm_node_version lts/argon
 install_or_update_nvm_node_version 0.12
 install_or_update_nvm_node_version 0.10
+
 nvm_outdated_versions | while read -r v
 do
-  echo "Uninstalling Node $(cyan "$v")..."
-  bash -c ". /usr/local/opt/nvm/nvm.sh && nvm uninstall \"$v\""
-  rm -rf "$NVM_DIR/_default_version"
-  echo "$(green ✓) Done"
+  if nvm alias | grep -q "default -> $v"
+  then
+    echo "Skipping cleaning up $v as it is the default" >&2
+  else
+    echo "Uninstalling Node $(cyan "$v")..."
+    bash -c ". /usr/local/opt/nvm/nvm.sh && nvm uninstall \"$v\""
+    rm -rf "$NVM_DIR/_default_version"
+    echo "$(green ✓) Done"
+  fi
 done
 
 # Set default NodeJS version
