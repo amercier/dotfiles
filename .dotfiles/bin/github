@@ -38,7 +38,7 @@ then
   echo "Defaulting to \"$remote_branch\""
 fi
 remote_name="$(echo "$remote_branch" | cut -d / -f1)"
-branch_name="$(echo "$remote_branch" | cut -d / -f2)"
+branch_name="$(echo "$remote_branch" | cut -d / -f2-)"
 
 
 ssh_remote="$(git remote get-url "$remote_name" 2>/dev/null)"
