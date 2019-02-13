@@ -31,7 +31,7 @@ install_or_update directory "$(xcode-select -p)" "Command Line Tools for Xcode" 
 # Brew
 install_or_update command brew Homebrew \
   "curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install | /usr/bin/env ruby" \
-  'brew update && brew prune && brew cleanup'
+  'brew update && brew cleanup'
 
 # Brew kegs
 install_or_update_brew_keg coreutils
