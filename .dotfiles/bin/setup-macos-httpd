@@ -48,6 +48,7 @@ fi
 install_or_update_brew_keg ant # requires java
 install_or_update_brew_keg php # requires httpd
 install_or_update_brew_keg composer # requires php
+install_or_update_brew_keg sqlite # required php
 
 # Apache SSL setup
 if [ -e /usr/local/etc/httpd/server.crt ]
