@@ -262,7 +262,7 @@ install_or_update_nvm_node_version 0.10
 
 nvm_outdated_versions | while read -r v
 do
-  if nvm alias | grep -q "default -> $v"
+  if nvm alias --no-colors | grep -q "default -> $v"
   then
     echo "Skipping cleaning up $v as it is the default" >&2
   else
