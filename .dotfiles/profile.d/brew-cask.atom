@@ -3,5 +3,5 @@
 if command_exists atom
 then
   alias aatom='atom -a'
-  export EDITOR=atom
+  export GRAPHICAL_EDITOR=atom
 fi
