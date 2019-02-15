@@ -26,7 +26,7 @@ install_app_store_upgrades() {
 #
 # @param 1 Application name
 mas_id() {
-  mas search "$1" | tr ' ' '\n' | head -n 1
+  mas search "$1"| grep -o -E '[[:digit:]]+' | head -n 1
 }
 
 # Install or upgrade a Mac App Store application
