@@ -11,6 +11,11 @@ dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 . "$dir/../lib/colors.sh"
 
+# Realpath replacement for MacOS
+realpath() {
+  [[ $1 = /* ]] && echo "$1" || echo "$PWD/${1#./}"
+}
+
 filepaths=$(find "$dir/../lib" -type f -not -name '.*' -not -name '*.example' -not -name 'colors.sh')
 for filepath in $filepaths
 do
