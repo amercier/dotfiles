@@ -54,7 +54,6 @@ install_or_update_mas_application WhatsApp
 install_or_update_brew_cask_application Atom atom
 install_or_update_brew_cask_application Catlight catlight
 install_or_update_brew_cask_application FileZilla filezilla
-install_or_update_brew_cask_application Flux flux
 install_or_update_brew_cask_application "Google Chrome" google-chrome
 install_or_update_brew_cask_application "GPG Keychain" gpg-suite
 install_or_update_brew_cask_application Hyper hyper
