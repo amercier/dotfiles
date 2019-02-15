@@ -13,7 +13,8 @@
 	edit-list = ! git status --porcelain | grep -v 'D ' | sed 's/.* //'
 	forked = ! git graph $(git current-local-branch) $(git current-remote-branch)
 	graph = log --graph --pretty=friendly --color=always
-	history = log --follow --pretty=history --color=always
+	history = log --follow --pretty=history --color=always --
+	history-log = log --follow -p --
 	histories = "! git_histories() { for path in "$@"; do echo; echo \"$path\"; echo '---'; git history \"$path\"; done; }; git_histories"
 	list-conflicts = diff --name-only --diff-filter=U
 	merged-branches = ! git branch --merged | egrep -v '^\\*'
