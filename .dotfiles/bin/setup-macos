@@ -48,7 +48,6 @@ install_or_update_brew_keg zsh-completions
 # App Store
 install_or_update_mas_application Dashlane
 install_or_update_mas_application Moom
-install_or_update_mas_application WhatsApp
 
 # Brew casks
 install_or_update_brew_cask_application Atom atom
