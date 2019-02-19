@@ -19,9 +19,11 @@ set -o nounset
 #
 # SYNTAX
 #
-#     github                # Opens the GitHub URL of the project
+#     github                       # Opens the GitHub URL of the project.
 #
-#     github FILE_1 FILE_2  # Opens FILE_1 and FILE_2 GitHub URLs
+#     github FILE_1 FILE_2         # Opens FILE_1 and FILE_2 GitHub URLs.
+#
+#     find . -name FILE | github   # Finds all files named FILE and opens them on GitHub.
 
 if [ ! -d .git ] && ! git rev-parse --git-dir > /dev/null 2>&1
 then
@@ -58,7 +60,8 @@ github_url="$(echo "$ssh_remote" | sed 's/^git@github.com:/https:\/\/github.com\
 if [ "$#" = 0 ]
 then
   # Tries show-ref (local)
-  if git show-ref | grep "refs/remotes/$remote_name/pr/" -q
+  # TODO Why -q does not work?
+  if [ "$(git show-ref | grep -c "refs/remotes/$remote_name/pr/")" != 0 ]
   then
     github_pr="$(git show-ref | grep "$(git rev-parse "$remote_branch") refs/remotes/$remote_name/pr/" | cut -d / -f5 || echo)"
   # Otherwise default to ls-remote (remote), with a warning
@@ -70,7 +73,7 @@ then
 fi
 
 # Add URL path when needed
-if [ "$#" != 0 ] || [ "$branch_name" != "master" ]
+if [ ! -t 0 ] || [ "$#" != 0 ] || [ "$branch_name" != "master" ]
 then
   github_url="$github_url/tree/$branch_name"
 elif [ -n "$github_pr" ]
@@ -78,19 +81,35 @@ then
   github_url="$github_url/pull/$github_pr"
 fi
 
-if [ "$#" = 0 ]
+# TODO Refactor
+open_path() {
+  if [ "$1" = '.' ]
+  then
+    # TODO: handle non-root dir
+    url="$github_url"
+  else
+    # TODO: Cleanup path
+    url="$github_url/$1"
+  fi
+
+  if [ -e "$1" ]
+  then
+    echo "Opening $url"
+    open "$url"
+  else
+    echo "File does not exist, skipping: $1" >&2
+  fi
+}
+
+if [ "$#" != 0 ]
 then
-  echo "Opening $github_url"
-  open "$github_url"
+  # When used with arguments, open each one as a file
+  for path in "$@"; do open_path "$path"; done
+elif [ ! -t 0 ]
+then
+  # Or with stdin, open each line as a file
+  while read -r path; do open_path "$path"; done
 else
-  for path in "$@"; do
-    if [ -e "$path" ]
-    then
-      # TODO: Cleanup path
-      echo "Opening $github_url/$path"
-      open "$github_url/$path"
-    else
-      echo "File does not exist, skipping: $path" >&2
-    fi
-  done
+  # Otherwise open current folder
+  open_path .
 fi
