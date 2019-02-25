@@ -7,15 +7,6 @@
 # TODO Support Gitlab CI
 # TODO Support Codeship
 
-if [ -f '.travis.yml' ]
-then
-  ci_origin="https://travis-ci.org"
-  ci_suffix="/branches"
-else
-  echo "No .travis.yml file found" >&2
-  return 1
-fi
-
 if [ ! -d .git ] && ! git rev-parse --git-dir > /dev/null 2>&1
 then
   echo "Not a git repository" >&2
@@ -42,6 +33,22 @@ then
 fi
 
 project_slug=$(echo "$ssh_remote" | sed "s/^git@github.com://" | sed 's/.git$//')
+
+if [ -f '.travis.yml' ]
+then
+  echo "Looking for $project_slug on travis-ci.org..."
+  if curl --output /dev/null --silent --head --fail --header 'Travis-API-Version: 3' "https://api.travis-ci.org/repo/$(echo "$project_slug" | sed 's/\//%2F/g')"
+  then
+    ci_origin="https://travis-ci.org"
+  else
+    echo "Could not find $project_slug on travis-ci.org, assuming travis-ci.com"
+    ci_origin="https://travis-ci.com"
+  fi
+  ci_suffix="/branches"
+else
+  echo "No .travis.yml file found" >&2
+  return 1
+fi
 ci_url="${ci_origin}/${project_slug}${ci_suffix}"
 
 echo "Opening $ci_url"
