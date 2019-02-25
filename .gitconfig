@@ -9,8 +9,8 @@
 	current-local-branch = ! source $HOME/.dotfiles/profile.d/git && git_current_local_branch
 	current-remote-branch = ! git rev-parse --abbrev-ref --symbolic-full-name $(git current-local-branch)@{u}
 	diff-cached = diff --cached
-	edit = ! "$GRAPHICAL_EDITOR" . "$(git edit-list)"
-	edit-list = ! git status --porcelain | grep -v 'D ' | sed 's/.* //'
+	edit = "! git_edit() { \"$GRAPHICAL_EDITOR\" . \"$(git edit-list \"$@\")\"; }; git_edit"
+	edit-list = "! git_edit_list() { if [ \"$#\" = 0 ]; then git status --porcelain; else git diff --name-status \"${1}..${1}~1\"; fi | grep -v 'D ' | awk '{ print $2; }'; }; git_edit_list"
 	forked = ! git graph $(git current-local-branch) $(git current-remote-branch)
 	graph = log --graph --pretty=friendly --color=always
 	history = log --follow --pretty=history --color=always --
