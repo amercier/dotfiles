@@ -54,8 +54,8 @@
 	pager = less -x1,5
 	ignorecase = false
 [pretty]
-	friendly = "\t%C(black)%h%C(reset) %<(64,trunc)%s %C(cyan)%>(10,trunc)%cr %C(dim white)%<(8,trunc)%aN%C(reset) %C(reset)%C(auto)%d%C(reset)"
-	history = "%C(black)%h%C(reset) %<(74,trunc)%s %C(cyan)%>(12,trunc)%ci%x08%x08 %C(dim white)%aN%C(reset)"
+	friendly = "\t%C(black)%h%C(reset) %<(80,trunc)%s %C(cyan)%>(10,trunc)%cr %C(dim white)%<(12,trunc)%aN%C(reset) %C(reset)%C(auto)%d%C(reset)"
+	history = "%C(black)%h%C(reset) %<(80,trunc)%s %C(cyan)%>(12,trunc)%cd%x08%x08 %C(dim white)%aN%C(reset)"
 [user]
 	name = Alex Mercier
 	email = pro.alexandre.mercier@gmail.com
