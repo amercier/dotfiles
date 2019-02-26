@@ -43,7 +43,7 @@ install_or_update_brew_keg coreutils
 install_or_update_brew_keg git
 install_or_update_brew_keg grep
 install_or_update_brew_keg mas
-install_or_update_brew_keg nvm
+install_or_update_brew_keg nodebrew
 install_or_update_brew_keg shellcheck
 install_or_update_brew_keg watchman
 install_or_update_brew_keg wget
@@ -254,31 +254,15 @@ echo
 install_or_update_atom_package manage-packages
 
 # Node versions
-. /usr/local/opt/nvm/nvm.sh
-install_or_update_nvm_node_version node && nvm use node
-install_or_update_nvm_node_version lts/dubnium
-install_or_update_nvm_node_version lts/carbon
-install_or_update_nvm_node_version lts/boron
-install_or_update_nvm_node_version lts/argon
-install_or_update_nvm_node_version 0.12
-install_or_update_nvm_node_version 0.10
-
-nvm_outdated_versions | while read -r v
-do
-  if nvm alias --no-colors | grep -q "default -> $v"
-  then
-    echo "Skipping cleaning up $v as it is the default" >&2
-  else
-    echo "Uninstalling Node $(cyan "$v")..."
-    bash -c ". /usr/local/opt/nvm/nvm.sh && nvm uninstall \"$v\""
-    rm -rf "$NVM_DIR/_default_version"
-    echo "$(green ✓) Done"
-  fi
-done
-
-# Set default NodeJS version
-nvm alias --no-colors | grep -e '^default -> ' -q || nvm alias default node
-nvm use default
+install_or_update_nodebrew_node_version 0.10
+install_or_update_nodebrew_node_version 0.12
+install_or_update_nodebrew_node_version 4
+install_or_update_nodebrew_node_version 6
+install_or_update_nodebrew_node_version 8
+install_or_update_nodebrew_node_version 10
+install_or_update_nodebrew_node_version latest
+nodebrew_alias default > /dev/null || nodebrew alias default latest
+nodebrew use default
 
 # Globally-installed NPM packages
 # TODO Do not reinstall every time

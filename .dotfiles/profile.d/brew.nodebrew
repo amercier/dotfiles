@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+
+if brew_keg_exists nodebrew
+then
+  if [ ! -d "$HOME/.nodebrew/src" ]
+  then
+    "$(brew --prefix nodebrew)/bin/nodebrew" setup_dirs
+  fi
+
+  [ -n "$LC_ALL" ] || export LC_ALL=en_US.UTF-8
+  export PATH=$HOME/.nodebrew/current/bin:$PATH
+  nodebrew use default >/dev/null
+fi
