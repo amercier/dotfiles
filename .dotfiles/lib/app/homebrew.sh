@@ -1,3 +1,4 @@
+# shellcheck disable=SC1090
 # shellcheck disable=SC2148
 
 # Homebew-related utility functions
@@ -41,11 +42,24 @@ brew_upgrade() {
   fi
 }
 
+# Install a Brew command
+#
+# @param 1 Brew keg name
+install_brew_keg() {
+  brew install "$1"
+  dotfile="$HOME/.dotfiles/profile.d/brew.$1"
+  if [ -e "$dotfile" ]
+  then
+    echo "Found $dotfile, sourcing..."
+    . "$dotfile"
+  fi
+}
+
 # Install or upgrade a Brew command
 #
 # @param 1 Brew keg name
 install_or_update_brew_keg() {
-  install_or_update brew_keg "$1" "$1" "brew install $1" "brew_upgrade $1"
+  install_or_update brew_keg "$1" "$1" "install_brew_keg $1" "brew_upgrade $1"
 }
 
 # Install or upgrade a Brew service
