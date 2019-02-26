@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+# shellcheck disable=SC1090
+
+if command_exists avn
+then
+  if [ ! -d "$HOME/.avn" ]
+  then
+    avn setup
+    perl -ni -e 'print unless /$HOME\/.avn/' "$HOME/.zshrc"
+  fi
+
+  . "$HOME/.avn/bin/avn.sh"
+fi
