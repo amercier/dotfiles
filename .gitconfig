@@ -26,7 +26,7 @@
 	renew-all = ! git renew && git push-all
 	rework = ! source $HOME/.dotfiles/lib/colors.sh && source $HOME/.dotfiles/profile.d/git && git_rework
 	show-files = show --name-only
-	unique-remote = "! git_unique_remote() { remotes=\"$(git remote)\"; if [ \"$(echo \"$remotes\" | wc -l)\" = 1 ]; then echo \"$remotes\"; else return 1; fi; }; git_unique_remote"
+	unique-remote = "! git_unique_remote() { remotes=\"$(git remote)\"; if [ $(echo \"$remotes\" | wc -l) = 1 ]; then echo \"$remotes\"; else echo \"$remotes\" | wc -l; return 1; fi; }; git_unique_remote"
 	unwip = "! if [ \"$(git log --format=%B -n 1 HEAD)\" = wip ]; then git reset HEAD~1; else echo 'Last commit message is not \"wip\":' \"$(git log --format=%B -n 1 HEAD | head -n 1)\" >&2; exit 1; fi"
 [color "advice"]
 	hint = black
