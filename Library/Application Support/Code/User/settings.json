@@ -1,5 +1,10 @@
 {
     "workbench.colorTheme": "One Dark Pro",
+    "workbench.colorCustomizations": {
+        "[One Dark Pro]": {
+            "terminal.ansiBlack": "#393d45"
+        }
+    },
     "eslint.autoFixOnSave": true,
     "eslint.alwaysShowStatus": true,
     "eslint.validate": [
@@ -15,6 +20,5 @@
             "language": "javascript",
             "autoFix": true
         }
-        ]
-    }
+    ]
 }
