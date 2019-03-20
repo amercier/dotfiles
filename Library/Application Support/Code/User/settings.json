@@ -1,4 +1,5 @@
 {
+    "workbench.activityBar.visible": false,
     "workbench.colorTheme": "One Dark Pro",
     "workbench.colorCustomizations": {
         "[One Dark Pro]": {
