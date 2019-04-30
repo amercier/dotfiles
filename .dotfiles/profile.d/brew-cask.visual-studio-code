@@ -1,0 +1,11 @@
+#!/usr/bin/env sh
+
+if command_exists code
+then
+  export GRAPHICAL_EDITOR=code
+
+  atom() {
+    echo "Please use Visual Studio Code" >&2
+    return 1
+  }
+fi
