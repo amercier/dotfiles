@@ -22,6 +22,7 @@
 	old = ! git graph $(git current-remote-branch) --not $(git current-local-branch)
 	push-all = ! source $HOME/.dotfiles/lib/colors.sh && source $HOME/.dotfiles/profile.d/git && git_push_all
 	push-upstream = "! if git unique-remote >/dev/null; then git push --set-upstream \"$(git unique-remote)\" \"$(git current-local-branch)\"; else echo \"Found multiple remotes: $(echo $(git remote) | sed 's/ /, /g')\"; exit 1; fi"
+	rebase-auto = "rebase -X ours"
 	renew = ! git rework $(git log --format=format:%H $(git current-local-branch) --not $(git current-remote-branch) | tail -n 1)
 	renew-all = ! git renew && git push-all
 	rework = ! source $HOME/.dotfiles/lib/colors.sh && source $HOME/.dotfiles/profile.d/git && git_rework
