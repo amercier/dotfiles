@@ -23,5 +23,6 @@
             "autoFix": true
         }
     ],
-    "editor.tabSize": 2
+    "editor.tabSize": 2,
+    "javascript.updateImportsOnFileMove.enabled": "always"
 }
