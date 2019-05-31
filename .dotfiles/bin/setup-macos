@@ -88,38 +88,6 @@ else
   echo
 fi
 
-# Fonts
-echo '
-  https://github.com/powerline/fonts/blob/master/Meslo%20Dotted/Meslo%20LG%20L%20DZ%20Bold%20Italic%20for%20Powerline.ttf?raw=true
-  https://github.com/powerline/fonts/blob/master/Meslo%20Dotted/Meslo%20LG%20L%20DZ%20Bold%20for%20Powerline.ttf?raw=true
-  https://github.com/powerline/fonts/blob/master/Meslo%20Dotted/Meslo%20LG%20L%20DZ%20Italic%20for%20Powerline.ttf?raw=true
-  https://github.com/powerline/fonts/blob/master/Meslo%20Dotted/Meslo%20LG%20L%20DZ%20Regular%20for%20Powerline.ttf?raw=true
-  https://github.com/powerline/fonts/blob/master/Meslo%20Dotted/Meslo%20LG%20M%20DZ%20Bold%20Italic%20for%20Powerline.ttf?raw=true
-  https://github.com/powerline/fonts/blob/master/Meslo%20Dotted/Meslo%20LG%20M%20DZ%20Bold%20for%20Powerline.ttf?raw=true
-  https://github.com/powerline/fonts/blob/master/Meslo%20Dotted/Meslo%20LG%20M%20DZ%20Italic%20for%20Powerline.ttf?raw=true
-  https://github.com/powerline/fonts/blob/master/Meslo%20Dotted/Meslo%20LG%20M%20DZ%20Regular%20for%20Powerline.ttf?raw=true
-  https://github.com/powerline/fonts/blob/master/Meslo%20Dotted/Meslo%20LG%20S%20DZ%20Bold%20Italic%20for%20Powerline.ttf?raw=true
-  https://github.com/powerline/fonts/blob/master/Meslo%20Dotted/Meslo%20LG%20S%20DZ%20Bold%20for%20Powerline.ttf?raw=true
-  https://github.com/powerline/fonts/blob/master/Meslo%20Dotted/Meslo%20LG%20S%20DZ%20Italic%20for%20Powerline.ttf?raw=true
-  https://github.com/powerline/fonts/blob/master/Meslo%20Dotted/Meslo%20LG%20S%20DZ%20Regular%20for%20Powerline.ttf?raw=true
-  https://github.com/powerline/fonts/blob/master/Meslo%20Slashed/Meslo%20LG%20L%20Bold%20Italic%20for%20Powerline.ttf?raw=true
-  https://github.com/powerline/fonts/blob/master/Meslo%20Slashed/Meslo%20LG%20L%20Bold%20for%20Powerline.ttf?raw=true
-  https://github.com/powerline/fonts/blob/master/Meslo%20Slashed/Meslo%20LG%20L%20Italic%20for%20Powerline.ttf?raw=true
-  https://github.com/powerline/fonts/blob/master/Meslo%20Slashed/Meslo%20LG%20L%20Regular%20for%20Powerline.ttf?raw=true
-  https://github.com/powerline/fonts/blob/master/Meslo%20Slashed/Meslo%20LG%20M%20Bold%20Italic%20for%20Powerline.ttf?raw=true
-  https://github.com/powerline/fonts/blob/master/Meslo%20Slashed/Meslo%20LG%20M%20Bold%20for%20Powerline.ttf?raw=true
-  https://github.com/powerline/fonts/blob/master/Meslo%20Slashed/Meslo%20LG%20M%20Italic%20for%20Powerline.ttf?raw=true
-  https://github.com/powerline/fonts/blob/master/Meslo%20Slashed/Meslo%20LG%20M%20Regular%20for%20Powerline.ttf?raw=true
-  https://github.com/powerline/fonts/blob/master/Meslo%20Slashed/Meslo%20LG%20S%20Bold%20Italic%20for%20Powerline.ttf?raw=true
-  https://github.com/powerline/fonts/blob/master/Meslo%20Slashed/Meslo%20LG%20S%20Bold%20for%20Powerline.ttf?raw=true
-  https://github.com/powerline/fonts/blob/master/Meslo%20Slashed/Meslo%20LG%20S%20Italic%20for%20Powerline.ttf?raw=true
-  https://github.com/powerline/fonts/blob/master/Meslo%20Slashed/Meslo%20LG%20S%20Regular%20for%20Powerline.ttf?raw=true
-' | trim_empty_lines | \
-while read -r url
-do
-  download_file "$HOME/Library/Fonts" "$url"
-done
-
 # Prezto
 install_or_update directory "$HOME/.zprezto" "Zprezto" \
   "git clone --recursive https://github.com/sorin-ionescu/prezto.git '$HOME/.zprezto'"  \
