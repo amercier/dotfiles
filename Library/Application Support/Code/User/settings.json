@@ -24,5 +24,9 @@
         }
     ],
     "editor.tabSize": 2,
-    "javascript.updateImportsOnFileMove.enabled": "always"
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "sync.autoDownload": true,
+    "sync.autoUpload": true,
+    "sync.gist": "69dc448a2590a368d03a8f7ce89008de",
+    "sync.quietSync": true
 }

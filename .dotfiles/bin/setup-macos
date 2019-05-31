@@ -210,6 +210,9 @@ nodebrew use default
 # Globally-installed NPM packages
 npm install -g npm yarn avn avn-nodebrew
 
+# VSCode
+code --install-extension Shan.code-settings-sync
+
 # Workspace
 create_directory_if_not_exists "$HOME/Workspace"
 
