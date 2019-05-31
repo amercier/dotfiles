@@ -53,7 +53,6 @@ install_or_update_mas_application Moom
 install_or_update_brew_cask_application "Google Chrome" google-chrome
 install_or_update_brew_cask_application "GPG Keychain" gpg-suite
 install_or_update_brew_cask_application Hyper hyper
-install_or_update_brew_cask_application VirtualBox virtualbox
 install_or_update_brew_cask_application VLC vlc
 install_or_update_brew_cask java
 
