@@ -20,10 +20,6 @@ do
 done
 echo
 
-# App Store updates
-echo "$(blue ▶) Looking for App Store updates..."
-softwareupdate --install --all
-
 # Xcode Command Line Tools
 install_or_update directory "$(xcode-select -p)" "Command Line Tools for Xcode" \
   'xcode-select --install'
@@ -215,3 +211,7 @@ npm install -g npm yarn avn avn-nodebrew
 
 # Workspace
 create_directory_if_not_exists "$HOME/Workspace"
+
+# App Store updates
+echo "$(blue ▶) Looking for App Store updates..."
+softwareupdate --install --all
