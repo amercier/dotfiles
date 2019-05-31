@@ -1,7 +1,0 @@
-#!/usr/bin/env sh
-
-if command_exists atom
-then
-  alias aatom='atom -a'
-  export GRAPHICAL_EDITOR=atom
-fi

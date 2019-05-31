@@ -127,9 +127,6 @@ then
   brew services restart httpd
 fi
 
-# Atom packages dependencies
-composer global require squizlabs/php_codesniffer # linter-phpcs
-
 # Workspace
 if [ ! -e "$HOME/Workspace/phpinfo.php" ]
 then

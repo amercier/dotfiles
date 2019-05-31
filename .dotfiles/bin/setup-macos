@@ -55,9 +55,6 @@ install_or_update_mas_application Dashlane
 install_or_update_mas_application Moom
 
 # Brew casks
-install_or_update_brew_cask_application Atom atom
-install_or_update_brew_cask_application Catlight catlight
-install_or_update_brew_cask_application FileZilla filezilla
 install_or_update_brew_cask_application "Google Chrome" google-chrome
 install_or_update_brew_cask_application "GPG Keychain" gpg-suite
 install_or_update_brew_cask_application Hyper hyper
@@ -249,9 +246,6 @@ macos_set_preference /Library/Preferences/com.apple.AppleFileServer guestAccess 
 macos_set_preference org.R-project.R force.LANG string en_US.UTF-8 # Fix 'tar: Failed to set default locale' warning
 
 echo
-
-# Atom packages
-install_or_update_atom_package manage-packages
 
 # Node versions
 install_or_update_nodebrew_node_version 0.10
