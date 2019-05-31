@@ -193,7 +193,6 @@ fi
 
 # General
 macos_set_preference NSGlobalDomain ApplePersistence bool 0
-macos_set_preference NSGlobalDomain CGFontRenderingFontSmoothingDisabled bool 0 # Fixes font rendering on Mojave
 macos_set_preference NSGlobalDomain com.apple.sound.beep.flash bool 1
 macos_set_preference NSGlobalDomain com.apple.springing.delay float 1
 macos_set_preference NSGlobalDomain com.apple.swipescrolldirection bool 0
