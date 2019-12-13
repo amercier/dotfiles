@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+if command_exists docker
+then
+  docker-cleanup() {
+    docker rm $(docker ps -q -f 'status=exited')
+    docker rmi $(docker images -q -f "dangling=true")
+  }
+fi
