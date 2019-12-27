@@ -1,0 +1,26 @@
+#!/usr/bin/env sh
+
+set -o errexit
+set -o pipefail
+set -o nounset
+# set -o xtrace
+
+# Open a URL with VSCode.
+#
+# SYNTAX
+#
+#   wcode URL:LINE:CHAR Download and open URL, at line LINE, character CHAR.
+
+url="$(echo "$1" | sed 's/^\(.*\):\([0-9]*\):\([0-9]*\)$/\1/')"
+line="$(echo "$1" | sed 's/^\(.*\):\([0-9]*\):\([0-9]*\)$/\2/')"
+char="$(echo "$1" | sed 's/^\(.*\):\([0-9]*\):\([0-9]*\)$/\3/')"
+
+if [ "$url" = "$1" ] || [ "$line" = "$1" ] || [ "$char" = "$1" ] || [ -z "$url" ] || [ -z "$line" ] || [ -z "$char" ]
+then
+  echo "Syntax: wcode URL:LINE:CHAR" >&2
+  exit 1
+fi
+
+file="$(mktemp)"
+curl -sL "$url" > "$file"
+code --goto "$file:$line:$char"
