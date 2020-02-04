@@ -72,13 +72,13 @@ then
   fi
 fi
 
-# Add URL path when needed
-if [ ! -t 0 ] || [ "$#" != 0 ] || [ "$branch_name" != "master" ]
-then
-  github_url="$github_url/tree/$branch_name"
-elif [ -n "$github_pr" ]
+if [ -n "$github_pr" ]
 then
   github_url="$github_url/pull/$github_pr"
+elif [ ! -t 0 ] || [ "$#" != 0 ] || [ "$branch_name" != "master" ]
+then
+  # Add URL path when needed
+  github_url="$github_url/tree/$branch_name"
 fi
 
 # TODO Refactor
