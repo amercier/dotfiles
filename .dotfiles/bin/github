@@ -55,6 +55,7 @@ then
 fi
 
 github_url="$(echo "$ssh_remote" | sed 's/^git@github.com:/https:\/\/github.com\//; s/.git$//')"
+github_pr=""
 
 # Look for associated PR (only when no argument is provided)
 if [ "$#" = 0 ]
