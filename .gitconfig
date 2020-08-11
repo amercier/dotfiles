@@ -6,6 +6,7 @@
 	cleanup-full = ! git checkout master && git pull && git clean-merged-branches && git clean-squashed-branches
 	clone-branch = clone -b
 	commit-message = "! git_commit_message() { message=\"$@\"; git commit -m \"$message\" --date=\"$(git_date)\"; }; source $HOME/.dotfiles/profile.d/git && git_commit_message"
+	commit-message-no-verify = "! git_commit_message() { message=\"$@\"; git commit -m \"$message\" --date=\"$(git_date)\" --no-verify; }; source $HOME/.dotfiles/profile.d/git && git_commit_message"
 	commit-wip = commit --no-verify -m wip
 	conflicts = ! $GRAPHICAL_EDITOR . $(git list-conflicts)
 	current-local-branch = ! source $HOME/.dotfiles/profile.d/git && git_current_local_branch
@@ -34,7 +35,6 @@
 	squashed-branches = ! source $HOME/.dotfiles/profile.d/git && git_squashed_branches
 	unignore = update-index --no-assume-unchanged
 	unique-remote = "! git_unique_remote() { remotes=\"$(git remote)\"; if [ $(echo \"$remotes\" | wc -l) = 1 ]; then echo \"$remotes\"; else echo \"$remotes\" | wc -l; return 1; fi; }; git_unique_remote"
-	unwip = "! if [ \"$(git log --format=%B -n 1 HEAD)\" = wip ]; then git reset HEAD~1; else echo 'Last commit message is not \"wip\":' \"$(git log --format=%B -n 1 HEAD | head -n 1)\" >&2; exit 1; fi"
 [color "advice"]
 	hint = black
 [color "branch"]
@@ -67,3 +67,5 @@
 	name = Alex Mercier
 	email = pro.alexandre.mercier@gmail.com
 	signingkey = A4A0BA9DE4FC1F8D
+[pull]
+	rebase = false
