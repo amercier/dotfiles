@@ -31,10 +31,15 @@ set -o nounset
 # - The first sequence of <letters>-<digits> of the local branch name is used as the ticket ID. This
 #   can be overriden by setting JIRA_ID_FORMAT. Default value: `[a-zA-Z]+-[0-9]+`.
 
-if [ -z "$JIRA_URL" ]
+if [ -z "$JIRA_URL" ] && [ ! -f "./.jirarc" ]
 then
-  echo "Please set JIRA_URL enviroment variable" >&2
+  echo "Please set JIRA_URL enviroment variable or create a .jirarc file" >&2
   exit 1
+fi
+
+if [ -f "./.jirarc" ]
+then
+  . "./.jirarc"
 fi
 
 if [ -n "${1-}" ]
