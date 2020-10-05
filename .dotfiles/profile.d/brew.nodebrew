@@ -10,4 +10,13 @@ then
   [ -n "$LC_ALL" ] || export LC_ALL=en_US.UTF-8
   export PATH=$HOME/.nodebrew/current/bin:$PATH
   nodebrew use default >/dev/null
+
+  nodebrew-update() {
+    version=$(node -e "try { console.log(require('./package.json').engines.node) } catch { console.log('latest') }")
+    nodebrew install "$version"
+    nodebrew use "$version"
+    nodebrew alias default "$version"
+    npm install -g yarn
+    npm install -g jicli
+  }
 fi
