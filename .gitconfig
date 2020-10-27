@@ -12,8 +12,9 @@
 	current-local-branch = ! source $HOME/.dotfiles/profile.d/git && git_current_local_branch
 	current-remote-branch = ! git rev-parse --abbrev-ref --symbolic-full-name $(git current-local-branch)@{u}
 	diff-cached = diff --cached
-	edit = "! git_edit() { git edit-list \"$@\" | xargs $GRAPHICAL_EDITOR .; }; git_edit"
+	edit = "! git_edit() { git edit-list-relative \"$@\" | xargs $GRAPHICAL_EDITOR \"./$GIT_PREFIX\"; }; git_edit"
 	edit-list = "! git_edit_list() { if [ \"$#\" = 0 ]; then git status --untracked-files --porcelain; else git diff --name-status \"${1}~1..${1}\"; fi| grep -v -E 'D\\W' | awk '{ print $2; }'; }; git_edit_list"
+	edit-list-relative = "! git_edit_list_relative() { git edit-list \"$@\" | while read p; do realpath --relative-to=\"./$GIT_PREFIX\" \"$p\"; done; }; git_edit_list_relative"
 	forked = ! git graph $(git current-local-branch) $(git current-remote-branch)
 	graph = log --graph --pretty=friendly --color=always
 	history = log --follow --pretty=history --color=always --
@@ -69,3 +70,8 @@
 	signingkey = A4A0BA9DE4FC1F8D
 [pull]
 	rebase = false
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
