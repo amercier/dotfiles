@@ -15,8 +15,14 @@ then
     $command $@
   }
 
-  node-dev-script() {
-    if node-scripts | grep -q dev
+  node-app-script() {
+    if node-scripts | grep -q start:app
+    then
+      echo start:app
+    elif node-scripts | grep -q app
+    then
+      echo app
+    elif node-scripts | grep -q dev
     then
       echo dev
     elif node-scripts | grep -q serve
@@ -27,12 +33,28 @@ then
     fi
   }
 
-  node-dev() {
-    node-run $(node-dev-script)
+  node-storybook-script() {
+    if node-scripts | grep -q start:storybook
+    then
+      echo start:storybook
+    elif node-scripts | grep -q storybook
+    then
+      echo storybook
+    else
+      echo start
+    fi
   }
 
-  alias dev=node-dev
-  alias sb='node-run storybook'
+  node-app() {
+    node-run $(node-app-script)
+  }
+
+  node-storybook() {
+    node-run $(node-storybook-script)
+  }
+
+  alias app=node-app
+  alias sb=node-storybook
 
   if command_exists npm
   then
