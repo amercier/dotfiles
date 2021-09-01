@@ -77,4 +77,6 @@ then
     alias yarn-upgrade-optional="node-list-packages optionalDependencies | yarn-install-latest --save-optional"
     alias yarn-upgrade="yarn-upgrade-dep && yarn-upgrade-dev && yarn-upgrade-peer && yarn-upgrade-bundled && yarn-upgrade-optional"
   fi
+
+  alias jest="node-run jest --watch --verbose"
 fi
