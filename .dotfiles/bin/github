@@ -19,9 +19,16 @@ set -o nounset
 #
 # SYNTAX
 #
-#     github                       # Opens the GitHub URL of the project.
+#     github                       # Opens the GitHub URL of the project, or the
+#                                  # current PR if on a branch with a PR.
+#
+#     github SHA1                  # Looks for a PR number in the commit name,
+#                                  # and opens the PR URL if found.
 #
 #     github FILE_1 FILE_2         # Opens FILE_1 and FILE_2 GitHub URLs.
+#
+#     github SHA1 FILE_1 FILE_2    # Opens FILE_1 and FILE_2 GitHub URLs on the
+#                                  # PR matching commit SHA1.
 #
 #     find . -name FILE | github   # Finds all files named FILE and opens them on GitHub.
 
@@ -60,17 +67,21 @@ github_pr=""
 # Look for associated PR (only when no argument is provided)
 if [ "$#" = 0 ]
 then
-  # Tries show-ref (local)
-  # TODO Why -q does not work?
   if [ "$(git show-ref | grep -c "refs/remotes/$remote_name/pr/")" != 0 ]
   then
+    # Tries show-ref (local)
+    # TODO Why -q does not work?
     github_pr="$(git show-ref | grep "$(git rev-parse "$remote_branch") refs/remotes/$remote_name/pr/" | cut -d / -f5 || echo)"
-  # Otherwise default to ls-remote (remote), with a warning
   else
+    # Otherwise default to ls-remote (remote), with a warning
     echo 'Warning: could not find any "pr/XXX" ref, please run:' >&2
     echo "git config --add remote.$remote_name.fetch '+refs/pull/*/head:refs/remotes/$remote_name/pr/*'" >&2
     github_pr=$(git ls-remote 2>/dev/null | grep "$(git rev-parse "$remote_branch")\\srefs/pull" | cut -d / -f3  || echo)
   fi
+# Look for associated PR (when $1 is a SHA1)
+elif  [ "$#" != 0 ] && echo "$1" | grep -q -E '^[a-f0-9]+$'
+then
+  github_pr="$(git log --format=%B -n 1 "$1" | grep -o -E '#[0-9]+' | grep -o -E '[0-9]+')"
 fi
 
 if [ -n "$github_pr" ]
@@ -101,6 +112,12 @@ open_path() {
     echo "File does not exist, skipping: $1" >&2
   fi
 }
+
+# Remove SHA1
+if [ "$#" != 0 ] && echo "$1" | grep -q -E '^[a-f0-9]+$'
+then
+  shift
+fi
 
 if [ "$#" != 0 ]
 then
